@@ -12,3 +12,5 @@ router.get('/assignTrainer',(req,res)=>{
 router.get('/assignTrainee',(req,res)=>{
     res.render('assignTrainee')
 })
+
+module.exports = router;

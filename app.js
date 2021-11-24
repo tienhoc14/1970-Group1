@@ -10,8 +10,8 @@ app.get('/',(req,res)=>{
 const adminController = require('./admin')
 app.use('/admin',adminController)
 
-// const staffController = require('./staff')
-// app.use('/staff',staffController)
+const staffController = require('./staff')
+app.use('/staff',staffController)
 
 const trainerController = require('./trainer')
 app.use('/trainer',trainerController)
