@@ -3,7 +3,7 @@ const { insertObject } = require('../databaseHandler')
 const router = express.Router()
 
 router.get('/',(req,res)=>{
-    res.render('trainerIndex')
+    res.render('traineeIndex')
 })
 
 router.get('/addUser',(req,res)=>{
