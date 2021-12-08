@@ -1,0 +1,19 @@
+li, a{
+    list-style-type: none;
+    display: inline;
+    text-decoration: none;
+}
+.header{
+    border: 1px outset black;
+}
+.function{
+    border: 1px outset black;
+    margin-top: 2%;
+}
+.home{
+    background-color: cyan;
+    border-radius: 5px;
+}
+.img-title{
+    style
+}
