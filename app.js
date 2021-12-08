@@ -18,8 +18,8 @@ app.use('/staff',staffController)
 const trainerController = require('./trainer')
 app.use('/trainer',trainerController)
 
-const trainerController = require('./trainee')
-app.use('/trainee',trainerController)
+const traineeController = require('./trainee')
+app.use('/trainee',traineeController)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT)
