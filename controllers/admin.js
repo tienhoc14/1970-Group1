@@ -1,5 +1,5 @@
 const express = require('express')
-const { insertObject } = require('./databaseHandler')
+const { insertObject } = require('../databaseHandler')
 const router = express.Router()
 
 router.get('/',(req,res)=>{
@@ -13,15 +13,16 @@ router.get('/addUser',(req,res)=>{
 router.post('/addUser',(req,res)=>{
     const name = req.body.txtName
     const role = req.body.Role
-    const pass = req.body.txtPassword
+    const pass= req.body.txtPassword
     const objectToInsert = {
         userName: name,
-        role: role,
+        role:role,
         password: pass
     }
-    insertObject("User",objectToInsert)
+    insertObject("Users",objectToInsert)
     res.render('adminIndex')
 })
+
 
 module.exports = router;
 
