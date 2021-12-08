@@ -2,9 +2,9 @@ const express = require('express')
 const { insertObject } = require('../databaseHandler')
 const router = express.Router()
 
-router.get('/',(req,res)=>{
-    res.render('adminIndex')
-})
+// router.get('/',(req,res)=>{
+//     res.render('adminIndex')
+// })
 
 router.get('/addUser',(req,res)=>{
     res.render('addUser')

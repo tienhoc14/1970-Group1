@@ -26,5 +26,10 @@ async function checkUserRole(nameI,passI){
     }
 }
 
-module.exports = {insertObject,checkUserRole}
+async function InsertTrainee(newTrainee){
+    const db = await getDB();
+    await db.collection("trainees").insertOne(newTrainee)
+}
+
+module.exports = {insertObject,checkUserRole,InsertTrainee}
 
