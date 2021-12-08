@@ -41,8 +41,8 @@ app.get('/login', (req, res) => {
 const adminController = require('./controllers/admin')
 app.use('/admin', adminController)
 
-// const staffController = require('./staff')
-// app.use('/staff',staffController)
+const staffController = require('./controllers/staff')
+app.use('/staff',staffController)    
 
 const trainerController = require('./controllers/trainer')
 app.use('/trainer',trainerController)
