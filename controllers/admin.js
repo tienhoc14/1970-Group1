@@ -23,6 +23,4 @@ router.post('/addUser',(req,res)=>{
     res.render('adminIndex')
 })
 
-
 module.exports = router;
-
