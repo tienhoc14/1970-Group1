@@ -32,7 +32,7 @@ router.get('/deteleTrainee',(req,res)=>{
 router.get('/editTrainee',(req,res)=>{
     const id = req.query.id;
     const getTrainee = GetIDTrainee(id);
-    res.render('/updateTrainee',{trainee: getTrainee});
+    res.render('/editTrainee',{trainee: getTrainee});
 })
 router.post('/updateTrainee',(req,res)=>{
     const id = req.body.id;
