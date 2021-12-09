@@ -3,8 +3,8 @@ const router = express.Router()
 const {ViewTrainees, InsertTrainee } = require('../databaseHandler')
 
 
-router.get('/indexStaff',(req,res)=>{
-    res.render('indexStaff',{data:ViewTrainees()});
+router.get('/staffPage',(req,res)=>{
+    res.render('staffPage',{data:ViewTrainees()});
 })
 router.get('/addTrainee',(req,res)=>{
     res.render("addTrainee")
