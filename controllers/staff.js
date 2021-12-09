@@ -35,12 +35,12 @@ router.get('/editTrainee',(req,res)=>{
     res.render('/editTrainee',{trainee: getTrainee});
 })
 router.post('/updateTrainee',(req,res)=>{
-    const id = req.body.id;
+    const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
-    const updateTrainee = {name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput} 
+    const updateTrainee = {id:id,name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput} 
     UpdateTrainee(updateTrainee);
 
     res.redirect('staffPage');

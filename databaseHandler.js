@@ -37,8 +37,8 @@ async function DeleteTrainee(id) {
 }
 async function GetIDTrainee(id){
     const db = await getDB();
-    await db.collection("trainees").findOne({_id:ObjectId(id)})
-    return;
+    const t = await db.collection("trainees").findOne({_id:ObjectId(id)})
+    return t;
 }
 async function UpdateTrainee(updateTrainee){
     const traineeID  = {_id:ObjectId(id)}
