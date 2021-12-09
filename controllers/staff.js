@@ -22,7 +22,7 @@ router.post('/addTrainee',async(req,res)=>{
 
     res.redirect('staffPage');
 })
-router.get('/deteleTrainee',async(req,res)=>{
+router.get('/staff/deteleTrainee',async(req,res)=>{
     const id = req.query.id;
 
     DeleteTrainee(id);
