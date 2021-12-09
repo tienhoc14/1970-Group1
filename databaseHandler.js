@@ -35,5 +35,18 @@ async function DeleteTrainee(id) {
     const db = await getDB();
     await db.collection("trainees").deleteOne({_id:ObjectId(id)})
 }
-module.exports = {getDB,insertObject,checkUserRole,InsertTrainee,DeleteTrainee}
+async function GetIDTrainee(id){
+    const db = await getDB();
+    await db.collection("trainees").findOne({_id:ObjectId(id)})
+    return;
+}
+async function UpdateTrainee(updateTrainee){
+    const traineeID  = {_id:ObjectId(id)}
+    const value = {$set: updateTrainee}
+
+    const db = await getDB();
+    await db.collection("trainee").updateOne(value, traineeID)
+}
+module.exports = {getDB,insertObject,checkUserRole,
+    InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee}
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getDB, InsertTrainee,DeleteTrainee } = require('../databaseHandler')
+const {getDB, InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee } = require('../databaseHandler')
 
 
 router.get('/staffPage',async(req,res)=>{
@@ -22,10 +22,26 @@ router.post('/addTrainee',async(req,res)=>{
 
     res.redirect('staffPage');
 })
-router.get('/deteleTrainee',async(req,res)=>{
+router.get('/deteleTrainee',(req,res)=>{
     const id = req.query.id;
 
     DeleteTrainee(id);
+
+    res.redirect('staffPage');
+})
+router.get('/editTrainee',(req,res)=>{
+    const id = req.query.id;
+    const getTrainee = GetIDTrainee(id);
+    res.render('/updateTrainee',{trainee: getTrainee});
+})
+router.post('/updateTrainee',(req,res)=>{
+    const id = req.body.id;
+    const nameInput = req.body.txtName;
+    const emailInput = req.body.txtEmail;
+    const ageInput = req.body.txtAge;
+    const specialtyInput = req.body.txtSpecialty;
+    const updateTrainee = {name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput} 
+    UpdateTrainee(updateTrainee);
 
     res.redirect('staffPage');
 })
