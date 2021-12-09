@@ -8,5 +8,15 @@
 </head>
 <body>
     <h1>Staff</h1>
+    {{#each data}}
+    <div>
+        <li>FullName: {{name}}</li>
+        <li>Age: {{age}}</li>
+        <li>Email: {{email}}</li>
+        <li>Specialty: {{specialty}}</li>
+        <li>Address: {{address}}</li>
+        <li><a href="/delete?id={{_id}}">Delete</a><a href="/edit?id={{_id}}">Edit</a></li> 
+    </div>
+    {{/each}}
 </body>
 </html>
