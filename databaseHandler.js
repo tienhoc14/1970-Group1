@@ -27,14 +27,10 @@ async function checkUserRole(nameI,passI){
 }
 
 
-async function ViewTrainees(allTrainees){
-    const db = await getDB();
-    await db.collection("trainees").find({}).toArray();
-}
 async function InsertTrainee(newTrainee){
     const db = await getDB();
     await db.collection("trainees").insertOne(newTrainee)
 }
 
-module.exports = {insertObject,checkUserRole,InsertTrainee,ViewTrainees}
+module.exports = {insertObject,checkUserRole,InsertTrainee,getDB}
 

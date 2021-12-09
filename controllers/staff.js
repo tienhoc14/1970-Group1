@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {ViewTrainees, InsertTrainee } = require('../databaseHandler')
+const {getDB, InsertTrainee } = require('../databaseHandler')
 
 
-router.get('/staffPage',(req,res)=>{
-    res.render('staffPage',{data:ViewTrainees()});
+router.get('/staffPage',async(req,res)=>{
+    const db = await getDB();
+    const viewTrainees = await db.collection("trainees").find({}).toArray();
+    res.render('staffPage',{data:viewTrainees});
 })
 router.get('/addTrainee',(req,res)=>{
     res.render("addTrainee")
