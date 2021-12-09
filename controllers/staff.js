@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getDB, InsertTrainee } = require('../databaseHandler')
+const {getDB, InsertTrainee,DeleteTrainee } = require('../databaseHandler')
 
 
 router.get('/staffPage',async(req,res)=>{
@@ -22,7 +22,13 @@ router.post('/addTrainee',async(req,res)=>{
 
     res.redirect('staffPage');
 })
+router.get('/delete',(req,res)=>{
+    const id = req.query.id;
 
+    DeleteTrainee(id);
+
+    res.redirect('staffPage');
+})
 
 router.get('/assignTrainer',(req,res)=>{
     res.render('assignTrainer')
