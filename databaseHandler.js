@@ -33,7 +33,7 @@ async function InsertTrainee(newTrainee){
 }
 async function DeleteTrainee(id) {
     const db = await getDB();
-    await db.collection("trainees").deleteOne({_id: ObjectId(id)})
+    await db.collection("trainees").deleteOne({_id:ObjectId(id)})
 }
 module.exports = {getDB,insertObject,checkUserRole,InsertTrainee,DeleteTrainee}
 
