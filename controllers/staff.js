@@ -20,7 +20,7 @@ router.post('/addTrainee',async(req,res)=>{
     const newTrainee = {name: nameInput, email: emailInput, age: ageInput,specialty: specialtyInput};
     InsertTrainee(newTrainee)
 
-    res.render('staffPage');
+    res.redirect('staffPage');
 })
 
 
