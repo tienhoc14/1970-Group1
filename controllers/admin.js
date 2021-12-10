@@ -1,25 +1,35 @@
 const express = require('express')
-const { insertObject } = require('../databaseHandler')
+const async = require('hbs/lib/async')
+const { insertObject, getDB } = require('../databaseHandler')
 const router = express.Router()
 
-// router.get('/',(req,res)=>{
-//     res.render('adminIndex')
-// })
+router.use(express.static('public'))
 
-router.get('/addUser',(req,res)=>{
-    res.render('addUser')
+router.get('/', (req, res) => {
+    res.render('adminIndex')
 })
-//Submit add User
-router.post('/addUser',(req,res)=>{
+
+router.get('/manage_trainer', async(req, res) => {
+    const dbo = await getDB();
+    const allTrainers = await dbo.collection('trainer').find({}).toArray();
+
+    res.render('manageTrainer', { data: allTrainers })
+})
+
+router.get('/addUser', (req, res) => {
+        res.render('addUser')
+    })
+    //Submit add User
+router.post('/addUser', (req, res) => {
     const name = req.body.txtName
     const role = req.body.Role
-    const pass= req.body.txtPassword
+    const pass = req.body.txtPassword
     const objectToInsert = {
         userName: name,
-        role:role,
+        role: role,
         password: pass
     }
-    insertObject("Users",objectToInsert)
+    insertObject("Users", objectToInsert)
     res.render('adminIndex')
 })
 

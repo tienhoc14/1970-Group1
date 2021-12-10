@@ -10,14 +10,14 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 60000 }, saveUninitialized: false, resave: false }))
+app.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 600000 }, saveUninitialized: false, resave: false }))
 
-app.get('/',requiresLogin, (req, res) => {
+app.get('/', requiresLogin, (req, res) => {
     const user = req.session["User"]
-    res.render('index',{userInfo:user})
+    res.render('index', { userInfo: user })
 })
 
-app.post('/login', async (req, res) => {
+app.post('/login', async(req, res) => {
     const name = req.body.txtName
     const pass = req.body.txtPass
     const role = await checkUserRole(name, pass)
@@ -42,13 +42,13 @@ const adminController = require('./controllers/admin')
 app.use('/admin', adminController)
 
 const staffController = require('./controllers/staff')
-app.use('/staff',staffController)    
+app.use('/staff', staffController)
 
 const trainerController = require('./controllers/trainer')
-app.use('/trainer',trainerController)
+app.use('/trainer', trainerController)
 
 const traineeController = require('./controllers/trainee')
-app.use('/trainee',traineeController)
+app.use('/trainee', traineeController)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT)
