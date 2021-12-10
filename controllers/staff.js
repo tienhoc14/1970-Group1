@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getDB, InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee } = require('../databaseHandler')
+const {getDB, InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee,ObjectId } = require('../databaseHandler')
 
 
 router.get('/staffPage',async(req,res)=>{
@@ -30,19 +30,23 @@ router.get('/deteleTrainee',(req,res)=>{
 
     res.redirect('staffPage');
 })
-router.get('/editTrainee',(req,res)=>{
+router.get('/editTrainee',async(req,res)=>{
     const id = req.query.id;
-    const getTrainee = GetIDTrainee(id);
-    res.render('editTrainee',{trainee: getTrainee});
+
+    const db = await getDB();
+    const t = await db.collection("trainees").findOne({ _id: ObjectId(id) });
+    
+    res.render('editTrainee',{trainee: t});
 })
-router.post('/updateTrainee',(req,res)=>{
+router.post('/updateTrainee',async(req, res)=>{
     const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
+    const addressInput = req.body.txtAddress;
 
-    UpdateTrainee(id, nameInput, emailInput, ageInput,specialtyInput);
+    UpdateTrainee(id, nameInput, emailInput, ageInput,specialtyInput,addressInput);
 
     res.redirect('staffPage');
 })

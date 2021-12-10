@@ -35,18 +35,13 @@ async function DeleteTrainee(id) {
     const db = await getDB();
     await db.collection("trainees").deleteOne({_id:ObjectId(id)})
 }
-async function GetIDTrainee(id){
-    const db = await getDB();
-    const t = await db.collection("trainees").findOne({_id:ObjectId(id)})
-    return t;
-}
-async function UpdateTrainee(id,name,email,specialty,address){
+async function UpdateTrainee(id,name,email,age,specialty,address){
     const traineeID  = {_id:ObjectId(id)}
-    const value = {$set: {name:name, email:email, specialty:specialty, address:address}}
+    const value = {$set: {name:name, email:email,age:age, specialty:specialty, address:address}};
 
     const db = await getDB();
-    await db.collection("trainee").updateOne(value, traineeID)
+    await db.collection("trainees").updateOne(traineeID, value)
 }
 module.exports = {getDB,insertObject,checkUserRole,
-    InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee}
+    InsertTrainee,DeleteTrainee,UpdateTrainee,ObjectId}
 
