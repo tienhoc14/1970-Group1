@@ -9,6 +9,7 @@
 </head>
 <body>
     <h2>Manage Trainers Account</h2>
+    <a href="/admin/addTrainer">Add Trainer Account</a>
     <table>
         <tr>
             <th>Name</th>
@@ -18,14 +19,16 @@
             <th>Speciality</th>
             <th>Controller</th>
         </tr>
+        {{#each data}}
         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
+            <td>{{name}}</td>
+            <td>{{age}}</td>
+            <td>{{address}}</td>
+            <td>{{email}}</td>
+            <td>{{speciality}}</td>
+            <td>123</td>
         </tr>
+        {{/each}}
     </table>
 </body>
 </html>
