@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Add Trainer</title>
 </head>
 <body>
-    <h1>Add Trainer Page</h1>
+    <h1>Add Trainer</h1>
+    <form action="addTrainer" method="post">
+        Full name: <input type="text" name="trainerName"> <br>
+        Username: <input type="text" name="username"> <br>
+        Age: <input type="number" name="trainerAge" min="18"> <br>
+        Email: <input type="email" name="email"> <br>
+        Speciality: <input type="text" name="spec"> <br>
+        Address: <input type="text" name="address"> <br>
+        <input type="submit" value="Save">
+        <a href="/admin/manage_trainer">Cancel</a>
+    </form>
 </body>
 </html>

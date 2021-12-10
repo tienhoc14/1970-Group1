@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Staff</title>
+</head>
+<body>
+    <h1>Edit Staff</h1>
+    <h1>Update Staff Page</h1>
+    <form action="updateStaff" method = "POST">
+        <input type="hidden" name="txtId" value="{{staff._id}}">
+        FullName: <input type="text" name="txtName" value="{{staff.name}}" />
+        Age: <input type="text" name="txtAge" value="{{staff.age}}" />
+        <br>
+        Email: <input type="email" name="txtEmail" value="{{staff.email}}">
+        Specialty: <input type="text" name="txtSpecialty" value = "{{staff.specialty}}">
+        <br>
+        Address: <input type="text" name="txtAddress" value = "{{staff.address}}">
+        <br>
+        <input type="submit" value="Update">
+        <input type="submit" value="Cancel">  
+    </form>
+</body>
+</html>
