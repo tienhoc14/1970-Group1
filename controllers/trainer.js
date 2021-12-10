@@ -8,5 +8,9 @@ router.get('/',requiresLogin,(req,res)=>{
     res.render('trainerIndex', { userInfo: user })
 })
 
+router.get('/profileTrainer',requiresLogin,(req,res)=>{
+    const user = req.session["User"]
+    res.render('profileTrainer', { userInfo: user })
+})
 
 module.exports = router;
