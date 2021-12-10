@@ -16,8 +16,9 @@ router.post('/addTrainee',async(req,res)=>{
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
+    const addressInput = req.body.txtAddress;
 
-    const newTrainee = {name: nameInput, email: emailInput, age: ageInput,specialty: specialtyInput};
+    const newTrainee = {name: nameInput, email: emailInput, age: ageInput,specialty: specialtyInput,address: addressInput};
     InsertTrainee(newTrainee)
 
     res.redirect('staffPage');
@@ -32,7 +33,7 @@ router.get('/deteleTrainee',(req,res)=>{
 router.get('/editTrainee',(req,res)=>{
     const id = req.query.id;
     const getTrainee = GetIDTrainee(id);
-    res.render('/editTrainee',{trainee: getTrainee});
+    res.render('editTrainee',{trainee: getTrainee});
 })
 router.post('/updateTrainee',(req,res)=>{
     const id = req.body.txtId;
@@ -40,8 +41,8 @@ router.post('/updateTrainee',(req,res)=>{
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
-    const updateTrainee = {id:id,name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput} 
-    UpdateTrainee(updateTrainee);
+
+    UpdateTrainee(id, nameInput, emailInput, ageInput,specialtyInput);
 
     res.redirect('staffPage');
 })

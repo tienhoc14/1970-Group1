@@ -1,19 +1,41 @@
-li, a{
+li,
+a {
     list-style-type: none;
     display: inline;
     text-decoration: none;
 }
-.header{
+
+.header {
     border: 1px outset black;
 }
-.function{
+
+.function {
     border: 1px outset black;
     margin-top: 2%;
 }
-.home{
+
+.home {
     background-color: cyan;
     border-radius: 5px;
 }
+
 .s{
     margin-left: 85%;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
