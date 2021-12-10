@@ -40,9 +40,9 @@ async function GetIDTrainee(id){
     const t = await db.collection("trainees").findOne({_id:ObjectId(id)})
     return t;
 }
-async function UpdateTrainee(updateTrainee){
+async function UpdateTrainee(id,name,email,specialty,address){
     const traineeID  = {_id:ObjectId(id)}
-    const value = {$set: updateTrainee}
+    const value = {$set: {name:name, email:email, specialty:specialty, address:address}}
 
     const db = await getDB();
     await db.collection("trainee").updateOne(value, traineeID)
