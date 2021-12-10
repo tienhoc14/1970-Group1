@@ -1,9 +1,11 @@
 const express = require('express')
 const { insertObject } = require('../databaseHandler')
+const { requiresLogin } = require('../projectLibrary')
 const router = express.Router()
 
-router.get('/',(req,res)=>{
-    res.render('trainerIndex')
+router.get('/',requiresLogin,(req,res)=>{
+    const user = req.session["User"]
+    res.render('trainerIndex', { userInfo: user })
 })
 
 router.get('/addUser',(req,res)=>{

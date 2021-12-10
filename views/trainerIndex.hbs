@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Trainer Page</title>
 </head>
+
 <body>
-    <h1>Welcome Trainer Page</h1>
-    <h2>{{userInfo.name}}</h2>
-    <h2>Role: {{userInfo.role}}</h2>
+    <h1 style="text-align: center;">Welcome Trainer Page</h1>
+    <center><img src="/images/Logo.png" width="250" height="120" /></center>
+    <h3>{{userInfo.name}}</h3>
+    <h3>Role: {{userInfo.role}}</h3>
+    <center>
+        <div class="function">
+        <li><a class="home" href="">Home</a></li>
+        <li><a class="update" href="">Update Profile</a></li>
+        <li><a class="logout" href="">Logout</a></li>
+    </div>
+    </center>
 </body>
+
 </html>
