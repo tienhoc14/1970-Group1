@@ -1,4 +1,3 @@
-
 const {MongoClient,ObjectId} = require('mongodb');
 
 const URL = 'mongodb://127.0.0.1:27017';
@@ -42,7 +41,7 @@ async function UpdateTrainee(id,name,email,age,specialty,address){
     const value = {$set: {name:name, email:email,age:age, specialty:specialty, address:address}};
 
     const db = await getDB();
-    await db.collection("trainees").UpdateOne(traineeID,value)
+    await db.collection("trainees").updateOne(traineeID,value)
 }
 async function InsertStaff(newStaff) {
     const db = await getDB();
@@ -76,6 +75,7 @@ module.exports = {
         InsertTrainee,
         DeleteTrainee,
         UpdateTrainee,
+        ObjectId,
         InsertStaff
     }
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getDB, InsertTrainee,DeleteTrainee,GetIDTrainee,UpdateTrainee,ObjectId } = require('../databaseHandler')
+const {getDB, InsertTrainee,DeleteTrainee,UpdateTrainee,ObjectId } = require('../databaseHandler')
 
 
 router.get('/staffPage',async(req,res)=>{
