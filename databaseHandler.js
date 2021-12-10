@@ -40,9 +40,15 @@ async function GetIDTrainee(id) {
     const t = await db.collection("trainees").findOne({ _id: ObjectId(id) })
     return t;
 }
-async function UpdateTrainee(updateTrainee) {
+// <<<<<<< HEAD
+// async function UpdateTrainee(updateTrainee) {
+//     const traineeID = { _id: ObjectId(id) }
+//     const value = { $set: updateTrainee }
+// =======
+async function UpdateTrainee(id, name, email, specialty, address) {
     const traineeID = { _id: ObjectId(id) }
-    const value = { $set: updateTrainee }
+    const value = { $set: { name: name, email: email, specialty: specialty, address: address } }
+        // >>>>>>> a72078628f56cd5364e2492a97f7e7fb9e8060a4
 
     const db = await getDB();
     await db.collection("trainee").updateOne(value, traineeID)
