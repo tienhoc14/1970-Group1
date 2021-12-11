@@ -1,7 +1,7 @@
 const express = require('express')
 const { render } = require('express/lib/response')
 const async = require('hbs/lib/async')
-const { insertObject, getDB } = require('../databaseHandler')
+const { insertObject, getDB, DeleteTrainer } = require('../databaseHandler')
 const router = express.Router()
 
 router.use(express.static('public'))
@@ -10,10 +10,11 @@ router.get('/', (req, res) => {
     res.render('adminIndex')
 })
 
+// Trainer 
+
 router.get('/manage_trainer', async(req, res) => {
     const dbo = await getDB();
     const allTrainers = await dbo.collection('Trainers').find({}).toArray();
-    console.log()
     res.render('manageTrainer', { data: allTrainers })
 })
 
@@ -21,34 +22,44 @@ router.get('/addTrainer', (req, res) => {
     res.render('addTrainer')
 })
 
-router.post('/addTrainer', (req, res) => {
+router.post('/addTrainer', async(req, res) => {
     const name = req.body.trainerName
     const age = req.body.trainerAge
-    const email = req.body.email
+    const phone = req.body.phone
     const spec = req.body.spec
     const address = req.body.address
     const username = req.body.username
-    const role = 'Trainer'
-    const defaultpass = '123'
+    const email = username + "@fpt.edu.vn"
 
-    const objectToUser = {
+    const objectToUsers = {
         userName: username,
-        role: role,
-        password: defaultpass
+        role: 'Trainer',
+        password: '123'
     }
     const objectToTrainers = {
         name: name,
         age: age,
         email: email,
         speciality: spec,
-        address: address
+        address: address,
+        phone_number: phone,
+        userName: username
     }
 
-    insertObject("Users", objectToUser)
+    insertObject("Users", objectToUsers)
     insertObject("Trainers", objectToTrainers)
-    res.render('manageTrainer')
+    res.redirect('manage_trainer')
 })
 
+router.get('/delete_trainer', async(req, res) => {
+    const id = req.query.id;
+    await DeleteTrainer(id);
+    res.redirect('manage_trainer')
+})
+
+// End Trainer
+
+//staff cua th nam
 router.post('/addStaff', (req, res) => {
     const name = req.body.txtName
     const age = req.body.txtAge
@@ -56,10 +67,11 @@ router.post('/addStaff', (req, res) => {
     const specialty = req.body.txtSpecialty;
     const address = req.body.txtAddress;
 
-    const newStaff = {name: name, email: email, age: age,specialty: specialty,address: address};
+    const newStaff = { name: name, email: email, age: age, specialty: specialty, address: address };
     InsertStaff(newStaff)
 
 })
+
 router.get('/addUser', (req, res) => {
         res.render('addUser')
     })
