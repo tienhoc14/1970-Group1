@@ -1,4 +1,5 @@
 const express = require('express')
+const { getDB } = require('../databaseHandler')
 
 const router = express.Router()
 
@@ -9,6 +10,10 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/viewClass', (req,res)=>{
+    // const searchInput = req.body.txtSearch;
+    
+    // const dbo = await getDB();
+    // const viewClass = await dbo.collection('').find({classId: searchInput}).toArray();
     res.render("viewClassmates")
 })
 
@@ -18,6 +23,10 @@ router.get('/viewMyCourse', (req,res)=>{
 
 router.get('/update', (req,res)=>{
     res.render('updateProfile')
+})
+
+router.get('/search', (req,res)=>{
+    res.render("searchCourse")
 })
 
 module.exports = router;
