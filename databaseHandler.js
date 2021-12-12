@@ -53,6 +53,13 @@ async function UpdateTrainee(id, name, email, age, specialty, address) {
     const db = await getDB();
     await db.collection("trainees").updateOne(traineeID, value)
 }
+async function ViewProfileTrainee(id, name, email, age, specialty, address) {
+    const traineeID = { _id: ObjectId(id) }
+    const value = { $set: { name: name, email: email, age: age, specialty: specialty, address: address } };
+
+    const db = await getDB();
+    await db.collection("trainees").findOne(traineeID, value)
+}
 async function InsertStaff(newStaff) {
     const db = await getDB();
     await db.collection("staff").insertOne(newStaff)
@@ -87,5 +94,6 @@ module.exports = {
     UpdateTrainee,
     InsertStaff,
     DeleteTrainer,
-    ObjectId
+    ObjectId,
+    ViewProfileTrainee
 }
