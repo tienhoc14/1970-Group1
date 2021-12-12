@@ -4,28 +4,28 @@ const { render } = require('express/lib/response')
 const async = require('hbs/lib/async')
 const { ObjectId } = require('mongodb')
 const { insertObject, getDB, DeleteTrainer } = require('../databaseHandler')
-const { requiresLogin } = require('../projectLibrary')
+const { requireAdmin } = require('../projectLibrary')
 const router = express.Router()
 
 router.use(express.static('public'))
 
-router.get('/', requiresLogin, (req, res) => {
+router.get('/', requireAdmin, (req, res) => {
     res.render('adminIndex')
 })
 
 // Trainer 
 
-router.get('/manage_trainer', async(req, res) => {
+router.get('/manage_trainer', requireAdmin, async(req, res) => {
     const dbo = await getDB();
     const allTrainers = await dbo.collection('Trainers').find({}).toArray();
     res.render('manageTrainer', { data: allTrainers })
 })
 
-router.get('/addTrainer', (req, res) => {
+router.get('/addTrainer', requireAdmin, (req, res) => {
     res.render('addTrainer')
 })
 
-router.post('/addTrainer', async(req, res) => {
+router.post('/addTrainer', requireAdmin, async(req, res) => {
     const name = req.body.trainerName
     const age = req.body.trainerAge
     const phone = req.body.phone
@@ -54,34 +54,34 @@ router.post('/addTrainer', async(req, res) => {
     res.redirect('manage_trainer')
 })
 
-router.get('/delete_trainer', async(req, res) => {
+router.get('/delete_trainer', requireAdmin, async(req, res) => {
     const us = req.query.userName
     await DeleteTrainer(us);
     res.redirect('manage_trainer')
 })
 
-router.get('/reset_password', async(req, res) => {
+router.get('/reset_password', requireAdmin, async(req, res) => {
     const us = req.query.userName
     const dbo = await getDB();
     await dbo.collection("Users").updateOne({ 'userName': us }, { $set: { password: '123' } })
     res.redirect('manage_trainer')
 })
 
-router.get('/detail_trainer', async(req, res) => {
+router.get('/detail_trainer', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
     res.render('detailTrainer', { data: trainer })
 })
 
-router.get('/update_trainer', async(req, res) => {
+router.get('/update_trainer', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
     res.render('editTrainer', { data: trainer })
 })
 
-router.post('/editTrainer', async(req, res) => {
+router.post('/editTrainer', requireAdmin, async(req, res) => {
     const id = req.body.txtId
     const name = req.body.trainerName
     const age = req.body.trainerAge
