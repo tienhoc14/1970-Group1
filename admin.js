@@ -1,15 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/',(req,res)=>{
+router.get('/', (req, res) => {
     res.render('adminIndex')
 })
 
-router.get('/addUser,(req,res)=>{
-    res.render('addUser')
-})
-//Submit add User
-router.post('/addUser',(req,res)=>{
+router.get('/addUser', (req, res) => {
+        res.render('addUser')
+    })
+    //Submit add User
+router.post('/addUser', (req, res) => {
     const name = req.body.txtName
     const role = req.body.Role
     const pass = req.body.txtPassword
@@ -22,4 +22,3 @@ router.post('/addUser',(req,res)=>{
 })
 
 module.exports = router;
-

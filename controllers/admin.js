@@ -4,11 +4,12 @@ const { render } = require('express/lib/response')
 const async = require('hbs/lib/async')
 const { ObjectId } = require('mongodb')
 const { insertObject, getDB, DeleteTrainer } = require('../databaseHandler')
+const { requiresLogin } = require('../projectLibrary')
 const router = express.Router()
 
 router.use(express.static('public'))
 
-router.get('/', (req, res) => {
+router.get('/', requiresLogin, (req, res) => {
     res.render('adminIndex')
 })
 
