@@ -86,5 +86,6 @@ module.exports = {
     DeleteTrainee,
     UpdateTrainee,
     InsertStaff,
-    DeleteTrainer
+    DeleteTrainer,
+    ObjectId
 }
