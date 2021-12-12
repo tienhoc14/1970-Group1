@@ -57,6 +57,14 @@ router.get('/delete_trainer', async(req, res) => {
     res.redirect('manage_trainer')
 })
 
+router.get('/reset_password', async(req, res) => {
+    const us = req.query.userName
+    const dbo = await getDB();
+    // const user = await dbo.collection("Trainers").findOne("_id")
+    await dbo.collection("Users").updateOne({ 'userName': us }, { $set: { password: '123' } })
+    res.redirect('manage_trainer')
+})
+
 // End Trainer
 
 //staff cua th nam
