@@ -52,17 +52,20 @@ router.post('/addTrainer', async(req, res) => {
 })
 
 router.get('/delete_trainer', async(req, res) => {
-    const id = req.query.id;
-    await DeleteTrainer(id);
+    const us = req.query.userName
+    await DeleteTrainer(us);
     res.redirect('manage_trainer')
 })
 
 router.get('/reset_password', async(req, res) => {
     const us = req.query.userName
     const dbo = await getDB();
-    // const user = await dbo.collection("Trainers").findOne("_id")
     await dbo.collection("Users").updateOne({ 'userName': us }, { $set: { password: '123' } })
     res.redirect('manage_trainer')
+})
+
+router.get('/detail_trainer', async(req, res) => {
+    res.render('detailTrainer')
 })
 
 // End Trainer

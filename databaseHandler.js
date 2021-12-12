@@ -30,9 +30,10 @@ async function checkUserRole(nameI, passI) {
 
 //trainer function
 
-async function DeleteTrainer(id) {
+async function DeleteTrainer(username) {
     const dbo = await getDB();
-    await dbo.collection("Trainers").deleteOne({ _id: ObjectId(id) })
+    await dbo.collection("Trainers").deleteOne({ userName: username })
+    await dbo.collection("Users").deleteOne({ userName: username })
 }
 
 //end trainer function
