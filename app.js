@@ -37,6 +37,10 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.render('login')
+})
 
 const adminController = require('./controllers/admin')
 app.use('/admin', adminController)
