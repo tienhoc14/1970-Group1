@@ -1,6 +1,8 @@
 const express = require('express')
+const res = require('express/lib/response')
 const { render } = require('express/lib/response')
 const async = require('hbs/lib/async')
+const { ObjectId } = require('mongodb')
 const { insertObject, getDB, DeleteTrainer } = require('../databaseHandler')
 const router = express.Router()
 
@@ -65,7 +67,43 @@ router.get('/reset_password', async(req, res) => {
 })
 
 router.get('/detail_trainer', async(req, res) => {
-    res.render('detailTrainer')
+    const id = req.query.id
+    const dbo = await getDB()
+    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
+    res.render('detailTrainer', { data: trainer })
+})
+
+router.get('/update_trainer', async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
+    res.render('editTrainer', { data: trainer })
+})
+
+router.post('/editTrainer', async(req, res) => {
+    const id = req.body.txtId
+    const name = req.body.trainerName
+    const age = req.body.trainerAge
+    const phone = req.body.phone
+    const spec = req.body.spec
+    const address = req.body.address
+
+    const updateToTrainers = {
+        $set: {
+            name: name,
+            age: age,
+            speciality: spec,
+            address: address,
+            phone_number: phone
+        }
+    }
+
+    const filter = { _id: ObjectId(id) }
+    const dbo = await getDB()
+    await dbo.collection("Trainers").updateOne(filter, updateToTrainers)
+
+    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
+    res.render('detailTrainer', { data: trainer })
 })
 
 // End Trainer
