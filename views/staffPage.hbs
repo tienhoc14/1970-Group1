@@ -8,8 +8,9 @@
 </head>
 <body>
     <h1>List of trainee members</h1>
+    {{#each data}}
     <div>
-        {{#each data}}
+        
             <li>Name: {{name}}</li>
             <li>Email: {{email}}</li>
             <li>Age: {{age}}</li>
@@ -19,7 +20,8 @@
                 <a href="/staff/editTrainee?id={{_id}}">Edit</a>
                 <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
             </li>
-        {{/each}}
+        
     </div>
+    {{/each}}
 </body>
 </html>
