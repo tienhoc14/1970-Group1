@@ -7,19 +7,15 @@
     <title>Add Staff</title>
 </head>
     <h1>Add Staff</h1>
-    <form action="addStaff" method = "POST">
-        FullName: <input type="text" name="txtName">
-        <br>
-        Email: <input type="email" name="txtEmail">
-        <br>
-        Age: <input type="text" name="txtAge">
-        <br>
-        Address: <input type="text" name="txtAddress">
-        <br>
-        Specialty: <input type="text" name="txtSpecialty">
-        <br>
-        <input type="submit" value="Add Staff">
-        <input type="submit" value="Cancel">
+    <form action="addStaff" method="post">
+        Full name: <input type="text" name="staffName"> <br>
+        Username: <input type="text" name="username"> <br>
+        Age: <input type="number" name="staffAge"> <br>
+        Phone: <input type="text" name="staffPhone"> <br>
+        Speciality: <input type="text" name="staffSpecialty"> <br>
+        Address: <input type="text" name="staffAddress"> <br>
+        <input type="submit" value="Add">
+        <a href="/admin/manage_staff">Cancel</a>
     </form>
 </body>
 </html>
