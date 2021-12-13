@@ -1,37 +1,38 @@
 const express = require('express')
 const async = require('hbs/lib/async')
-const { getDB, UpdateTrainee, ObjectId } = require('../databaseHandler')
+const { getDB, UpdateTrainee, ObjectId, ViewProfileTrainee } = require('../databaseHandler')
+const { requireTrainee } = require('../projectLibrary')
 
 const router = express.Router()
 
 router.use(express.static('public'))
 
-router.get('/',(req,res)=>{
+router.get('/', requireTrainee, (req, res) => {
     res.render('traineeIndex')
 })
 
-router.get('/viewClass', (req,res)=>{
+router.get('/viewClass', requireTrainee, (req, res) => {
     // const searchInput = req.body.txtSearch;
-    
+
     // const dbo = await getDB();
     // const viewClass = await dbo.collection('').find({classId: searchInput}).toArray();
     res.render("viewClassmates")
 })
 
-router.get('/viewMyCourse', (req,res)=>{
+router.get('/viewMyCourse', requireTrainee, (req, res) => {
     res.render("viewCourse")
 })
 
-router.get('/update', async(req,res)=>{
+router.get('/update', requireTrainee, async(req, res) => {
     const id = req.query.id;
 
     const db = await getDB();
     const info = await db.collection("trainees").findOne({ _id: ObjectId(id) });
-    
-    res.render('updateProfileTrainee', {trainee: info});
+
+    res.render('updateProfileTrainee', { trainee: info });
 })
 
-router.post('/update',async(req, res)=>{
+router.post('/update', requireTrainee, async(req, res) => {
     const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
@@ -39,21 +40,34 @@ router.post('/update',async(req, res)=>{
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    UpdateTrainee(id, nameInput, emailInput, ageInput,specialtyInput,addressInput);
+    UpdateTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
 
     res.redirect('/trainee/updateProfileTrainee');
 })
 
-router.get('/view', async (req, res)=>{
+router.get('/view', requireTrainee, async(req, res) => {
     const id = req.query.id;
 
     const db = await getDB();
     const info = await db.collection("trainees").findOne({ _id: ObjectId(id) });
-    
-    res.render("viewProfileTrainee", {trainee: info});
+
+    res.render("viewProfileTrainee", { trainee: info });
 })
 
-router.get('/search', (req,res)=>{
+router.post('/view', requireTrainee, async(req, res) => {
+    const id = req.body.txtId;
+    const nameInput = req.body.txtName;
+    const emailInput = req.body.txtEmail;
+    const ageInput = req.body.txtAge;
+    const specialtyInput = req.body.txtSpecialty;
+    const addressInput = req.body.txtAddress;
+
+    ViewProfileTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
+
+    res.redirect('/trainee/viewProfileTrainee');
+})
+
+router.get('/search', requireTrainee, (req, res) => {
     res.render("searchCourse")
 })
 
