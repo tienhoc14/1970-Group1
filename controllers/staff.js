@@ -59,4 +59,10 @@ router.get('/assignTrainee',(req,res)=>{
     res.render('assignTrainee')
 })
 
+//Minh:
+
+router.get('/addTrainerForCourses',(req,res)=>{
+    res.render('addTrainerForCourses')
+})
+
 module.exports = router;
