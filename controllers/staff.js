@@ -20,7 +20,7 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const addressInput = req.body.txtAddress;
 
     const newTrainee = { name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput, address: addressInput };
-    InsertTrainee(newTrainee)
+    insertObject('trainees',newTrainee)
 
     res.redirect('staffPage');
 })
@@ -97,6 +97,11 @@ router.get('/assignTrainee', requireStaff, (req, res) => {
 
 router.get('/addTrainerForCourses', (req, res) => {
     res.render('addTrainerForCourses')
+})
+router.get('/addTraineeForCourses',async (req, res) => {
+    const db = await getDB();
+    const viewTrainees = await db.collection("Course").find({}).toArray();
+    res.render('addTraineeForCourses',{ course: viewTrainees });
 })
 
 module.exports = router;

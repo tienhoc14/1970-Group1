@@ -22,7 +22,33 @@
             <li><a class="logout" href="login">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View Courses</h1>
-        
+        <table bolder = 3>
+        {{#each course}}
+        <div>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Tutor</th>
+                <th>Category</th>
+                <th>Descripton</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
+                <td>{{categoryCourse}}</td>
+                <td>{{descriptionCourse}}</td>
+                <td>SHOW</td>
+            </tr>
+            {{!-- <li>
+                <a href="/staff/editTrainee?id={{_id}}">Edit</a>
+                <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
+            </li> --}}
+            
+        </div>
+        {{/each}}
+    </table>
     </center>
 </body>
 
