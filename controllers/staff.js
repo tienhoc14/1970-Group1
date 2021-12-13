@@ -104,4 +104,7 @@ router.get('/addTraineeForCourses',async (req, res) => {
     res.render('addTraineeForCourses',{ course: viewTrainees });
 })
 
+router.get('/addTraineeForCourses', (req, res) => {
+    res.render('addTraineeForCourses')
+})
 module.exports = router;
