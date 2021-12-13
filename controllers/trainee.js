@@ -1,6 +1,6 @@
 const express = require('express')
 const async = require('hbs/lib/async')
-const { getDB, UpdateTrainee, ObjectId, ViewProfileTrainee } = require('../databaseHandler')
+const { getDB, UpdateTrainee, ObjectId } = require('../databaseHandler')
 
 const router = express.Router()
 
@@ -51,19 +51,6 @@ router.get('/view', async (req, res)=>{
     const info = await db.collection("trainees").findOne({ _id: ObjectId(id) });
     
     res.render("viewProfileTrainee", {trainee: info});
-})
-
-router.post('/view',async(req, res)=>{
-    const id = req.body.txtId;
-    const nameInput = req.body.txtName;
-    const emailInput = req.body.txtEmail;
-    const ageInput = req.body.txtAge;
-    const specialtyInput = req.body.txtSpecialty;
-    const addressInput = req.body.txtAddress;
-
-    ViewProfileTrainee(id, nameInput, emailInput, ageInput,specialtyInput,addressInput);
-
-    res.redirect('/trainee/viewProfileTrainee');
 })
 
 router.get('/search', (req,res)=>{
