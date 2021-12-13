@@ -25,9 +25,9 @@ router.get('/viewMyCourse', requireTrainee, (req, res) => {
 
 router.get('/update', requireTrainee, async(req, res) => {
     const id = req.query.id;
-
+    const user = req.session["Trainee"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({ _id: ObjectId(id) });
+    const info = await db.collection("trainees").findOne({"name": user.name});
 
     res.render('updateProfileTrainee', { trainee: info });
 })
@@ -47,24 +47,11 @@ router.post('/update', requireTrainee, async(req, res) => {
 
 router.get('/view', requireTrainee, async(req, res) => {
     const id = req.query.id;
-
+    const user = req.session["Trainee"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({ _id: ObjectId(id) });
+    const info = await db.collection("trainees").findOne({"name": user.name});
 
     res.render("viewProfileTrainee", { trainee: info });
-})
-
-router.post('/view', requireTrainee, async(req, res) => {
-    const id = req.body.txtId;
-    const nameInput = req.body.txtName;
-    const emailInput = req.body.txtEmail;
-    const ageInput = req.body.txtAge;
-    const specialtyInput = req.body.txtSpecialty;
-    const addressInput = req.body.txtAddress;
-
-    ViewProfileTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
-
-    res.redirect('/trainee/viewProfileTrainee');
 })
 
 router.get('/search', requireTrainee, (req, res) => {
