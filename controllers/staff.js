@@ -52,12 +52,54 @@ router.post('/updateTrainee', requireStaff, async(req, res) => {
     res.redirect('staffPage');
 })
 
-router.get('/assignTrainer', requireStaff, (req, res) => {
-    res.render('assignTrainer')
-})
+<<
+<< << < HEAD
+router.get('/assignTrainer', requireStaff, (req, res) => { ===
+            === =
+            //Insert course: Cuong
+            router.get('/viewCourse', async(req, res) => {
+                const db = await getDB();
+                const viewTrainees = await db.collection("courses").find({}).toArray();
+                res.render('viewCourse', { course: viewTrainees });
+            })
 
-router.get('/assignTrainee', requireStaff, (req, res) => {
-    res.render('assignTrainee')
-})
+            router.get('/addCourse', (req, res) => {
+                res.render('addCourse')
+            })
+            router.post('/addCourse', (req, res) => {
+                const courseIDInput = req.body.txtCourseID;
+                const courseName = req.body.txtNameCourse;
+                const tutorInput = req.body.txtTutor;
+                const categoryCourse = req.body.txtCategoryCourse;
+                const descriptionCourse = req.body.txtDescription;
 
-module.exports = router;
+                const InsertCourse = {
+                    courseID: courseIDInput,
+                    courseName: courseName,
+                    tutor: tutorInput,
+                    categoryCourse: categoryCourse,
+                    descriptionCourse: descriptionCourse,
+                }
+
+                insertObject('Course', InsertCourse)
+
+                res.redirect('viewCouse');
+            })
+
+
+            router.get('/assignTrainer', (req, res) => { >>>
+                >>> > eb3359b4e86af38709c6ea41d6d48e15f8e67a7e
+                res.render('assignTrainer')
+            })
+
+            router.get('/assignTrainee', requireStaff, (req, res) => {
+                res.render('assignTrainee')
+            })
+
+            //Minh:
+
+            router.get('/addTrainerForCourses', (req, res) => {
+                res.render('addTrainerForCourses')
+            })
+
+            module.exports = router;

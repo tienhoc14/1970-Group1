@@ -1,7 +1,11 @@
 const express = require('express')
-const async = require('hbs/lib/async')
+const async = require('hbs/lib/async') <<
+    << << < HEAD
 const { getDB, UpdateTrainee, ObjectId, ViewProfileTrainee } = require('../databaseHandler')
-const { requireTrainee } = require('../projectLibrary')
+const { requireTrainee } = require('../projectLibrary') ===
+    === =
+    const { getDB, UpdateTrainee, ObjectId } = require('../databaseHandler') >>>
+    >>> > eb3359b4e86af38709c6ea41d6d48e15f8e67a7e
 
 const router = express.Router()
 
