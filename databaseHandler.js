@@ -38,10 +38,7 @@ async function DeleteTrainer(username) {
 
 //end trainer function
 
-async function InsertTrainee(newTrainee) {
-    const db = await getDB();
-    await db.collection("trainees").insertOne(newTrainee)
-}
+//trainee
 async function DeleteTrainee(id) {
     const db = await getDB();
     await db.collection("trainees").deleteOne({ _id: ObjectId(id) })
@@ -54,39 +51,21 @@ async function UpdateTrainee(id, name, email, age, specialty, address) {
     await db.collection("trainees").updateOne(traineeID, value)
 }
 
-async function InsertStaff(newStaff) {
-    const db = await getDB();
-    await db.collection("staff").insertOne(newStaff)
-}
-// async function GetIDStaff(id){
-//     const db = await getDB();
-//     const t = await db.collection("staff").findOne({_id:ObjectId(id)})
-//     return t;
-// }
-// async function UpdateStaff(id, name, email, specialy, address){
-//     const traineeID  = {_id:ObjectId(id)}
-//     const value = {$set: UpdateStaff}
+// Staff function
 
-//     const db = await getDB();
-//     await db.collection("staff").updateOne(value, staffID)
-// }
-// async function DeleteStaff(id) {
-//     const db = await getDB();
-//     await db.collection("trainees").deleteOne({ _id: ObjectId(id) })
-// }
-// async function UpdateTrainee(updateTrainee) {
-//     const traineeID = { _id: ObjectId(id) }
-//     const value = { $set: updateTrainee }
-// =======
+async function DeleteStaff(username) {
+    const dbo = await getDB();
+    await dbo.collection("Staff").deleteOne({ userName: username })
+    await dbo.collection("Users").deleteOne({ userName: username })
+}
 
 module.exports = {
     getDB,
     insertObject,
     checkUserRole,
-    InsertTrainee,
     DeleteTrainee,
     UpdateTrainee,
-    InsertStaff,
     DeleteTrainer,
+    DeleteStaff,
     ObjectId,
 }

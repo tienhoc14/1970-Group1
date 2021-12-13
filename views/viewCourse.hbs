@@ -8,23 +8,7 @@
     <title>View Course</title>
 </head>
 <body>
-
-    {{#each course}}
-    <div>
-        
-            <li>Course ID: {{courseID}}</li>
-            <li>Course Name: {{courseName}}</li>
-            <li>Tutor: {{tutor}}</li>
-            <li>Category: {{categoryCourse}}</li>
-            <li>Descripton: {{descriptionCourse}}</li>
-            {{!-- <li>
-                <a href="/staff/editTrainee?id={{_id}}">Edit</a>
-                <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
-            </li> --}}
-        
-    </div>
-    {{/each}}
-
+    
     <div class="header">
         <img src="/images/avt.jpeg" width="3%">
         <li><a href="/trainee/update">Update profile</a></li>
@@ -41,8 +25,34 @@
         <li><a class="course" href="/trainee/viewClass">View Classmates</a></li>   
     </div>
     <br>
-    <table>
-        
+    <table bolder = 3>
+        {{#each course}}
+        <div>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Tutor</th>
+                <th>Category</th>
+                <th>Descripton</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
+                <td>{{categoryCourse}}</td>
+                <td>{{descriptionCourse}}</td>
+                <td>Edit</td>
+                <td>Delete</td>
+            </tr>
+            {{!-- <li>
+                <a href="/staff/editTrainee?id={{_id}}">Edit</a>
+                <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
+            </li> --}}
+            
+        </div>
+        {{/each}}
     </table>
 </body>
 </html>

@@ -19,10 +19,33 @@
             <li><a href="/">Home</a></li>
             <li><a href="/">Trainers</a></li>
             <li><a class="update" href="/trainer/profileTrainer">Profile</a></li>
-            <li><a class="logout" href="login">Logout</a></li>
+            <li><a class="logout" href="\login">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View Courses</h1>
-        
+        <table bolder = 3>
+        {{#each course}}
+        <div>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Tutor</th>
+                <th>Category</th>
+                <th>Descripton</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
+                <td>{{categoryCourse}}</td>
+                <td>{{descriptionCourse}}</td>
+                <td><a href="/staff/showTrainees?id={{_id}}">Show</a></td>
+            </tr>
+ 
+            
+        </div>
+        {{/each}}
+    </table>
     </center>
 </body>
 

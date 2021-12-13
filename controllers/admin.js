@@ -109,18 +109,100 @@ router.post('/editTrainer', requireAdmin, async(req, res) => {
 
 // End Trainer
 
-//staff cua th nam
-router.post('/addStaff', (req, res) => {
-    const name = req.body.txtName
-    const age = req.body.txtAge
-    const email = req.body.txtEmail
-    const specialty = req.body.txtSpecialty;
-    const address = req.body.txtAddress;
-
-    const newStaff = { name: name, email: email, age: age, specialty: specialty, address: address };
-    InsertStaff(newStaff)
-
+//staff  Nam
+router.get('/addStaff', requireAdmin, (req, res) => {
+    res.render('addStaff')
 })
+
+router.get('/manage_staff', requireAdmin, async(req, res) => {
+    const dbo = await getDB();
+    const allStaff = await dbo.collection('Staff').find({}).toArray();
+    res.render('manageStaff', { data: allStaff })
+})
+
+router.post('/addStaff', (req, res) => {
+    const name = req.body.staffName
+    const age = req.body.staffAge
+    const phone = req.body.staffPhone
+    const specialty = req.body.staffSpecialty;
+    const address = req.body.staffAddress;
+    const username = req.body.username
+    const email = username + "@fpt.edu.vn"
+    
+    const objectToUsers = {
+        userName: username,
+        role: 'Staff',
+        password: '234'
+    }
+    const objectToStaff = {
+        name: name,
+        age: age,
+        email: email,
+        speciality: specialty,
+        address: address,
+        phone_number: phone,
+        userName: username
+    }
+
+    insertObject("Users", objectToUsers)
+    insertObject("Staff", objectToStaff)
+    res.redirect('manage_staff')
+    
+})
+
+router.get('/delete_staff', requireAdmin, async(req, res) => {
+    const us = req.query.userName
+    await DeleteStaff(us);
+    res.redirect('manage_trainer')
+})
+
+router.get('/reset_password', requireAdmin, async(req, res) => {
+    const us = req.query.userName
+    const dbo = await getDB();
+    await dbo.collection("Users").updateOne({ 'userName': us }, { $set: { password: '234' } })
+    res.redirect('manage_staff')
+})
+
+router.get('/detail_staff', requireAdmin, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    res.render('detailStaff', { data: staff })
+})
+
+router.get('/update_staff', requireAdmin, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    res.render('editStaff', { data: staff })
+})
+
+router.post('/editStaff', requireAdmin, async(req, res) => {
+    const name = req.body.staffName
+    const age = req.body.staffAge
+    const phone = req.body.staffPhone
+    const specialty = req.body.staffSpecialty;
+    const address = req.body.staffAddress;
+
+    const updateToStaff = {
+        $set: {
+            name: name,
+            age: age,
+            speciality: specialty,
+            address: address,
+            phone_number: phone
+        }
+    }
+
+    const filter = { _id: ObjectId(id) }
+    const dbo = await getDB()
+    await dbo.collection("Staff").updateOne(filter, updateToStaff)
+
+    const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    res.render('detailStaff', { data: staff })
+})
+
+//End Staff
 
 router.get('/addUser', (req, res) => {
         res.render('addUser')
