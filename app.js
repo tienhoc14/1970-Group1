@@ -29,12 +29,26 @@ app.post('/login', async(req, res) => {
             role: role
         }
         res.redirect('/admin')
-    } else {
-        req.session["User"] = {
+
+    } else if (role == "Staff") {
+        req.session["Staff"] = {
             name: name,
             role: role
         }
-        res.redirect('/')
+        res.redirect('/staff/staffpage')
+
+    } else if (role == "Trainee") {
+        req.session["Trainee"] = {
+            name: name,
+            role: role
+        }
+        res.redirect('/trainee')
+    } else if (role == "Trainer") {
+        req.session["Trainer"] = {
+            name: name,
+            role: role
+        }
+        res.redirect('/trainer')
     }
 })
 
