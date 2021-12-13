@@ -8,6 +8,23 @@
     <title>View Course</title>
 </head>
 <body>
+
+    {{#each course}}
+    <div>
+        
+            <li>Course ID: {{courseID}}</li>
+            <li>Course Name: {{courseName}}</li>
+            <li>Tutor: {{tutor}}</li>
+            <li>Category: {{categoryCourse}}</li>
+            <li>Descripton: {{descriptionCourse}}</li>
+            {{!-- <li>
+                <a href="/staff/editTrainee?id={{_id}}">Edit</a>
+                <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
+            </li> --}}
+        
+    </div>
+    {{/each}}
+
     <div class="header">
         <img src="/images/avt.jpeg" width="3%">
         <li><a href="/trainee/update">Update profile</a></li>

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {getDB, InsertTrainee,DeleteTrainee,UpdateTrainee,ObjectId } = require('../databaseHandler')
+const {getDB, InsertTrainee,DeleteTrainee,UpdateTrainee,ObjectId,insertObject } = require('../databaseHandler')
 
 
 router.get('/staffPage',async(req,res)=>{
@@ -12,6 +12,15 @@ router.get('/addTrainee',(req,res)=>{
     res.render("addTrainee")
 })
 router.post('/addTrainee',async(req,res)=>{
+
+    const userNameTrainee = req.params.txtUser;
+    const role = 'Trainee'
+    const defaultpass = '111'
+
+    const insertObject = {
+
+    }
+
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
@@ -51,12 +60,49 @@ router.post('/updateTrainee',async(req, res)=>{
     res.redirect('staffPage');
 })
 
+//Insert course: Cuong
+router.get('/viewCourse',async(req,res)=>{
+    const db = await getDB();
+    const viewTrainees = await db.collection("courses").find({}).toArray();
+    res.render('viewCourse',{course:viewTrainees});
+})
+
+router.get('/addCourse',(req,res)=>{
+    res.render('addCourse')
+})
+router.post('/addCourse',(req, res)=>{
+    const courseIDInput = req.body.txtCourseID;
+    const courseName = req.body.txtNameCourse;
+    const tutorInput = req.body.txtTutor;
+    const categoryCourse = req.body.txtCategoryCourse;
+    const descriptionCourse = req.body.txtDescription;
+
+    const InsertCourse = {
+        courseID: courseIDInput,
+        courseName: courseName,
+        tutor: tutorInput,
+        categoryCourse: categoryCourse,
+        descriptionCourse: descriptionCourse,
+    }
+
+    insertObject('Course',InsertCourse)
+
+    res.redirect('viewCouse');
+})
+
+
 router.get('/assignTrainer',(req,res)=>{
     res.render('assignTrainer')
 })
 
 router.get('/assignTrainee',(req,res)=>{
     res.render('assignTrainee')
+})
+
+//Minh:
+
+router.get('/addTrainerForCourses',(req,res)=>{
+    res.render('addTrainerForCourses')
 })
 
 module.exports = router;
