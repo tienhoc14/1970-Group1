@@ -13,15 +13,25 @@ router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
 router.post('/addTrainee', requireStaff, async(req, res) => {
+    const userName = req.body.txtUser;
+    const passWord = req.body.txtPass;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    const newTrainee = { name: nameInput, email: emailInput, age: ageInput, specialty: specialtyInput, address: addressInput };
-    insertObject('trainees',newTrainee)
-
+    const newAccountTrainee={
+        username: userName,
+        role: 'Trainee',
+        password: passWord,
+        name: nameInput,
+        email: emailInput,
+        age: ageInput,
+        specialty:specialtyInput,
+        address:addressInput
+    }
+    insertObject('trainees',newAccountTrainee)
     res.redirect('staffPage');
 })
 router.get('/deteleTrainee', requireStaff, (req, res) => {
