@@ -25,19 +25,17 @@
     </div>
     <br>
     <div>
-    <form action="view" method = "POST">
-        <input type="hidden" name="txtId" value="{{trainee._id}}">
-        FullName: <input type="text" name="txtName" value="{{trainee.name}}" />
-        Age: <input type="text" name="txtAge" value="{{trainee.age}}" />
+        FullName: {{trainee.name}}
         <br>
-        Email: <input type="email" name="txtEmail" value="{{trainee.email}}">
-        Specialty: <input type="text" name="txtSpecialty" value = "{{trainee.specialty}}">
+        Age: {{trainee.age}}
         <br>
-        Address: <input type="text" name="txtAddress" value = "{{trainee.address}}">
+        Email:{{trainee.email}}
+        Specialty: {{trainee.specialty}}
         <br>
-        <input type="submit" value="Update">
+        Address: {{trainee.address}}
+        <br>
+        <a href="/trainee/update">Update</a>
         <a href="/trainee">Cancel</a>
-    </form>
     </div>
 </body>
 </html>
