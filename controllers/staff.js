@@ -115,11 +115,11 @@ router.get('/addTraineeForCourses',async (req, res) => {
 })
 
 router.get('/showTrainees',async (req, res) => {
-  
-    const id = req.query.id;   
+    const id = req.query.id;
     const db = await getDB();
-    const course = await db.collection("trainees").findOne({ _id: ObjectId(id) });
-    res.render('showTrainees',{ myCourse: course });
+    const c = await db.collection("Course").findOne({ _id: ObjectId(id) });
+    res.render('showTrainees', { course: c });
+
 })
 
 module.exports = router;
