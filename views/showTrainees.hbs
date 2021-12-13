@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Trainer Page</title>
+</head>
+
+<body>
+	<h2 style="text-align: center;">Welcome Trainer Page</h2>
+	<center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
+	<h3>{{userInfo.name}}</h3>
+	<h3>Role: {{userInfo.role}}</h3>
+	<center>
+		<div class="function">
+			<li><a href="/">Home</a></li>
+			<li><a class="update" href="/trainer/profileTrainer">Update Profile</a></li>
+			<li><a class="logout" href="login">Logout</a></li>
+		</div>
+		<h1 style="font-weight: 100;">Course: {{myCourse.name}} </h1>
+		<form action="">
+			<input type="checkbox" id="" name="" value="">
+			<label for="">Trainee 1: </label><br>
+			<input type="checkbox" id="" name="" value="">
+			<label for="">Trainee 2: </label><br>
+
+			<input type="submit" value="Submit">
+		</form>
+	</center>
+</body>
+
+</html>
