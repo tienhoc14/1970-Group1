@@ -99,4 +99,7 @@ router.get('/addTrainerForCourses', (req, res) => {
     res.render('addTrainerForCourses')
 })
 
+router.get('/addTraineeForCourses', (req, res) => {
+    res.render('addTraineeForCourses')
+})
 module.exports = router;
