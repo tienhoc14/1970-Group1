@@ -10,7 +10,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 600000 }, saveUninitialized: false, resave: false }))
+app.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 300000 }, saveUninitialized: false, resave: false }))
 
 app.get('/', requiresLogin, (req, res) => {
     const user = req.session["User"]
@@ -23,12 +23,17 @@ app.post('/login', async(req, res) => {
     const role = await checkUserRole(name, pass)
     if (role == -1) {
         res.render('login')
+    } else if (role == "Admin") {
+        req.session["Admin"] = {
+            name: name,
+            role: role
+        }
+        res.redirect('/admin')
     } else {
         req.session["User"] = {
             name: name,
             role: role
         }
-        console.log("Ban dang dang nhap voi quyen la: " + role)
         res.redirect('/')
     }
 })
@@ -37,6 +42,10 @@ app.get('/login', (req, res) => {
     res.render('login')
 })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.render('login')
+})
 
 const adminController = require('./controllers/admin')
 app.use('/admin', adminController)

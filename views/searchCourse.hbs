@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Update Profile</title>
+    <title>Search Course</title>
 </head>
 <body>
     <div class="header">
-        <img src="/images/avt.jpeg">
+        <a href=""><img src="/images/avt.jpeg" width="3%"></a>
+        <li><a href="/trainee/update">Update profile</a></li>
         <li><a href="">Logout</a></li>
     </div>
     <br>
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
-    <input class="s" type="search" name="txtSearch" placeholder="Search Course">
+    <form class="s" action="/search">
+        <input type="search" name="txtSearch" placeholder="Search Course">
+    </form>
     <br>
     <div class="function">
         <li><a class="home" href="/trainee">Home</a></li>
@@ -22,5 +25,18 @@
         <li><a class="class" href="/trainee/viewClass">View Classmates</a></li>    
     </div>
     <br>
+    <table>
+        <tr>
+            <th>Course ID</th>
+            <th>Name Course</th>
+            <th>Trainer</th>
+            <th>Controller</th>
+        </tr>
+        {{#each data}}
+        <tr>
+
+        </tr>
+        {{/each}}
+    </table>
 </body>
 </html>

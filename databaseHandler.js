@@ -1,4 +1,5 @@
-const {MongoClient,ObjectId} = require('mongodb');
+const async = require('hbs/lib/async');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const URL = 'mongodb://127.0.0.1:27017';
 const DATABASE_NAME = "GCH0805-ApplicationDev"
@@ -27,22 +28,32 @@ async function checkUserRole(nameI, passI) {
     }
 }
 
-//Cường
+//trainer function
+
+async function DeleteTrainer(username) {
+    const dbo = await getDB();
+    await dbo.collection("Trainers").deleteOne({ userName: username })
+    await dbo.collection("Users").deleteOne({ userName: username })
+}
+
+//end trainer function
+
 async function InsertTrainee(newTrainee) {
     const db = await getDB();
     await db.collection("trainees").insertOne(newTrainee)
 }
 async function DeleteTrainee(id) {
     const db = await getDB();
-    await db.collection("trainees").deleteOne({_id:ObjectId(id)})
+    await db.collection("trainees").deleteOne({ _id: ObjectId(id) })
 }
-async function UpdateTrainee(id,name,email,age,specialty,address){
-    const traineeID  = {_id:ObjectId(id)}
-    const value = {$set: {name:name, email:email,age:age, specialty:specialty, address:address}};
+async function UpdateTrainee(id, name, email, age, specialty, address) {
+    const traineeID = { _id: ObjectId(id) }
+    const value = { $set: { name: name, email: email, age: age, specialty: specialty, address: address } };
 
     const db = await getDB();
-    await db.collection("trainees").updateOne(traineeID,value)
+    await db.collection("trainees").updateOne(traineeID, value)
 }
+
 async function InsertStaff(newStaff) {
     const db = await getDB();
     await db.collection("staff").insertOne(newStaff)
@@ -69,13 +80,13 @@ async function InsertStaff(newStaff) {
 // =======
 
 module.exports = {
-        getDB,
-        insertObject,
-        checkUserRole,
-        InsertTrainee,
-        DeleteTrainee,
-        UpdateTrainee,
-        ObjectId,
-        InsertStaff
-    }
-
+    getDB,
+    insertObject,
+    checkUserRole,
+    InsertTrainee,
+    DeleteTrainee,
+    UpdateTrainee,
+    InsertStaff,
+    DeleteTrainer,
+    ObjectId,
+}

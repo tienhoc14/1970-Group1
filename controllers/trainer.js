@@ -13,4 +13,14 @@ router.get('/profileTrainer',requiresLogin,(req,res)=>{
     res.render('profileTrainer', { userInfo: user })
 })
 
+router.get('/detailCourse',requiresLogin,(req,res)=>{
+    const user = req.session["User"]
+    res.render('detailCourse', { userInfo: user })
+})
+
+router.get('/scoring',requiresLogin,(req,res)=>{
+    const user = req.session["User"]
+    res.render('scoring', { userInfo: user })
+})
+
 module.exports = router;

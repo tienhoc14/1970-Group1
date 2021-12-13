@@ -12,21 +12,21 @@
     <a href="/admin/addTrainer">Add Trainer Account</a>
     <table>
         <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Address</th>
-            <th>Email</th>
+            <th>Full Name</th>
+            <th>Username</th>
             <th>Speciality</th>
             <th>Controller</th>
         </tr>
         {{#each data}}
         <tr>
             <td>{{name}}</td>
-            <td>{{age}}</td>
-            <td>{{address}}</td>
-            <td>{{email}}</td>
+            <td>{{userName}}</td>
             <td>{{speciality}}</td>
-            <td>123</td>
+            <td>
+                <a href="/admin/detail_trainer?id={{_id}}">Detail -</a>
+                <a href="/admin/reset_password?userName={{userName}}">Reset Password -</a>
+                <a href="/admin/delete_trainer?userName={{userName}}">Delete</a>
+            </td>
         </tr>
         {{/each}}
     </table>

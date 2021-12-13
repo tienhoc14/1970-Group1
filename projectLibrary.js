@@ -1,10 +1,18 @@
 //custom middleware
-function requiresLogin(req,res,next){
-    if(req.session["User"]){
+function requiresLogin(req, res, next) {
+    if (req.session["User"]) {
         return next()
-    }else{
+    } else {
         res.redirect('/login')
     }
 }
 
-module.exports = {requiresLogin}
+function requireAdmin(req, res, next) {
+    if (req.session["Admin"]) {
+        return next()
+    } else {
+        res.redirect('/login')
+    }
+}
+
+module.exports = { requiresLogin, requireAdmin }

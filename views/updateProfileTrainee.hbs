@@ -5,12 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Trainees Page</title>
+    <title>Update Profile</title>
 </head>
 <body>
     <div class="header">
-        <a href="/trainee/view"><img src="/images/avt.jpeg" width="3%"></a>
-        <li><a href="/trainee/update">Update profile</a></li>
+        <img src="/images/avt.jpeg" width="3%">
         <li><a href="">Logout</a></li>
     </div>
     <br>
@@ -25,6 +24,20 @@
         <li><a class="class" href="/trainee/viewClass">View Classmates</a></li>    
     </div>
     <br>
-    <center><img src="/images/img.png" width="70%" height="30%"></center>
+    <div>
+    <form action="update" method = "POST">
+        <input type="hidden" name="txtId" value="{{trainee._id}}">
+        FullName: <input type="text" name="txtName" value="{{trainee.name}}" />
+        Age: <input type="text" name="txtAge" value="{{trainee.age}}" />
+        <br>
+        Email: <input type="email" name="txtEmail" value="{{trainee.email}}">
+        Specialty: <input type="text" name="txtSpecialty" value = "{{trainee.specialty}}">
+        <br>
+        Address: <input type="text" name="txtAddress" value = "{{trainee.address}}">
+        <br>
+        <input type="submit" value="Update">
+        <a href="/trainee">Cancel</a>
+    </form>
+    </div>
 </body>
 </html>
