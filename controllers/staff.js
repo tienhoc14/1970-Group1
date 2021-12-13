@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { getDB, InsertTrainee, DeleteTrainee, UpdateTrainee, ObjectId } = require('../databaseHandler');
+const { getDB, InsertTrainee, DeleteTrainee, UpdateTrainee, ObjectId,insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
+router.use(express.static('public'))
 
-
-router.get('/staffPage', requireStaff, async (req, res) => {
+router.get('/staffPage', requireStaff, async(req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("trainees").find({}).toArray();
     res.render('staffPage', { data: viewTrainees });
@@ -12,7 +12,7 @@ router.get('/staffPage', requireStaff, async (req, res) => {
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
-router.post('/addTrainee', requireStaff, async (req, res) => {
+router.post('/addTrainee', requireStaff, async(req, res) => {
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
@@ -31,7 +31,7 @@ router.get('/deteleTrainee', requireStaff, (req, res) => {
 
     res.redirect('staffPage');
 })
-router.get('/editTrainee', requireStaff, async (req, res) => {
+router.get('/editTrainee', requireStaff, async(req, res) => {
     const id = req.query.id;
 
     const db = await getDB();
@@ -39,7 +39,7 @@ router.get('/editTrainee', requireStaff, async (req, res) => {
 
     res.render('editTrainee', { trainee: t });
 })
-router.post('/updateTrainee', requireStaff, async (req, res) => {
+router.post('/updateTrainee', requireStaff, async(req, res) => {
     const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
@@ -51,13 +51,13 @@ router.post('/updateTrainee', requireStaff, async (req, res) => {
 
     res.redirect('staffPage');
 })
-
 router.get('/assignTrainer', requireStaff, (req, res) => {
-    //Insert course: Cuong
+
 })
-router.get('/viewCourse', async (req, res) => {
+//Insert course: Cuong
+router.get('/viewCourse', async(req, res) => {
     const db = await getDB();
-    const viewTrainees = await db.collection("courses").find({}).toArray();
+    const viewTrainees = await db.collection("Course").find({}).toArray();
     res.render('viewCourse', { course: viewTrainees });
 })
 
@@ -81,7 +81,7 @@ router.post('/addCourse', (req, res) => {
 
     insertObject('Course', InsertCourse)
 
-    res.redirect('viewCouse');
+    res.redirect('viewCourse');
 })
 
 
@@ -97,10 +97,6 @@ router.get('/assignTrainee', requireStaff, (req, res) => {
 
 router.get('/addTrainerForCourses', (req, res) => {
     res.render('addTrainerForCourses')
-})
-
-router.get('/addTraineeForCourses', (req, res) => {
-    res.render('addTraineeForCourses')
 })
 
 module.exports = router;
