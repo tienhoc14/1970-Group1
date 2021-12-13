@@ -57,7 +57,7 @@ router.get('/assignTrainer', requireStaff, (req, res) => {
 //Insert course: Cuong
 router.get('/viewCourse', async(req, res) => {
     const db = await getDB();
-    const viewTrainees = await db.collection("courses").find({}).toArray();
+    const viewTrainees = await db.collection("Course").find({}).toArray();
     res.render('viewCourse', { course: viewTrainees });
 })
 
