@@ -26,7 +26,7 @@
     </div>
     <br>
     <table bolder = 3>
-        {{#each course}}
+        
         <div>
             <tr>
                 <th>Course ID</th>
@@ -37,6 +37,7 @@
                 <th></th>
                 <th></th>
             </tr>
+            {{#each course}}
             <tr>
                 <td>{{courseID}}</td>
                 <td>{{courseName}}</td>
@@ -46,13 +47,13 @@
                 <td>Edit</td>
                 <td>Delete</td>
             </tr>
+        {{/each}}
             {{!-- <li>
                 <a href="/staff/editTrainee?id={{_id}}">Edit</a>
                 <a href="/staff/deteleTrainee?id={{_id}}">Delete</a>
             </li> --}}
             
         </div>
-        {{/each}}
     </table>
 </body>
 </html>
