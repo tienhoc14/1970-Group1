@@ -144,7 +144,7 @@ router.get('/addStaff', requireAdmin, (req, res) => {
 router.get('/manage_staff', requireAdmin, async(req, res) => {
     const dbo = await getDB();
     const allStaff = await dbo.collection('Staff').find({}).toArray();
-    res.render('manageStaff', { data: allStaff })
+    res.render('manageStaff', { base: allStaff })
 })
 
 router.post('/addStaff', (req, res) => {
