@@ -24,7 +24,6 @@ router.get('/viewMyCourse', requireTrainee, (req, res) => {
 })
 
 router.get('/update', requireTrainee, async(req, res) => {
-    const id = req.query.id;
     const user = req.session["Trainee"]
     const db = await getDB();
     const info = await db.collection("trainees").findOne({ "name": user.name });
@@ -32,24 +31,39 @@ router.get('/update', requireTrainee, async(req, res) => {
     res.render('updateProfileTrainee', { trainee: info });
 })
 
+router.get('/view', requireTrainee, async(req, res) => {
+    const id = req.query.id
+    const user = req.session["Trainee"]
+    const db = await getDB();
+    const info = await db.collection("trainees").findOne({"_id": ObjectId(id)});
+
+    res.render("viewProfileTrainee", { trainee: info });
+})
+
 router.post('/update', requireTrainee, async(req, res) => {
-    const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    UpdateTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
+    const updateTrainee ={
+        $set:{
+            name: nameInput,
+            age: ageInput,
+            email: emailInput,
+            specicalty: specialtyInput,
+            address: addressInput
+        }
+    }
 
-    res.redirect('/trainee/updateProfileTrainee');
-})
+    session["Trainee"] = {name: user};
 
-router.get('/view', requireTrainee, async(req, res) => {
-    const id = req.query.id;
-    const user = req.session["Trainee"]
+    const filter = { _id: ObjectId(id) }
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({ "name": user.name });
+
+    const info = await db.collection("trainees").updateOne({filter, updateTrainee});
+
 
     res.render("viewProfileTrainee", { trainee: info });
 })

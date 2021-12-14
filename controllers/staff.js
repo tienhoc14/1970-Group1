@@ -135,7 +135,7 @@ router.get('/viewCourseCategory', async(req, res) => {
     res.render('viewCoursecategory', { course_cagtegory: viewCourseCategorys });
 })
 
-router.get('/addCourseCategory', (req, res) => {
+router.get('/addCourseCategory', requireStaff, (req, res) => {
     res.render('addCourseCategory')
 })
 router.post('/addCourseCategory', (req, res) => {
