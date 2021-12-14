@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile</title>
+</head>
+<body>
+    <form action="editAdmin" method="post">
+        <input type="hidden" name="txtId" value="{{u._id}}">
+        Username: <input type="text" name="txtUser" value="{{u.userName}}"> <br><br>
+        Password: <input type="password" name="txtPass" value="{{u.password}}"> <br><br>
+        <input type="submit" value="Save">
+        <a href="/admin">Cancel</a>
+    </form>
+</body>
+</html>
