@@ -1,6 +1,6 @@
 const express = require('express')
 const async = require('hbs/lib/async')
-const { getDB, UpdateTrainee, ObjectId, } = require('../databaseHandler')
+const { getDB, ObjectId } = require('../databaseHandler')
 const { requireTrainee } = require('../projectLibrary')
 
 const router = express.Router()
@@ -32,39 +32,34 @@ router.get('/update', requireTrainee, async(req, res) => {
 })
 
 router.get('/view', requireTrainee, async(req, res) => {
-    const id = req.query.id
     const user = req.session["Trainee"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({"_id": ObjectId(id)});
+    const info = await db.collection("trainees").findOne({"name": user.name});
 
     res.render("viewProfileTrainee", { trainee: info });
 })
 
 router.post('/update', requireTrainee, async(req, res) => {
+    const id = req.body.txtId
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    const updateTrainee ={
-        $set:{
+    const UpdateTrainee = {
+        $set: {
             name: nameInput,
-            age: ageInput,
             email: emailInput,
-            specicalty: specialtyInput,
-            address: addressInput
+            age: ageInput,
+            speciality: specialtyInput,
+            address: addressInput,
         }
     }
-
-    session["Trainee"] = {name: user};
-
     const filter = { _id: ObjectId(id) }
-    const db = await getDB();
-
-    const info = await db.collection("trainees").updateOne({filter, updateTrainee});
-
-
+    const dbo = await getDB()
+    await dbo.collection("trainees").updateOne(filter, UpdateTrainee)
+    const info = await dbo.collection("trainees").findOne({ "_id": ObjectId(id) })
     res.render("viewProfileTrainee", { trainee: info });
 })
 
