@@ -1,6 +1,6 @@
 const express = require('express')
 const async = require('hbs/lib/async')
-const { getDB, UpdateTrainee, ObjectId, ViewProfileTrainee } = require('../databaseHandler')
+const { getDB, UpdateTrainee, ObjectId, } = require('../databaseHandler')
 const { requireTrainee } = require('../projectLibrary')
 
 const router = express.Router()
@@ -54,8 +54,20 @@ router.get('/view', requireTrainee, async(req, res) => {
     res.render("viewProfileTrainee", { trainee: info });
 })
 
-router.get('/search', requireTrainee, (req, res) => {
+router.get('/search', requireTrainee, async (req, res)=>{
+
+    const dbo = await getDB();
+    const allCourse = await dbo.collection("Course").find({}).toArray();
+    res.render("searchCourse", {data: allCourse})
+})
+
+router.post('/search', requireTrainee, async (req, res) => {
+    // const searchCoures = req.body.txtSearch;
+    // const dbo = await getDB();
+    // const allCourse = await dbo.collection("Course").find({courseID: searchCoures}).toArray();
+    // res.render("searchCourse", {data: allCourse})
     res.render("searchCourse")
 })
+
 
 module.exports = router;
