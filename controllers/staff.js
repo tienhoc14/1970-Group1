@@ -1,7 +1,7 @@
 const express = require('express');
 const async = require('hbs/lib/async');
 const router = express.Router()
-const { getDB, InsertTrainee, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
+const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
 router.use(express.static('public'))
 
@@ -10,6 +10,38 @@ router.get('/staffPage', requireStaff, async (req, res) => {
     const viewTrainees = await db.collection("trainees").find({}).toArray();
     res.render('staffPage', { data: viewTrainees });
 })
+
+router.get('/updateProfileStaff',requireStaff,(req, res)=>{
+    const id = req.query.id;
+    const user = req.session["Staff"]
+    const db = await getDB();
+    const info = await db.collection("trainees").findOne({"name": user.name});
+
+    res.render('updateProfileStaff', { trainee: info });
+})
+router.get('/updateProfileStaff', requireStaff, async (req, res)=>{
+    const id = req.body.txtId
+    const name = req.body.trainerName
+    const age = req.body.trainerAge
+    const phone = req.body.phone
+    const spec = req.body.spec
+    const address = req.body.address
+
+    const updateToStaffs = {
+        $set: {
+            name: name,
+            age: age,
+            speciality: spec,
+            address: address,
+            phone_number: phone
+        }
+    }
+    const filter = { _id: ObjectId(id) }
+    const dbo = await getDB()
+    await dbo.collection
+})
+
+
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
