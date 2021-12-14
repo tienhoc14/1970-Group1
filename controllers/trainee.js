@@ -27,7 +27,7 @@ router.get('/update', requireTrainee, async(req, res) => {
     const id = req.query.id;
     const user = req.session["Trainee"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({"name": user.name});
+    const info = await db.collection("trainees").findOne({ "name": user.name });
 
     res.render('updateProfileTrainee', { trainee: info });
 })
@@ -49,24 +49,22 @@ router.get('/view', requireTrainee, async(req, res) => {
     const id = req.query.id;
     const user = req.session["Trainee"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({"name": user.name});
+    const info = await db.collection("trainees").findOne({ "name": user.name });
 
     res.render("viewProfileTrainee", { trainee: info });
 })
 
-router.get('/search', requireTrainee, async (req, res)=>{
-
+router.get('/search', requireTrainee, async(req, res) => {
     const dbo = await getDB();
     const allCourse = await dbo.collection("Course").find({}).toArray();
-    res.render("searchCourse", {data: allCourse})
+    res.render("searchCourse", { data: allCourse })
 })
 
-router.post('/search', requireTrainee, async (req, res) => {
-    // const searchCoures = req.body.txtSearch;
-    // const dbo = await getDB();
-    // const allCourse = await dbo.collection("Course").find({courseID: searchCoures}).toArray();
-    // res.render("searchCourse", {data: allCourse})
-    res.render("searchCourse")
+router.post('/search', requireTrainee, async(req, res) => {
+    const searchCoures = req.body.txtSearch;
+    const dbo = await getDB();
+    const allCourse = await dbo.collection("Course").find({ courseID: searchCoures }).toArray();
+    res.render("searchCourse", { data: allCourse })
 })
 
 
