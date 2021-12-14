@@ -22,4 +22,11 @@ router.get('/scoring', requireTrainer, (req, res) => {
     res.render('scoring', { userInfo: user })
 })
 
+router.get('/profileTrainer', requireTrainer, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
+    res.render('profileTrainer', { data: trainer })
+})
+
 module.exports = router;

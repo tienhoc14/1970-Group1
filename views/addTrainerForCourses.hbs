@@ -10,20 +10,35 @@
 </head>
 
 <body>
-    <h2 style="text-align: center;">Welcome Staff Page</h2>
+    <h2 style="text-align: center;">Welcome Trainer Page</h2>
     <center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
     <h3>{{userInfo.name}}</h3>
     <h3>Role: {{userInfo.role}}</h3>
     <center>
         <div class="function">
-            <li><a href="/">Home</a></li>
-            <li><a href="/">Courses</a></li>
-            <li><a class="update" href="/trainer/profileTrainer">Profile</a></li>
+            <li><a href="/staff/staffPage">Home</a></li>
+            <li><a href="/staff/addTraineeForCourses">Courses</a></li>
+            <li><a class="update" href="">Profile</a></li>
             <li><a class="logout" href="\login">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View Trainers</h1>
-        <h3>Trainer 1</h3>
-        
+        <table>
+            <tr>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Speciality</th>
+                <th>Controller</th>
+            </tr>
+            {{#each trainer}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{userName}}</td>
+                <td>{{speciality}}</td>
+                <td><a href="/staff/showCourses?id={{_id}}">Show</a></td>
+                
+            </tr>
+            {{/each}}
+        </table>
     </center>
 </body>
 

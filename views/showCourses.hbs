@@ -20,11 +20,18 @@
 			<li><a class="update" href="/trainer/profileTrainer">Update Profile</a></li>
 			<li><a class="logout" href="\login">Logout</a></li>
 		</div>
-		<h1 style="font-weight: 100;">Course: {{course.courseID}} </h1>
-		<form action="">
-			<input type="checkbox" id="" name="" value="">
+		<h1 style="font-weight: 100;">Trainer: {{trainer.name}} </h1>
+		<form action="addCoursesToTrainer" method="POST">
+			<input type="hidden" value="{{trainer._id}}" name="txtID">
+			{{#each trainer}}
 
-			<input type="submit" value="Submit">
+			<input type="checkbox" id="" name="CB" value="{{Courses}}" checked> 
+			{{courseID}} - {{courseName}}
+			<br>
+			{{/each}}
+			<br>
+
+			<input type="submit" value="Update">
 		</form>
 	</center>
 </body>

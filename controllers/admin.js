@@ -21,6 +21,35 @@ router.get('/manage_trainer', requireAdmin, async(req, res) => {
     res.render('manageTrainer', { data: allTrainers })
 })
 
+router.get('/update_admin', requireAdmin, async(req, res) => {
+    const user = req.session["Admin"]
+    const dbo = await getDB()
+    const us = await dbo.collection("Users").findOne({ "userName": user.name })
+    console.log("id dang nhap: " + us._id)
+    res.render('updateAdmin', { u: us })
+})
+
+router.post('/editAdmin', requireAdmin, async(req, res) => {
+    const id = req.body.txtId
+    const user = req.body.txtUser
+    const pass = req.body.txtPass
+
+    const update = {
+        $set: {
+            userName: user,
+            password: pass
+        }
+    }
+
+    req.session["Admin"] = { name: user }
+
+    const filter = { _id: ObjectId(id) }
+    const dbo = getDB();
+    (await dbo).collection("Users").updateOne(filter, update)
+
+    res.redirect("/admin")
+})
+
 router.get('/addTrainer', requireAdmin, (req, res) => {
     res.render('addTrainer')
 })
@@ -98,7 +127,6 @@ router.post('/editTrainer', requireAdmin, async(req, res) => {
             phone_number: phone
         }
     }
-
     const filter = { _id: ObjectId(id) }
     const dbo = await getDB()
     await dbo.collection("Trainers").updateOne(filter, updateToTrainers)
