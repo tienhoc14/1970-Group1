@@ -1,15 +1,10 @@
 const express = require('express')
-const { insertObject } = require('../databaseHandler')
+const { insertObject, getDB } = require('../databaseHandler')
 const { requireTrainer } = require('../projectLibrary')
 const router = express.Router()
 
 router.get('/', requireTrainer, (req, res) => {
     res.render('trainerIndex')
-})
-
-router.get('/profileTrainer', requireTrainer, (req, res) => {
-    const user = req.session["User"]
-    res.render('profileTrainer', { userInfo: user })
 })
 
 router.get('/detailCourse', requireTrainer, (req, res) => {
@@ -23,9 +18,10 @@ router.get('/scoring', requireTrainer, (req, res) => {
 })
 
 router.get('/profileTrainer', requireTrainer, async(req, res) => {
-    const id = req.query.id
+    const user = req.session["Trainer"]
     const dbo = await getDB()
-    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
+    const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
+
     res.render('profileTrainer', { data: trainer })
 })
 

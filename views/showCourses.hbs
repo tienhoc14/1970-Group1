@@ -23,9 +23,9 @@
 		<h1 style="font-weight: 100;">Trainer: {{trainer.name}} </h1>
 		<form action="addCoursesToTrainer" method="POST">
 			<input type="hidden" value="{{trainer._id}}" name="txtID">
-			{{#each trainer}}
+			{{#each c}}
 
-			<input type="checkbox" id="" name="CB" value="{{Courses}}" checked> 
+			<input type="checkbox" id="" name="CB" value="{{courseID}}"> 
 			{{courseID}} - {{courseName}}
 			<br>
 			{{/each}}
