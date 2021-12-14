@@ -103,7 +103,7 @@ router.get('/viewCourseCategory', async (req, res) => {
     res.render('viewCoursecategory', { course_cagtegory: viewCourseCategorys });
 })
 
-router.get('/addCourseCategory', (req, res) => {
+router.get('/addCourseCategory', requireStaff, (req, res) => {
     res.render('addCourseCategory')
 })
 router.post('/addCourseCategory', (req, res) => {
@@ -122,7 +122,7 @@ router.post('/addCourseCategory', (req, res) => {
     res.redirect('viewCourseCategory');
 })
 
-router.post('/editCourseCategory', requireAdmin, async(req, res) => {
+router.post('/editCourseCategory', requireStaff, async(req, res) => {
     const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
