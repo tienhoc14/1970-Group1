@@ -11,7 +11,7 @@ router.get('/staffPage', requireStaff, async (req, res) => {
     res.render('staffPage', { data: viewTrainees });
 })
 
-router.get('/updateProfileStaff',requireStaff,(req, res)=>{
+router.get('/updateProfileStaff',requireStaff,async (req, res)=>{
     const id = req.query.id;
     const user = req.session["Staff"]
     const db = await getDB();
@@ -154,7 +154,7 @@ router.post('/addCourseCategory', (req, res) => {
     res.redirect('viewCourseCategory');
 })
 
-router.post('/editCourseCategory', requireAdmin, async(req, res) => {
+router.post('/editCourseCategory', requireStaff, async(req, res) => {
     const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
