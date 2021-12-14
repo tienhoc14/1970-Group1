@@ -195,14 +195,14 @@ router.get('/detail_staff', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('detailStaff', { data: staff })
+    res.render('detailStaff', { base: staff })
 })
 
 router.get('/update_staff', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('editStaff', { data: staff })
+    res.render('editStaff', { base: staff })
 })
 
 router.post('/editStaff', requireAdmin, async(req, res) => {
@@ -227,7 +227,7 @@ router.post('/editStaff', requireAdmin, async(req, res) => {
     await dbo.collection("Staff").updateOne(filter, updateToStaff)
 
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('detailStaff', { data: staff })
+    res.render('detailStaff', { base: staff })
 
     
 })

@@ -95,7 +95,54 @@ router.post('/addCourse', (req, res) => {
     res.redirect('viewCourse');
 })
 
+// Nam: course category
 
+router.get('/viewCourseCategory', async (req, res) => {
+    const db = await getDB();
+    const viewCourseCategorys = await db.collection("CourseCategory").find({}).toArray();
+    res.render('viewCoursecategory', { course_cagtegory: viewCourseCategorys });
+})
+
+router.get('/addCourseCategory', (req, res) => {
+    res.render('addCourseCategory')
+})
+router.post('/addCourseCategory', (req, res) => {
+    const coursecategory_ID = req.body.txtCourseCategoryID;
+    const coursecategory_Name = req.body.txtCourseCategoryName;
+    const description_CourseCategory = req.body.txtDescriptionCourseCategory;
+
+    const InsertCourseCategory = {
+        courseCategoryID: coursecategory_ID,
+        courseCategoryName: coursecategory_Name,
+        descriptionCourseCategory: description_CourseCategory,
+    }
+
+    insertObject('CourseCategory', InsertCourseCategory)
+
+    res.redirect('viewCourseCategory');
+})
+
+router.post('/editCourseCategory', requireAdmin, async(req, res) => {
+    const coursecategory_ID = req.body.txtCourseCategoryID;
+    const coursecategory_Name = req.body.txtCourseCategoryName;
+    const description_CourseCategory = req.body.txtDescriptionCourseCategory;
+
+    const updateToCourseCategory = {
+        $set: {
+            courseCategoryID: coursecategory_ID,
+            courseCategoryName: coursecategory_Name,
+            descriptionCourseCategory: description_CourseCategory,
+        }
+    }
+    const filter = { _id: ObjectId(id) }
+    const dbo = await getDB()
+    await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
+
+    const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
+    res.render('viewCourseCategory', { course_cagtegory: category })
+})
+
+//End code
 router.get('/assignTrainer', (req, res) => {
     res.render('assignTrainer')
 })
