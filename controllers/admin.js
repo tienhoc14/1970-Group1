@@ -3,7 +3,7 @@ const res = require('express/lib/response')
 const { render } = require('express/lib/response')
 const async = require('hbs/lib/async')
 const { ObjectId } = require('mongodb')
-const { insertObject, getDB, DeleteTrainer } = require('../databaseHandler')
+const { insertObject, getDB, DeleteTrainer, DeleteStaff } = require('../databaseHandler')
 const { requireAdmin } = require('../projectLibrary')
 const router = express.Router()
 
@@ -181,7 +181,7 @@ router.post('/addStaff', (req, res) => {
 router.get('/delete_staff', requireAdmin, async(req, res) => {
     const us = req.query.userName
     await DeleteStaff(us);
-    res.redirect('manage_trainer')
+    res.redirect('manage_staff')
 })
 
 router.get('/reset_password', requireAdmin, async(req, res) => {
@@ -228,6 +228,8 @@ router.post('/editStaff', requireAdmin, async(req, res) => {
 
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
     res.render('detailStaff', { data: staff })
+
+    
 })
 
 //End Staff
