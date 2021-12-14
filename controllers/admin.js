@@ -25,7 +25,6 @@ router.get('/update_admin', requireAdmin, async(req, res) => {
     const user = req.session["Admin"]
     const dbo = await getDB()
     const us = await dbo.collection("Users").findOne({ "userName": user.name })
-    console.log("id dang nhap: " + us._id)
     res.render('updateAdmin', { u: us })
 })
 
@@ -156,7 +155,7 @@ router.post('/addStaff', (req, res) => {
     const address = req.body.staffAddress;
     const username = req.body.username
     const email = username + "@fpt.edu.vn"
-    
+
     const objectToUsers = {
         userName: username,
         role: 'Staff',
@@ -175,7 +174,7 @@ router.post('/addStaff', (req, res) => {
     insertObject("Users", objectToUsers)
     insertObject("Staff", objectToStaff)
     res.redirect('manage_staff')
-    
+
 })
 
 router.get('/delete_staff', requireAdmin, async(req, res) => {
@@ -195,14 +194,14 @@ router.get('/detail_staff', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('detailStaff', { data: staff })
+    res.render('detailStaff', { base: staff })
 })
 
 router.get('/update_staff', requireAdmin, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('editStaff', { data: staff })
+    res.render('editStaff', { base: staff })
 })
 
 router.post('/editStaff', requireAdmin, async(req, res) => {
@@ -227,7 +226,7 @@ router.post('/editStaff', requireAdmin, async(req, res) => {
     await dbo.collection("Staff").updateOne(filter, updateToStaff)
 
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('detailStaff', { data: staff })
+    res.render('detailStaff', { base: staff })
 
     
 })

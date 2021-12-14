@@ -9,12 +9,12 @@
 <body>
     <h2>Update Trainer Profile</h2>
     <form action="editStaff" method="post">
-        <input type="hidden" name="txtId" value="{{data._id}}">
-        Full name: <input type="text" name="staffName" value="{{data.name}}"> <br>
-        Age: <input type="number" name="staffAge" value="{{data.age}}"> <br>
-        Phone: <input type="text" name="staffPhone" value="{{data.phone_number}}"> <br>
-        Speciality: <input type="text" name="staffSpecicalty" value="{{data.speciality}}"> <br>
-        Address: <input type="text" name="staffAddress" value="{{data.address}}"> <br>
+        <input type="hidden" name="txtId" value="{{base._id}}">
+        Full name: <input type="text" name="staffName" value="{{base.name}}"> <br>
+        Age: <input type="number" name="staffAge" value="{{base.age}}"> <br>
+        Phone: <input type="text" name="staffPhone" value="{{base.phone_number}}"> <br>
+        Speciality: <input type="text" name="staffSpecicalty" value="{{base.speciality}}"> <br>
+        Address: <input type="text" name="staffAddress" value="{{base.address}}"> <br>
         <input type="submit" value="Save">
         <a href="/admin/manage_staff">Cancel</a>
     </form>
