@@ -1,10 +1,11 @@
-const express = require('express')
+const express = require('express');
+const async = require('hbs/lib/async');
 const router = express.Router()
-const { getDB, InsertTrainee, DeleteTrainee, UpdateTrainee, ObjectId,insertObject } = require('../databaseHandler');
+const { getDB, InsertTrainee, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
 router.use(express.static('public'))
 
-router.get('/staffPage', requireStaff, async(req, res) => {
+router.get('/staffPage', requireStaff, async (req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("trainees").find({}).toArray();
     res.render('staffPage', { data: viewTrainees });
@@ -12,7 +13,7 @@ router.get('/staffPage', requireStaff, async(req, res) => {
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
-router.post('/addTrainee', requireStaff, async(req, res) => {
+router.post('/addTrainee', requireStaff, async (req, res) => {
     const userName = req.body.txtUser;
     const passWord = req.body.txtPass;
     const nameInput = req.body.txtName;
@@ -21,17 +22,17 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    const newAccountTrainee={
+    const newAccountTrainee = {
         username: userName,
         role: 'Trainee',
         password: passWord,
         name: nameInput,
         email: emailInput,
         age: ageInput,
-        specialty:specialtyInput,
-        address:addressInput
+        specialty: specialtyInput,
+        address: addressInput
     }
-    insertObject('trainees',newAccountTrainee)
+    insertObject('trainees', newAccountTrainee)
     res.redirect('staffPage');
 })
 router.get('/deteleTrainee', requireStaff, (req, res) => {
@@ -41,7 +42,7 @@ router.get('/deteleTrainee', requireStaff, (req, res) => {
 
     res.redirect('staffPage');
 })
-router.get('/editTrainee', requireStaff, async(req, res) => {
+router.get('/editTrainee', requireStaff, async (req, res) => {
     const id = req.query.id;
 
     const db = await getDB();
@@ -49,7 +50,7 @@ router.get('/editTrainee', requireStaff, async(req, res) => {
 
     res.render('editTrainee', { trainee: t });
 })
-router.post('/updateTrainee', requireStaff, async(req, res) => {
+router.post('/updateTrainee', requireStaff, async (req, res) => {
     const id = req.body.txtId;
     const nameInput = req.body.txtName;
     const emailInput = req.body.txtEmail;
@@ -65,7 +66,7 @@ router.get('/assignTrainer', requireStaff, (req, res) => {
 
 })
 //Insert course: Cuong
-router.get('/viewCourse', async(req, res) => {
+router.get('/viewCourse', async (req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("Course").find({}).toArray();
     res.render('viewCourse', { course: viewTrainees });
@@ -105,21 +106,54 @@ router.get('/assignTrainee', requireStaff, (req, res) => {
 
 //Minh:
 
-router.get('/addTrainerForCourses', (req, res) => {
-    res.render('addTrainerForCourses')
-})
-router.get('/addTraineeForCourses',async (req, res) => {
+
+router.get('/addTraineeForCourses', async (req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("Course").find({}).toArray();
-    res.render('addTraineeForCourses',{ course: viewTrainees });
+    res.render('addTraineeForCourses', { course: viewTrainees });
 })
 
-router.get('/showTrainees',async (req, res) => {
+router.get('/showTrainees', async (req, res) => {
     const id = req.query.id;
     const db = await getDB();
     const c = await db.collection("Course").findOne({ _id: ObjectId(id) });
     res.render('showTrainees', { course: c });
+})
 
+
+
+router.get('/addTrainerForCourses', async (req, res) => {
+    const db = await getDB();
+    const viewCourses = await db.collection("Trainers").find({}).toArray();
+    console.log(viewCourses)
+    res.render('addTrainerForCourses', { trainer: viewCourses });
+
+})
+
+
+router.get('/showCourses', async (req, res) => {
+    const id = req.query.id;
+    const db = await getDB();
+    const t = await db.collection("Trainers").findOne({ _id: ObjectId(id) });
+    const courses = await db.collection("Course").find({}).toArray();
+
+    res.render('showCourses', { trainer: t, c: courses });
+})
+
+router.post('/addCoursesToTrainer', async (req, res) => {
+    const id = req.body.txtID;
+    const courseID = req.body.CB;
+    const dbo = await getDB();
+    const filter = { _id: ObjectId(id) }
+    const coursesToTrainer = {
+        $set: {
+            Courses: courseID
+        }
+    }
+    await dbo.collection("Trainers").updateOne(filter, coursesToTrainer)
+    
+    console.log(courseID)
+    res.redirect('/staff/addTrainerForCourses')
 })
 
 module.exports = router;
