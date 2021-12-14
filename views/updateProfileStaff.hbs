@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <form action="editStaff" method="post">
+        <input type="hidden" name="txtId" value="{{data._id}}">
+        Full name: <input type="text" name="staffName" value="{{data.name}}"> <br>
+        Age: <input type="number" name="staffAge" value="{{data.age}}"> <br>
+        Phone: <input type="text" name="staffPhone" value="{{data.phone_number}}"> <br>
+        Speciality: <input type="text" name="staffSpecicalty" value="{{data.speciality}}"> <br>
+        Address: <input type="text" name="staffA">
+</body>
+</html>
