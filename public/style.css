@@ -39,3 +39,15 @@ th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+.container {
+    max-width: 30%;
+    margin-top: 10%;
+    padding: 40px;
+    border: gainsboro 1px solid;
+    border-radius: 1%;
+}
+
+#text-login {
+    margin-bottom: 40px;
+}

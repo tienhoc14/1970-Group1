@@ -13,21 +13,22 @@
 
 <body>
     <div class="container">
-        <h4 class="text-center">Login Page</h4>
+        <h4 class="text-center" id="text-login">Sign in</h4>
         <form action="/login" method="post">
             <div class="form-floating">
                 <input type="text" class="form-control redText" name="txtName" id="txtName" />
-                <label for="txtName">User Name</label>
+                <label for="txtName">Username</label>
             </div>
+            <br>
             <div class="form-floating">
                 <input type="password" class="form-control" name="txtPass" id="txtPass">
                 <label for="txtPass">Password</label>
             </div>
+            <br>
             <div class="text-center">
-                 <input class="btn btn-secondary" type="reset" value="Reset"/>
-                <input class="btn btn-primary" type="submit" value="Login">
+                <input class="btn btn-primary" type="submit" value="Sign in">
+                <input class="btn btn-secondary" type="reset" value="Reset"/>
             </div>
-            
         </form>
     </div>
 </body>
