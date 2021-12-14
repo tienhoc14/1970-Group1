@@ -1,5 +1,4 @@
 const express = require('express');
-const async = require('hbs/lib/async');
 const router = express.Router()
 const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
@@ -11,34 +10,46 @@ router.get('/staffPage', requireStaff, async(req, res) => {
     res.render('staffPage', { data: viewTrainees });
 })
 
-router.get('/updateProfileStaff', requireStaff, async(req, res) => {
-    const id = req.query.id;
+router.get('/profileStaff', requireStaff, async(req, res) => {
     const user = req.session["Staff"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({ "name": user.name });
+    const info = await db.collection("Staff").findOne({ "userName": user.name });
 
-    res.render('updateProfileStaff', { trainee: info });
+    res.render('profileStaff', { staff: info });
 })
-router.get('/updateProfileStaff', requireStaff, async(req, res) => {
-    const id = req.body.txtId
-    const name = req.body.trainerName
-    const age = req.body.trainerAge
-    const phone = req.body.phone
-    const spec = req.body.spec
-    const address = req.body.address
 
+router.get('/updateProfileStaff', requireStaff, async(req, res) => {
+    const user = req.session["Staff"]
+    const db = await getDB();
+    const info = await db.collection("Staff").findOne({ "userName": user.name });
+
+    res.render('updateProfileStaff', { staff: info });
+})
+router.post('/updateProfileStaff', requireStaff, async(req, res) => {
+    const id = req.body.txtId;
+    const name = req.body.txtName;
+    const age = req.body.txtAge;
+    const email = req.body.txtEmail;
+    const phone = req.body.txtPhone;
+    const spec = req.body.txtSpecialty;
+    const address = req.body.txtAddress;
+    const filter = { _id: ObjectId(id) }
     const updateToStaffs = {
         $set: {
             name: name,
             age: age,
+            email: email,
             speciality: spec,
             address: address,
             phone_number: phone
         }
     }
-    const filter = { _id: ObjectId(id) }
-    const dbo = await getDB()
-    await dbo.collection
+
+    const db = await getDB();
+    await db.collection('Staff').updateOne(filter,updateToStaffs);
+    const st = await db.collection('Staff').findOne({_id: ObjectId(id)});
+    
+    res.render('profileStaff',{staff:st});
 })
 
 
