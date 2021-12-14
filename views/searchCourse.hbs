@@ -15,8 +15,8 @@
     </div>
     <br>
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
-    <form class="s" action="/search">
-        <input type="search" name="txtSearch" placeholder="Search Course">
+    <form class="s" action="/search" method="POST">
+        <input type="text" name="txtSearch" placeholder="Search Course">
     </form>
     <br>
     <div class="function">
@@ -34,7 +34,9 @@
         </tr>
         {{#each data}}
         <tr>
-
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
         </tr>
         {{/each}}
     </table>
