@@ -11,15 +11,15 @@ router.get('/staffPage', requireStaff, async(req, res) => {
     res.render('staffPage', { data: viewTrainees });
 })
 
-router.get('/updateProfileStaff',requireStaff,(req, res)=>{
+router.get('/updateProfileStaff', requireStaff, async(req, res) => {
     const id = req.query.id;
     const user = req.session["Staff"]
     const db = await getDB();
-    const info = await db.collection("trainees").findOne({"name": user.name});
+    const info = await db.collection("trainees").findOne({ "name": user.name });
 
     res.render('updateProfileStaff', { trainee: info });
 })
-router.get('/updateProfileStaff', requireStaff, async (req, res)=>{
+router.get('/updateProfileStaff', requireStaff, async(req, res) => {
     const id = req.body.txtId
     const name = req.body.trainerName
     const age = req.body.trainerAge
