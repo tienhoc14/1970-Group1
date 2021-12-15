@@ -65,24 +65,30 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
 
-    const newAccountTrainee = {
-        username: userName,
+    const newAccountTrainee={
+        userName: userName,
         role: 'Trainee',
-        password: passWord,
+        password: passWord
+    }
+    const newProfileTrainee = {
         name: nameInput,
         email: emailInput,
         age: ageInput,
         specialty: specialtyInput,
-        address: addressInput
+        address: addressInput,
+        userName: userName
     }
-    insertObject('trainees', newAccountTrainee)
+
+    insertObject('Users',newAccountTrainee);
+    insertObject('trainees', newProfileTrainee);
+
     res.redirect('staffPage');
 })
-router.get('/deteleTrainee', requireStaff, (req, res) => {
-    const id = req.query.id;
+router.get('/deteleTrainee', requireStaff, async(req, res) => {
+    const trainee = req.query.userName;
 
-    DeleteTrainee(id);
-
+    await DeleteTrainee(trainee);
+    
     res.redirect('staffPage');
 })
 router.get('/editTrainee', requireStaff, async(req, res) => {
