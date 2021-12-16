@@ -76,7 +76,8 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         age: ageInput,
         specialty: specialtyInput,
         address: addressInput,
-        userName: userName
+        userName: userName,
+        role: 'Trainee'
     }
 
     insertObject('Users',newAccountTrainee);
