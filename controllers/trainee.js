@@ -56,6 +56,7 @@ router.post('/update', requireTrainee, async(req, res) => {
             address: addressInput,
         }
     }
+    
     const filter = { _id: ObjectId(id) }
     const dbo = await getDB()
     await dbo.collection("trainees").updateOne(filter, UpdateTrainee)

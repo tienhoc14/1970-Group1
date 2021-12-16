@@ -46,10 +46,10 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
     }
 
     const db = await getDB();
-    await db.collection('Staff').updateOne(filter,updateToStaffs);
-    const st = await db.collection('Staff').findOne({_id: ObjectId(id)});
-    
-    res.render('profileStaff',{staff:st});
+    await db.collection('Staff').updateOne(filter, updateToStaffs);
+    const st = await db.collection('Staff').findOne({ _id: ObjectId(id) });
+
+    res.render('profileStaff', { staff: st });
 })
 
 
@@ -66,22 +66,28 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const addressInput = req.body.txtAddress;
 
     const newAccountTrainee = {
-        username: userName,
+        userName: userName,
         role: 'Trainee',
-        password: passWord,
+        password: passWord
+    }
+    const newProfileTrainee = {
         name: nameInput,
         email: emailInput,
         age: ageInput,
         specialty: specialtyInput,
-        address: addressInput
+        address: addressInput,
+        userName: userName
     }
-    insertObject('trainees', newAccountTrainee)
+
+    insertObject('Users', newAccountTrainee);
+    insertObject('trainees', newProfileTrainee);
+
     res.redirect('staffPage');
 })
-router.get('/deteleTrainee', requireStaff, (req, res) => {
-    const id = req.query.id;
+router.get('/deteleTrainee', requireStaff, async(req, res) => {
+    const trainee = req.query.userName;
 
-    DeleteTrainee(id);
+    await DeleteTrainee(trainee);
 
     res.redirect('staffPage');
 })
@@ -215,7 +221,7 @@ router.get('/showTrainees', async(req, res) => {
 router.get('/addTrainerForCourses', async(req, res) => {
     const db = await getDB();
     const viewCourses = await db.collection("Trainers").find({}).toArray();
-    console.log(viewCourses)
+
     res.render('addTrainerForCourses', { trainer: viewCourses });
 
 })
@@ -227,8 +233,14 @@ router.get('/showCourses', async(req, res) => {
     const db = await getDB();
     const t = await db.collection("Trainers").findOne({ _id: ObjectId(id) });
     const courses = await db.collection("Course").find({}).toArray();
-    console.log(t.Courses)
-    res.render('showCourses', { trainer: t, c: courses });
+
+    const newCourses = []
+    courses.forEach(c => {
+        if (!t.Courses.includes(c.courseID)) {
+            newCourses.push(c.courseID)
+        }
+    });
+    res.render('showCourses', { trainer: t, new: newCourses });
 })
 
 router.post('/addCoursesToTrainer', async(req, res) => {
@@ -243,7 +255,6 @@ router.post('/addCoursesToTrainer', async(req, res) => {
     }
     await dbo.collection("Trainers").updateOne(filter, coursesToTrainer)
 
-    console.log(courseID)
     res.redirect('/staff/addTrainerForCourses')
 })
 

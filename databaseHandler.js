@@ -39,10 +39,12 @@ async function DeleteTrainer(username) {
 //end trainer function
 
 //trainee
-async function DeleteTrainee(id) {
+async function DeleteTrainee(username) {
     const db = await getDB();
-    await db.collection("trainees").deleteOne({ _id: ObjectId(id) })
+    await db.collection("trainees").deleteOne({ userName: username })
+    await db.collection("Users").deleteOne({ userName: username })
 }
+
 async function UpdateTrainee(id, name, email, age, specialty, address) {
     const traineeID = { _id: ObjectId(id) }
     const value = { $set: { name: name, email: email, age: age, specialty: specialty, address: address } };
