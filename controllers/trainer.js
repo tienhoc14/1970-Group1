@@ -17,6 +17,10 @@ router.get('/scoring', requireTrainer, (req, res) => {
     res.render('scoring', { userInfo: user })
 })
 
+router.post('scoring', requireTrainer, (req,res)=>{
+    
+})
+
 router.get('/profileTrainer', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
