@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    grid-template-columns: 15% 70% 13%;
+    grid-template-columns: 15% 70% 15%;
 }
 
 .c-item {
@@ -33,13 +33,10 @@
     border-bottom: none;
 }
 
-.body {
-    border-top: none;
-}
-
 .controller div {
     border: 1px solid gainsboro;
     margin: auto;
+    margin-top: 20px;
     padding: 30px 70px;
     border-radius: 5px;
 }
@@ -48,6 +45,7 @@
     grid-column: 2/4;
     grid-row: 3;
     min-height: 550px;
+    border-top: none;
 }
 
 a {
@@ -92,4 +90,12 @@ a {
 
 .profile:hover .dropdown {
     display: block;
+}
+
+footer {
+    height: 30px;
+    padding-top: 10px;
+    text-align: center;
+    color: white;
+    background-color: cornflowerblue;
 }
