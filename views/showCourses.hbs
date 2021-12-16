@@ -11,7 +11,7 @@
 </head>
 
 <body>
-	<h2 style="text-align: center;">Welcome Trainer Page</h2>
+	<h2 style="text-align: center;">Welcome Staff Page</h2>
 	<center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
 	<h3>{{userInfo.name}}</h3>
 	<h3>Role: {{userInfo.role}}</h3>
@@ -19,7 +19,7 @@
 		<div class="function">
 			<li><a href="/staff/staffPage">Home</a></li>
 			<li><a class="update" href="/trainer/profileTrainer">Update Profile</a></li>
-			<li><a class="logout" href="\login">Logout</a></li>
+			<li><a href="/logout">Logout</a></li>
 		</div>
 		<h1 style="font-weight: 100;">Trainer: {{trainer.name}} </h1>
 		<form action="addCoursesToTrainer" method="POST">

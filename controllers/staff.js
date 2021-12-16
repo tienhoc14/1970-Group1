@@ -76,7 +76,8 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         age: ageInput,
         specialty: specialtyInput,
         address: addressInput,
-        userName: userName
+        userName: userName,
+        role: 'Trainee'
     }
 
     insertObject('Users', newAccountTrainee);
@@ -229,6 +230,7 @@ router.get('/addTrainerForCourses', async(req, res) => {
 
 router.get('/showCourses', async(req, res) => {
     const id = req.query.id;
+
     const db = await getDB();
     const t = await db.collection("Trainers").findOne({ _id: ObjectId(id) });
     const courses = await db.collection("Course").find({}).toArray();

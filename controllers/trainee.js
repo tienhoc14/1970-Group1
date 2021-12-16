@@ -23,20 +23,20 @@ router.get('/viewMyCourse', requireTrainee, (req, res) => {
     res.render("viewCourse")
 })
 
-router.get('/update', requireTrainee, async(req, res) => {
-    const user = req.session["Trainee"]
-    const db = await getDB();
-    const info = await db.collection("trainees").findOne({ "name": user.name });
-
-    res.render('updateProfileTrainee', { trainee: info });
-})
-
 router.get('/view', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
-    const db = await getDB();
-    const info = await db.collection("trainees").findOne({"name": user.name});
 
+    const dbo = await getDB()
+    const info = await dbo.collection("trainees").findOne({ "userName": user.name });
     res.render("viewProfileTrainee", { trainee: info });
+})
+
+router.get('/update', requireTrainee, async(req, res) => {
+    const user = req.session["Trainee"]
+
+    const dbo = await getDB()
+    const info = await dbo.collection("trainees").findOne({ "userName": user.name });
+    res.render("updateProfileTrainee", { trainee: info });
 })
 
 router.post('/update', requireTrainee, async(req, res) => {
