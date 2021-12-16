@@ -26,17 +26,14 @@
     </div>
     <br>
     <div>
-        FullName: {{trainee.name}}
-        <br>
-        Age: {{trainee.age}}
-        <br>
-        Email:{{trainee.email}}
-        <br>
-        Specialty: {{trainee.specialty}}
-        <br>
-        Address: {{trainee.address}}
-        <br>
-        <a href="/trainee/update">Update</a>
+        FullName: {{trainee.name}}<br>
+        UserName: {{trainee.userName}} <br>
+        Role: {{trainee.role}} <br>
+        Age: {{trainee.age}}<br>
+        Email:{{trainee.email}}<br>
+        Specialty: {{trainee.specialty}}<br>
+        Address: {{trainee.address}}<br>
+        <a href="/trainee/update?id={{trainee._id}}">Update</a>
         <a href="/trainee">Cancel</a>
     </div>
 </body>
