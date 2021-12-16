@@ -10,7 +10,8 @@ const router = express.Router()
 router.use(express.static('public'))
 
 router.get('/', requireAdmin, (req, res) => {
-    res.render('adminIndex')
+    const user = req.session["Admin"]
+    res.render('adminIndex', { user: user })
 })
 
 // Trainer 
@@ -228,7 +229,7 @@ router.post('/editStaff', requireAdmin, async(req, res) => {
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
     res.render('detailStaff', { base: staff })
 
-    
+
 })
 
 //End Staff
