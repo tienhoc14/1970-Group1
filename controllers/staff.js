@@ -230,7 +230,7 @@ router.get('/addTrainerForCourses', async(req, res) => {
 
 router.get('/showCourses', async(req, res) => {
     const id = req.query.id;
-    const newCourses = [];
+
     const db = await getDB();
     const t = await db.collection("Trainers").findOne({ _id: ObjectId(id) });
     const courses = await db.collection("Course").find({}).toArray();
