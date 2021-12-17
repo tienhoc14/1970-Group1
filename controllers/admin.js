@@ -10,15 +10,17 @@ const router = express.Router()
 router.use(express.static('public'))
 
 router.get('/', requireAdmin, (req, res) => {
-    res.render('adminIndex')
+    const user = req.session["Admin"]
+    res.render('adminIndex', { user: user })
 })
 
 // Trainer 
 
 router.get('/manage_trainer', requireAdmin, async(req, res) => {
+    const user = req.session["Admin"]
     const dbo = await getDB();
     const allTrainers = await dbo.collection('Trainers').find({}).toArray();
-    res.render('manageTrainer', { data: allTrainers })
+    res.render('manageTrainer', { data: allTrainers, user: user })
 })
 
 router.get('/update_admin', requireAdmin, async(req, res) => {
@@ -50,7 +52,8 @@ router.post('/editAdmin', requireAdmin, async(req, res) => {
 })
 
 router.get('/addTrainer', requireAdmin, (req, res) => {
-    res.render('addTrainer')
+    const user = req.session["Admin"]
+    res.render('addTrainer', { user: user })
 })
 
 router.post('/addTrainer', requireAdmin, async(req, res) => {
@@ -97,16 +100,18 @@ router.get('/reset_password', requireAdmin, async(req, res) => {
 
 router.get('/detail_trainer', requireAdmin, async(req, res) => {
     const id = req.query.id
+    const user = req.session["Admin"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
-    res.render('detailTrainer', { data: trainer })
+    res.render('detailTrainer', { data: trainer, user: user })
 })
 
 router.get('/update_trainer', requireAdmin, async(req, res) => {
     const id = req.query.id
+    const user = req.session["Admin"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
-    res.render('editTrainer', { data: trainer })
+    res.render('editTrainer', { data: trainer, user: user })
 })
 
 router.post('/editTrainer', requireAdmin, async(req, res) => {
@@ -132,6 +137,14 @@ router.post('/editTrainer', requireAdmin, async(req, res) => {
 
     const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
     res.render('detailTrainer', { data: trainer })
+})
+
+router.post('/search', async(req, res) => {
+    const search = req.body.txtSearch
+    const user = req.session["Admin"]
+    const dbo = await getDB()
+    const trainer = await dbo.collection("Trainers").findOne({ "userName": search })
+    res.render('detailTrainer', { data: trainer, user: user })
 })
 
 // End Trainer
@@ -228,7 +241,7 @@ router.post('/editStaff', requireAdmin, async(req, res) => {
     const staff = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
     res.render('detailStaff', { base: staff })
 
-    
+
 })
 
 //End Staff

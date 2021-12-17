@@ -231,16 +231,24 @@ router.get('/addTrainerForCourses', async(req, res) => {
 
 router.get('/showCourses', async(req, res) => {
     const id = req.query.id;
+
     const db = await getDB();
     const t = await db.collection("Trainers").findOne({ _id: ObjectId(id) });
     const courses = await db.collection("Course").find({}).toArray();
 
     const newCourses = []
-    courses.forEach(c => {
-        if (!t.Courses.includes(c.courseID)) {
+    if (t.Courses == null) {
+        courses.forEach(c => {
             newCourses.push(c.courseID)
-        }
-    });
+        });
+    } else {
+        courses.forEach(c => {
+            if (!t.Courses.includes(c.courseID)) {
+                newCourses.push(c.courseID)
+            }
+        });
+    }
+
     res.render('showCourses', { trainer: t, new: newCourses });
 })
 
