@@ -1,4 +1,5 @@
 const express = require('express');
+const async = require('hbs/lib/async');
 const router = express.Router()
 const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
@@ -257,5 +258,15 @@ router.post('/addCoursesToTrainer', async(req, res) => {
 
     res.redirect('/staff/addTrainerForCourses')
 })
+
+//Hoà
+router.get("/delete", async (req,res)=>{
+    const id = req.query.id;
+
+    const dbo = await getDB();
+    await dbo.collection("Course").deleteOne({ "_id": ObjectId(id) });
+    res.redirect("viewCourse")
+})
+
 
 module.exports = router;
