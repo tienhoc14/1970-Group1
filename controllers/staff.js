@@ -52,7 +52,11 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
     res.render('profileStaff', { staff: st });
 })
 
-
+router.get('/staffPage', requireStaff, async(req, res) => {
+    const db = await getDB();
+    const viewTrainees = await db.collection("trainees").find({}).toArray();
+    res.render('staffPage', { data: viewTrainees });
+})
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
@@ -111,6 +115,17 @@ router.post('/updateTrainee', requireStaff, async(req, res) => {
 
     res.redirect('staffPage');
 })
+router.post('/searchTrainee', requireStaff, async(req, res) => {
+    const searchName = req.body.txtSearch;
+
+    const db = await getDB();
+    const searchTrainee = await db.collection("trainees").find({ name: searchName }).toArray();
+
+    res.render('staffPage', { data: searchTrainee })
+})
+
+
+
 router.get('/assignTrainer', requireStaff, (req, res) => {
 
     })
@@ -149,7 +164,7 @@ router.post('/addCourse', (req, res) => {
 router.get('/viewCourseCategory', async(req, res) => {
     const db = await getDB();
     const viewCourseCategorys = await db.collection("CourseCategory").find({}).toArray();
-    res.render('viewCoursecategory', { course_cagtegory: viewCourseCategorys });
+    res.render('viewCoursecategory', { bas: viewCourseCategorys });
 })
 
 router.get('/addCourseCategory', requireStaff, (req, res) => {
@@ -188,7 +203,7 @@ router.post('/editCourseCategory', requireStaff, async(req, res) => {
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
     const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { course_cagtegory: category })
+    res.render('viewCourseCategory', { bas: category })
 })
 
 //End code
@@ -199,6 +214,8 @@ router.get('/assignTrainer', (req, res) => {
 router.get('/assignTrainee', requireStaff, (req, res) => {
     res.render('assignTrainee')
 })
+
+
 
 //Minh:
 
