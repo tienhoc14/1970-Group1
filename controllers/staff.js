@@ -193,6 +193,14 @@ router.post('/editCourseCategory', requireStaff, async (req, res) => {
     res.render('viewCourseCategory', { course_cagtegory: category })
 })
 
+
+router.get('/updateCourseCategory', requireStaff, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const coursecategory = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    res.render('editCourseCategory', { course_cagtegory: coursecategory })
+})
+
 //End code
 router.get('/assignTrainer', (req, res) => {
     res.render('assignTrainer')
