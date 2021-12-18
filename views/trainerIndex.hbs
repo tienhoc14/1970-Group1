@@ -14,7 +14,7 @@
     <h2 style="text-align: center;">Welcome Trainer Page</h2>
     <center><a href="/trainer"><img src="/images/Logo.png" width="250" height="120" /></a></center>
     <h3>{{user.name}}</h3>
-    <h3>Role: {{userInfo.role}}</h3>
+    <h3>Role: {{user.role}}</h3>
     <center>
         <div class="function">
             <li><a href="/trainer">Home</a></li>
@@ -22,8 +22,10 @@
             <li><a href="/logout">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View aggisned courses</h1>
-
-        <a href="/trainer/detailCourse">Detail</a>
+        {{#each courses}}
+        {{this}}
+        <a href="/trainer/detailCourse?=">Detail</a><br><br>
+        {{/each}}
     </center>
 </body>
 

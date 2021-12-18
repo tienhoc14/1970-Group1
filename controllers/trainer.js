@@ -1,10 +1,15 @@
 const express = require('express')
+const async = require('hbs/lib/async')
 const { insertObject, getDB, ObjectId } = require('../databaseHandler')
 const { requireTrainer } = require('../projectLibrary')
 const router = express.Router()
 
-router.get('/', requireTrainer, (req, res) => {
-    res.render('trainerIndex')
+router.get('/', requireTrainer, async (req, res) => {
+    const user = req.session["Trainer"]
+    const dbo = await getDB()
+    const view = await dbo.collection("Trainers").findOne({ "userName": user.name })
+    
+    res.render('trainerIndex', {user : user, courses: view.Courses})
 })
 
 router.get('/detailCourse', requireTrainer, (req, res) => {

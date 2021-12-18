@@ -212,21 +212,26 @@ router.get('/addTraineeForCourses', async(req, res) => {
 
 router.get('/showTrainees', async(req, res) => {
     const id = req.query.id;
+
     const db = await getDB();
-    const c = await db.collection("Course").findOne({ _id: ObjectId(id) });
-    res.render('showTrainees', { course: c });
+    const o = await db.collection("Courses").findOne({ _id: ObjectId(id) });
+    const trainees = await db.collection("Trainee").find({}).toArray();
+
+    const newTrainees = []
+    if (o.Trainees == null) {
+        trainees.forEach(e => {
+            newTrainees.push(e.traineeID)
+        });
+    } else {
+        courses.forEach(e => {
+            if (!o.Trainees.includes(e.traineeID)) {
+                newTrainees.push(e.traineeID)
+            }
+        });
+    }
+
+    res.render('showTrainees', { course: o, new: newTrainees });
 })
-
-
-
-router.get('/addTrainerForCourses', async(req, res) => {
-    const db = await getDB();
-    const viewCourses = await db.collection("Trainers").find({}).toArray();
-
-    res.render('addTrainerForCourses', { trainer: viewCourses });
-
-})
-
 
 router.get('/showCourses', async(req, res) => {
     const id = req.query.id;
@@ -251,6 +256,16 @@ router.get('/showCourses', async(req, res) => {
     res.render('showCourses', { trainer: t, new: newCourses });
 })
 
+
+
+router.get('/addTrainerForCourses', async(req, res) => {
+    const db = await getDB();
+    const viewCourses = await db.collection("Trainers").find({}).toArray();
+
+    res.render('addTrainerForCourses', { trainer: viewCourses });
+
+})
+
 router.post('/addCoursesToTrainer', async(req, res) => {
     const id = req.body.txtID;
     const courseID = req.body.CB;
@@ -264,6 +279,21 @@ router.post('/addCoursesToTrainer', async(req, res) => {
     await dbo.collection("Trainers").updateOne(filter, coursesToTrainer)
 
     res.redirect('/staff/addTrainerForCourses')
+})
+
+router.post('/addTraineesToCourse', async(req, res) => {
+    const id = req.body.txtID;
+    const traineeID = req.body.TB;
+    const dbo = await getDB();
+    const filter = { _id: ObjectId(id) }
+    const traineeToCourse = {
+        $set: {
+            trainees: traineeName
+        }
+    }
+    await dbo.collection("Courses").updateOne(filter, traineeToCourse)
+
+    res.redirect('/staff/addTraineeForCourses')
 })
 
 module.exports = router;
