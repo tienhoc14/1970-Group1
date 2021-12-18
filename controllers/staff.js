@@ -151,7 +151,7 @@ router.post('/addCourse', (req, res) => {
 router.get('/viewCourseCategory', async (req, res) => {
     const db = await getDB();
     const viewCourseCategorys = await db.collection("CourseCategory").find({}).toArray();
-    res.render('viewCoursecategory', { course_cagtegory: viewCourseCategorys });
+    res.render('viewCoursecategory', { bas : viewCourseCategorys });
 })
 
 router.get('/addCourseCategory', requireStaff, (req, res) => {
@@ -173,6 +173,13 @@ router.post('/addCourseCategory', (req, res) => {
     res.redirect('viewCourseCategory');
 })
 
+router.get('/updateCourseCategory', requireStaff, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const coursecategory = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    res.render('editCourseCategory', { bas : coursecategory })
+})
+
 router.post('/editCourseCategory', requireStaff, async (req, res) => {
     const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
@@ -190,15 +197,7 @@ router.post('/editCourseCategory', requireStaff, async (req, res) => {
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
     const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { course_cagtegory: category })
-})
-
-
-router.get('/updateCourseCategory', requireStaff, async(req, res) => {
-    const id = req.query.id
-    const dbo = await getDB()
-    const coursecategory = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
-    res.render('editCourseCategory', { course_cagtegory: coursecategory })
+    res.render('viewCourseCategory', { bas : category })
 })
 
 //End code
