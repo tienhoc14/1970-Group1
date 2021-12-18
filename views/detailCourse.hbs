@@ -13,15 +13,15 @@
 <body>
     <h2 style="text-align: center;">Welcome Trainer Page</h2>
     <center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
-    <h3>{{userInfo.name}}</h3>
-    <h3>Role: {{userInfo.role}}</h3>
+    <h3>{{user.name}}</h3>
+    <h3>Role: {{user.role}}</h3>
     <center>
         <div class="function">
             <li><a href="/trainer">Home</a></li>
             <li><a href="/trainer/profileTrainer">Update Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         </div>
-        <h1 style="font-weight: 100;">View Trainees regisrered for course</h1>
+        <h1 style="font-weight: 100;">View Trainees regisrered for course: {{o}}</h1>
         {{#each t}}
         {{this}}
         <a href="/trainer/scoring">Scoring</a> <br><br>

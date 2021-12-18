@@ -8,29 +8,29 @@ router.get('/', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const view = await dbo.collection("Trainers").findOne({ "userName": user.name })
-    
-    res.render('trainerIndex', {user : user, courses: view.Courses})
+
+    res.render('trainerIndex', { user: user, courses: view.Courses })
 })
 
 router.get('/detailCourse', requireTrainer, async (req, res) => {
-    const user = req.session["User"]
-    const dbo = await getDB()
+    const user = req.session["Trainer"]
     const courseID = req.query.courseID
-    const view = await dbo.collection("Course").findOne({ "courseID": courseID})
-
-    res.render('detailCourse', { userInfo: user, t: view.trainees })
+    const dbo = await getDB()
+    const view = await dbo.collection("Course").findOne({ "courseID": courseID })
+    console.log(view.trainees)
+    res.render('detailCourse', { user: user, t : view.trainees, o: courseID })
 })
 
 router.get('/scoring', requireTrainer, (req, res) => {
-    const user = req.session["User"]
-    res.render('scoring', { userInfo: user })
+    const user = req.session["Trainer"]
+    res.render('scoring', { user: user })
 })
 
-router.post('scoring', requireTrainer, (req,res)=>{
-    
+router.post('scoring', requireTrainer, (req, res) => {
+
 })
 
-router.get('/profileTrainer', requireTrainer, async(req, res) => {
+router.get('/profileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
@@ -39,14 +39,14 @@ router.get('/profileTrainer', requireTrainer, async(req, res) => {
 })
 
 
-router.get('/updateProfileTrainer', requireTrainer, async(req, res) => {
+router.get('/updateProfileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
     res.render('updateProfileTrainer', { data: trainer })
 })
 
-router.post('/updateProfileTrainer', requireTrainer, async(req, res) => {
+router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
     const id = req.body.txtId
     const name = req.body.trainerName
     const age = req.body.trainerAge
