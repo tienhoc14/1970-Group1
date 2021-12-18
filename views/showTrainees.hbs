@@ -22,17 +22,17 @@
 			<li><a href="/staff/profileStaff">Profile</a></li>
 			<li><a href="/logout">Logout</a></li>
 		</div>
-		<h1 style="font-weight: 100;">Course: {{course.courseID}} </h1>
+		<h1 style="font-weight: 100;">Course: {{o.courseID}} </h1>
 		<form action="addTraineesToCourse" method="POST">
-			<input type="hidden" value="{{course._id}}" name="txtID">
+			<input type="hidden" value="{{o._id}}" name="txtID">
 			{{!-- old trainees --}}
-			{{#each course.Trainees}}
-			<input type="checkbox" checked id="" name="TB" value="{{this}}"> {{this}} <br>
+			{{#each o.trainees}}
+			<input type="checkbox" checked id="" name="CB" value="{{this}}"> {{this}} <br>
 			{{/each}}
 
 			{{!-- new trainees --}}
 			{{#each new}}
-			<input type="checkbox" id="" name="TB" value="{{this}}">
+			<input type="checkbox" id="" name="CB" value="{{this}}">
 			{{this}}
 			<br>
 			{{/each}}
