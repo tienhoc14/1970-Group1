@@ -202,6 +202,8 @@ router.get('/assignTrainee', requireStaff, (req, res) => {
     res.render('assignTrainee')
 })
 
+
+
 //Minh:
 
 
