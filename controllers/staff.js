@@ -53,7 +53,11 @@ router.post('/updateProfileStaff', requireStaff, async (req, res) => {
     res.render('profileStaff', { staff: st });
 })
 
-
+router.get('/staffPage', requireStaff, async(req, res) => {
+    const db = await getDB();
+    const viewTrainees = await db.collection("trainees").find({}).toArray();
+    res.render('staffPage', { data: viewTrainees });
+})
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
 })
@@ -113,6 +117,17 @@ router.post('/updateTrainee', requireStaff, async (req, res) => {
 
     res.redirect('staffPage');
 })
+router.post('/searchTrainee', requireStaff, async(req, res) => {
+    const searchName = req.body.txtSearch;
+
+    const db = await getDB();
+    const searchTrainee = await db.collection("trainees").find({name: searchName}).toArray();
+
+    res.render('staffPage', { data: searchTrainee })
+})
+
+
+
 router.get('/assignTrainer', requireStaff, (req, res) => {
 
 })
