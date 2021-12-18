@@ -13,7 +13,7 @@
 
 <body>
     <h2 style="text-align: center;">Welcome Trainer Page</h2>
-    <center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
+    <center><a href="/trainer"><img src="/images/Logo.png" width="250" height="120" /></a></center>
     <h3>{{user.name}}</h3>
     <h3>Role: {{user.role}}</h3>
     <center>
@@ -25,7 +25,7 @@
         <h1 style="font-weight: 100;">View Trainees regisrered for course: {{o}}</h1>
         {{#each t}}
         {{this}}
-        <a href="/trainer/scoring">Scoring</a> <br><br>
+        <a href="/trainer/scoring?userName={{this}}">Scoring</a> <br><br>
         {{/each}}
     </center>
 </body>

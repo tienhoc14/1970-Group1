@@ -245,12 +245,12 @@ router.get('/showTrainees', async (req, res) => {
     const newTrainees = []
     if (o.trainees == null) {
         trainees.forEach(e => {
-            newTrainees.push(e.name)
+            newTrainees.push(e.userName)
         });
     } else {
         trainees.forEach(e => {
-            if (!o.trainees.includes(e.name)) {
-                newTrainees.push(e.name)
+            if (!o.trainees.includes(e.userName)) {
+                newTrainees.push(e.userName)
             }
         });
     }
