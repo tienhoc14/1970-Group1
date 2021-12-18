@@ -18,7 +18,7 @@ router.get('/detailCourse', requireTrainer, async (req, res) => {
     const dbo = await getDB()
     const view = await dbo.collection("Course").findOne({ "courseID": courseID })
     console.log(view.trainees)
-    res.render('detailCourse', { user: user, t : view.trainees, o: courseID })
+    res.render('detailCourse', { user: user, t: view.trainees, o: courseID })
 })
 
 router.get('/scoring', requireTrainer, (req, res) => {
