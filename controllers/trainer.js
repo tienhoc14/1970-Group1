@@ -12,9 +12,13 @@ router.get('/', requireTrainer, async (req, res) => {
     res.render('trainerIndex', {user : user, courses: view.Courses})
 })
 
-router.get('/detailCourse', requireTrainer, (req, res) => {
+router.get('/detailCourse', requireTrainer, async (req, res) => {
     const user = req.session["User"]
-    res.render('detailCourse', { userInfo: user })
+    const dbo = await getDB()
+    const courseID = req.query.courseID
+    const view = await dbo.collection("Course").findOne({ "courseID": courseID})
+
+    res.render('detailCourse', { userInfo: user, t: view.trainees })
 })
 
 router.get('/scoring', requireTrainer, (req, res) => {

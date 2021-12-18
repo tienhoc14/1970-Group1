@@ -17,13 +17,15 @@
     <h3>Role: {{userInfo.role}}</h3>
     <center>
         <div class="function">
-            <li><a href="/">Home</a></li>
+            <li><a href="/trainer">Home</a></li>
             <li><a href="/trainer/profileTrainer">Update Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View Trainees regisrered for course</h1>
-        
-        <a href="/trainer/scoring">Scoring</a>
+        {{#each t}}
+        {{this}}
+        <a href="/trainer/scoring">Scoring</a> <br><br>
+        {{/each}}
     </center>
 </body>
 
