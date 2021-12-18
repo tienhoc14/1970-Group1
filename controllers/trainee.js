@@ -19,9 +19,17 @@ router.get('/viewClass', requireTrainee, (req, res) => {
     res.render("viewClassmates")
 })
 
-router.get('/viewMyCourse', requireTrainee, (req, res) => {
-    res.render("viewCourse")
+router.get('/viewMyCourse', requireTrainee, async (req, res) => {
+    const user = req.session["Trainee"]
+
+    const dbo = await getDB();
+    const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
+    res.render("viewMyCourse", {data: trainee.Courses})
 })
+
+router.get('/join', requireTrainee, async (req,res)=>{
+
+});
 
 router.get('/view', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
@@ -76,6 +84,5 @@ router.post('/search', requireTrainee, async(req, res) => {
     const allCourse = await dbo.collection("Course").find({ courseID: searchCoures }).toArray();
     res.render("searchCourse", { data: allCourse })
 })
-
 
 module.exports = router;
