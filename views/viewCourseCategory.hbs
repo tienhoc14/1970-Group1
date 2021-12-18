@@ -22,19 +22,16 @@
     <table bolder=3>
         <div>
             <tr>
-                <th>Course Category ID</th>
                 <th>Course Category Name</th>
                 <th>Descripton</th>
-                <th></th>
-                <th></th>
+                <th>Controler</th>
             </tr>
             {{#each bas}}
             <tr>
-                <td>{{courseCategoryID}}</td>
                 <td>{{courseCategoryName}}</td>
                 <td>{{descriptionCourseCategory}}</td>
-                <td><a href="/staff/editCourseCategory?id={{_id}}">Edit</a></td>
-                <td><a href="/staff/deteleCoursecategory?id={{_id}}">Delete</a></td>
+                <td><a href="/staff/updateCourseCategory?id={{_id}}">Edit</a></td>
+                <td><a href="/staff/deleteCourseCategory?id={{_id}}">Delete</a></td>
             </tr>
         </div>
         {{/each}}

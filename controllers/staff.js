@@ -173,12 +173,10 @@ router.get('/addCourseCategory', requireStaff, (req, res) => {
     res.render('addCourseCategory')
 })
 router.post('/addCourseCategory', (req, res) => {
-    const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
 
     const InsertCourseCategory = {
-        courseCategoryID: coursecategory_ID,
         courseCategoryName: coursecategory_Name,
         descriptionCourseCategory: description_CourseCategory,
     }
@@ -191,18 +189,16 @@ router.post('/addCourseCategory', (req, res) => {
 router.get('/updateCourseCategory', requireStaff, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
-    const coursecategory = await dbo.collection("Staff").findOne({ "_id": ObjectId(id) })
+    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
     res.render('editCourseCategory', { bas : coursecategory })
 })
 
 router.post('/editCourseCategory', requireStaff, async (req, res) => {
-    const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
 
     const updateToCourseCategory = {
         $set: {
-            courseCategoryID: coursecategory_ID,
             courseCategoryName: coursecategory_Name,
             descriptionCourseCategory: description_CourseCategory,
         }
@@ -211,8 +207,16 @@ router.post('/editCourseCategory', requireStaff, async (req, res) => {
     const dbo = await getDB()
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
-    const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { bas : category })
+    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
+    res.render('viewCourseCategory', { bas : coursecategory })
+})
+
+router.get("/deleteCourseCategory", async (req, res) => {
+    const id = req.query.id;
+
+    const dbo = await getDB();
+    await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
+    res.redirect("viewCourseCategory")
 })
 
 //End code
