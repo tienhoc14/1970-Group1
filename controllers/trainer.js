@@ -26,15 +26,19 @@ router.get('/scoring', requireTrainer, async (req, res) => {
     const nameTrainee = req.query.userName
     const dbo = await getDB()
     const t = await dbo.collection("trainees").findOne({ "userName": nameTrainee })
-    res.render('scoring', { user: user, t: t.name })
+    res.render('scoring', { user: user, t: t })
 })
 
 router.get('/showScore', requireTrainer, async (req, res) => {
-
+    
+    res.render('showScore')
 })
 
 router.post('scoringTrainee', requireTrainer, async (req, res) => {
+    const id = req.body.txtId
     
+
+    res.redirect('/trainer/showScore')
 })
 
 

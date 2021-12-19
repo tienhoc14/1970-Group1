@@ -245,11 +245,18 @@ router.get('/showTrainees', async(req, res) => {
     const db = await getDB();
     const o = await db.collection("Course").findOne({ _id: ObjectId(id) });
     const trainees = await db.collection("trainees").find({}).toArray();
-
+    
     const newTrainees = []
     if (o.trainees == null) {
         trainees.forEach(e => {
             newTrainees.push(e.userName)
+        });
+    } else if (!Array.isArray(o.trainees)) {
+        o.trainees = [o.trainees]
+        trainees.forEach(e => {
+            if (!o.trainees.includes(e.userName)) {
+                newTrainees.push(e.userName)
+            }
         });
     } else {
         trainees.forEach(e => {
@@ -258,12 +265,9 @@ router.get('/showTrainees', async(req, res) => {
             }
         });
     }
-    console.log("old: " + o.trainees)
-    console.log("new: " + newTrainees)
+
     res.render('showTrainees', { o: o, new: newTrainees });
 })
-
-
 
 
 router.get('/addTrainerForCourses', async(req, res) => {
