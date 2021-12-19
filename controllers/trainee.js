@@ -24,54 +24,29 @@ router.get('/viewMyCourse', requireTrainee, async (req, res) => {
     const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
     res.render("viewMyCourse", {data: trainee.Courses})
 })
-router.post('/joinCourse', async(req, res) => {
-    const id = req.body.txtID;
-    const courseID = req.body.CB;
-    const dbo = await getDB();
-    const filter = { _id: ObjectId(id) }
-    const traineeAssignCourse = {
-        $set: {
-            Courses: courseID
-        }
-    }
-    await dbo.collection("Trainers").updateOne(filter, traineeAssignCourse)
 
-    res.redirect('viewMyCourse')
-})
+
 router.get('/joinCourse', requireTrainee, async (req,res)=>{
     const id = req.query.id;
-    const user = req.session["Trainee"]
+    const user = req.session["Trainee"];
 
     const db = await getDB();
     const me = await db.collection("trainees").findOne({ "userName": user.name });
     const course = await db.collection("Course").findOne({ _id: ObjectId(id) });
 
-    const newCourses = [];
-    const newTrainees = [];
-    if(!Array.isArray(me.Courses) || !Array.isArray(course.traineeName)){
-        me.Courses = [me.Courses]
-        course.traineeName = [course.traineeName]
-        newCourses.push(me.courseID)
-        newTrainees.push(course.name)
-    }else{
-        if(me.Courses == null || course.traineeName == null){
-            newCourses.push(me.courseID)
-            newTrainees.push(course.name)
-        }else{
-            course.forEach(c=>{
-                if(!me.Courses.includes(c.courseID)){
-                    me.forEach(m=>{
-                        if(!course.traineeName.includes(m.name)){
-                            newCourses.push(me.courseID)
-                            newTrainees.push(course.name)
-                        }
-                    })
-                    
-                }
-            })
+    me.forEach(c=>{
+        if(!trainee.Course.includes(course.courseID)){
+            trainee.Course.push(course.courseID)
         }
-    }
-    res.render('viewMyCourse', { trainee: me, new: newCourses, course:course });
+    })
+    course.forEach(c=>{
+        if(!course.trainees.includes(me.name)){
+            course.trainees.push(me.name)
+        }
+    })
+
+
+    res.render('viewMyCourse', { t: me, c:course });
 });
 
 router.get('/view', requireTrainee, async(req, res) => {

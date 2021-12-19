@@ -42,6 +42,7 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
             speciality: spec,
             address: address,
             phone_number: phone
+            
         }
     }
 
@@ -68,6 +69,7 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
+    const Course = [];
 
     const newAccountTrainee = {
         userName: userName,
@@ -80,7 +82,8 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         age: ageInput,
         specialty: specialtyInput,
         address: addressInput,
-        userName: userName
+        userName: userName,
+        Course:Course
     }
 
     insertObject('Users', newAccountTrainee);
