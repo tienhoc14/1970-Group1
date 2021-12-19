@@ -16,7 +16,7 @@ router.get('/viewClass', requireTrainee, (req, res) => {
 
     // const dbo = await getDB();
     // const viewClass = await dbo.collection('').find({classId: searchInput}).toArray();
-    res.render("viewClassmates")
+    res.render("viewClass")
 })
 
 router.get('/viewMyCourse', requireTrainee, async (req, res) => {

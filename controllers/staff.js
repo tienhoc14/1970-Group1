@@ -52,10 +52,10 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
     res.render('profileStaff', { staff: st });
 })
 
-router.get('/staffPage', requireStaff, async(req, res) => {
+router.get('/viewTrainees', requireStaff, async(req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("trainees").find({}).toArray();
-    res.render('staffPage', { data: viewTrainees });
+    res.render('viewTrainees', { data: viewTrainees });
 })
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
@@ -86,14 +86,14 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     insertObject('Users', newAccountTrainee);
     insertObject('trainees', newProfileTrainee);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.get('/deteleTrainee', requireStaff, async(req, res) => {
     const trainee = req.query.userName;
 
     await DeleteTrainee(trainee);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.get('/editTrainee', requireStaff, async(req, res) => {
     const id = req.query.id;
@@ -113,7 +113,7 @@ router.post('/updateTrainee', requireStaff, async(req, res) => {
 
     UpdateTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.post('/searchTrainee', requireStaff, async(req, res) => {
     const searchName = req.body.txtSearch;
@@ -121,7 +121,7 @@ router.post('/searchTrainee', requireStaff, async(req, res) => {
     const db = await getDB();
     const searchTrainee = await db.collection("trainees").find({ name: searchName }).toArray();
 
-    res.render('staffPage', { data: searchTrainee })
+    res.render('viewTrainees', { data: searchTrainee })
 })
 
 
