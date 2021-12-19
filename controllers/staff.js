@@ -42,7 +42,7 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
             speciality: spec,
             address: address,
             phone_number: phone
-            
+
         }
     }
 
@@ -83,7 +83,7 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         specialty: specialtyInput,
         address: addressInput,
         userName: userName,
-        Course:Course
+        Course: Course
     }
 
     insertObject('Users', newAccountTrainee);
@@ -148,13 +148,14 @@ router.post('/addCourse', (req, res) => {
     const tutorInput = req.body.txtTutor;
     const categoryCourse = req.body.txtCategoryCourse;
     const descriptionCourse = req.body.txtDescription;
-
+    const trainee = []
     const InsertCourse = {
         courseID: courseIDInput,
         courseName: courseName,
         tutor: tutorInput,
         categoryCourse: categoryCourse,
         descriptionCourse: descriptionCourse,
+        trainees: trainee
     }
 
     insertObject('Course', InsertCourse)
@@ -191,7 +192,7 @@ router.get('/updateCourseCategory', requireStaff, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('editCourseCategory', { bas : coursecategory })
+    res.render('editCourseCategory', { bas: coursecategory })
 })
 
 router.post('/editCourseCategory', requireStaff, async(req, res) => {
@@ -209,10 +210,10 @@ router.post('/editCourseCategory', requireStaff, async(req, res) => {
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { bas : coursecategory })
+    res.render('viewCourseCategory', { bas: coursecategory })
 })
 
-router.get("/deleteCourseCategory", async (req, res) => {
+router.get("/deleteCourseCategory", async(req, res) => {
     const id = req.query.id;
     const dbo = await getDB();
     await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
@@ -267,7 +268,7 @@ router.get('/showTrainees', async(req, res) => {
     const db = await getDB();
     const o = await db.collection("Course").findOne({ _id: ObjectId(id) });
     const trainees = await db.collection("trainees").find({}).toArray();
-    
+
     const newTrainees = []
     if (o.trainees == null) {
         trainees.forEach(e => {

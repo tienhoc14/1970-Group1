@@ -77,6 +77,11 @@ a {
     height: 30px;
 }
 
+.search input:hover {
+    background-color: gainsboro;
+    border-radius: 5px;
+}
+
 .profile {
     display: flex;
 }
