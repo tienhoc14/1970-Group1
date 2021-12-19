@@ -18,11 +18,36 @@
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
     <form class="s" action="/trainee/search" method="POST">
         <input type="text" name="txtSearch" placeholder="Search Course">
+        <br>
     </form>
-    <br>
     <div class="function">
         <li><a class="home" href="/trainee">Home</a></li>
         <li><a class="course" href="/trainee/viewMyCourse">My Course</a></li>   
     </div>
+    <form action = "joinCourse" method="POST" >
+    <table bolder = 3>
+        <div>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Tutor</th>
+                <th>Category</th>
+                <th>Descripton</th>
+                <th>Option</th>
+            </tr>
+            {{#each course}}
+            <tr>
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
+                <td>{{categoryCourse}}</td>
+                <td>{{descriptionCourse}}</td>
+                <td><a href="/trainee/joinCourse?id={{_id}}">Join</a></td>
+            </tr>
+            {{/each}}
+            
+        </div>
+    </table>
+    </form>
 </body>
 </html>

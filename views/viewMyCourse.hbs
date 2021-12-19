@@ -26,17 +26,18 @@
         <li><a class="course" href="/trainee/viewClass">View Classmates</a></li>   
     </div>
     <br>
+    
     <table>
         <tr>
             <th>Course ID</th>
             <th>Name Course</th>
             <th>Trainer</th>
         </tr>
-        {{#each data}}
+        {{#each trainee}}
         <tr>
-                <td>{{courseID}}</td>
-                <td>{{courseName}}</td>
-                <td>{{tutor}}</td>
+            <td>{{this}}</td>
+            <td>{{courseName}}</td>
+            <td>{{tutor}}</td>
         </tr>
         {{/each}}
     </table>
