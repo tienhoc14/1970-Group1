@@ -291,7 +291,6 @@ router.get('/showTrainees', async(req, res) => {
     res.render('showTrainees', { o: o, new: newTrainees });
 })
 
-``
 router.get('/addTrainerForCourses', async(req, res) => {
     const db = await getDB();
     const viewCourses = await db.collection("Trainers").find({}).toArray();
