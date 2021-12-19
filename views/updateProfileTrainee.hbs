@@ -25,7 +25,7 @@
         <li><a class="class" href="/trainee/viewClass">View Classmates</a></li>    
     </div>
     <br>
-    <div>
+    <div class="update">
     <form action="update" method = "POST">
         <input type="hidden" name="txtId" value="{{trainee._id}}">
         FullName: <input type="text" name="txtName" value="{{trainee.name}}" />
@@ -33,6 +33,7 @@
         Age: <input type="text" name="txtAge" value="{{trainee.age}}" />
         <br>
         Email: <input type="email" name="txtEmail" value="{{trainee.email}}">
+        <br>
         Specialty: <input type="text" name="txtSpecialty" value = "{{trainee.specialty}}">
         <br>
         Address: <input type="text" name="txtAddress" value = "{{trainee.address}}">
