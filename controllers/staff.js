@@ -174,12 +174,10 @@ router.get('/addCourseCategory', requireStaff, (req, res) => {
     res.render('addCourseCategory')
 })
 router.post('/addCourseCategory', (req, res) => {
-    const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
 
     const InsertCourseCategory = {
-        courseCategoryID: coursecategory_ID,
         courseCategoryName: coursecategory_Name,
         descriptionCourseCategory: description_CourseCategory,
     }
@@ -189,14 +187,19 @@ router.post('/addCourseCategory', (req, res) => {
     res.redirect('viewCourseCategory');
 })
 
+router.get('/updateCourseCategory', requireStaff, async(req, res) => {
+    const id = req.query.id
+    const dbo = await getDB()
+    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
+    res.render('editCourseCategory', { bas : coursecategory })
+})
+
 router.post('/editCourseCategory', requireStaff, async(req, res) => {
-    const coursecategory_ID = req.body.txtCourseCategoryID;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
 
     const updateToCourseCategory = {
         $set: {
-            courseCategoryID: coursecategory_ID,
             courseCategoryName: coursecategory_Name,
             descriptionCourseCategory: description_CourseCategory,
         }
@@ -205,8 +208,24 @@ router.post('/editCourseCategory', requireStaff, async(req, res) => {
     const dbo = await getDB()
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
+    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
+    res.render('viewCourseCategory', { bas : coursecategory })
+})
+
+router.get("/deleteCourseCategory", async (req, res) => {
+    const id = req.query.id;
+    const dbo = await getDB();
+    await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
     const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
     res.render('viewCourseCategory', { bas: category })
+})
+
+router.post('/searchCourseCategory', async(req, res) => {
+    const search = req.body.txtSearch
+    const id = req.session["Staff"]
+    const dbo = await getDB()
+    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": search })
+    res.render('detailTrainer', { search: coursecategory, id: id })
 })
 
 //End code
@@ -272,7 +291,7 @@ router.get('/showTrainees', async(req, res) => {
     res.render('showTrainees', { o: o, new: newTrainees });
 })
 
-
+``
 router.get('/addTrainerForCourses', async(req, res) => {
     const db = await getDB();
     const viewCourses = await db.collection("Trainers").find({}).toArray();

@@ -13,12 +13,11 @@
 <body>
     <h2>Course Category</h2>
     <form action="editCourseCategory" method="post">
-        <input type="hidden" name="txtId" value="{{bas._id}}">
-        Course Category ID: <input type="text" name="txtCourseCategoryID" value="{{bas.courseCategoryID}}"> <br>
+        <input type="hidden" name="txtCourseCategoryID" value="{{bas._id}}">
         Name: <input type="text" name="txtCourseCategoryName" value="{{bas.courseCategoryName}}"><br>
         Descripton: <input type="text" name="txtDescriptionCourseCategory" value="{{bas.descriptionCourseCategory}}"><br>
         <input type="submit" value="Save">
-        <a href="/admin/updateCourseCategory?id={{bas._id}}">Update</a>
+        <a href="/staff/viewCourseCategory">Cancel</a>
     </form>
 </body>
 
