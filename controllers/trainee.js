@@ -11,17 +11,43 @@ router.get('/', requireTrainee, (req, res) => {
     res.render('traineeIndex')
 })
 
-router.get('/viewClass', requireTrainee, (req, res) => {
-    // const searchInput = req.body.txtSearch;
-
-    // const dbo = await getDB();
-    // const viewClass = await dbo.collection('').find({classId: searchInput}).toArray();
-    res.render("viewClassmates")
+router.get('/viewClass', requireTrainee, async(req, res) => {
+    const db = await getDB();
+    const viewTrainees = await db.collection("Course").find({}).toArray();
+    res.render("viewClass",{ course: viewTrainees });
 })
 
-router.get('/viewMyCourse', requireTrainee, (req, res) => {
-    res.render("viewCourse")
+router.get('/viewMyCourse', requireTrainee, async (req, res) => {
+    const user = req.session["Trainee"]
+
+    const dbo = await getDB();
+    const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
+    res.render("viewMyCourse", {data: trainee.Courses})
 })
+
+
+router.get('/joinCourse', requireTrainee, async (req,res)=>{
+    const id = req.query.id;
+    const user = req.session["Trainee"];
+
+    const db = await getDB();
+    const me = await db.collection("trainees").findOne({ "userName": user.name });
+    const course = await db.collection("Course").findOne({ _id: ObjectId(id) });
+
+    me.forEach(c=>{
+        if(!trainee.Course.includes(course.courseID)){
+            trainee.Course.push(course.courseID)
+        }
+    })
+    course.forEach(c=>{
+        if(!course.trainees.includes(me.name)){
+            course.trainees.push(me.name)
+        }
+    })
+
+
+    res.render('viewMyCourse', { t: me, c:course });
+});
 
 router.get('/view', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
@@ -76,6 +102,5 @@ router.post('/search', requireTrainee, async(req, res) => {
     const allCourse = await dbo.collection("Course").find({ courseID: searchCoures }).toArray();
     res.render("searchCourse", { data: allCourse })
 })
-
 
 module.exports = router;

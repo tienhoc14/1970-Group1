@@ -42,6 +42,7 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
             speciality: spec,
             address: address,
             phone_number: phone
+            
         }
     }
 
@@ -52,10 +53,10 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
     res.render('profileStaff', { staff: st });
 })
 
-router.get('/staffPage', requireStaff, async(req, res) => {
+router.get('/viewTrainees', requireStaff, async(req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("trainees").find({}).toArray();
-    res.render('staffPage', { data: viewTrainees });
+    res.render('viewTrainees', { data: viewTrainees });
 })
 router.get('/addTrainee', requireStaff, (req, res) => {
     res.render("addTrainee")
@@ -68,6 +69,7 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
     const ageInput = req.body.txtAge;
     const specialtyInput = req.body.txtSpecialty;
     const addressInput = req.body.txtAddress;
+    const Course = [];
 
     const newAccountTrainee = {
         userName: userName,
@@ -80,20 +82,21 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         age: ageInput,
         specialty: specialtyInput,
         address: addressInput,
-        userName: userName
+        userName: userName,
+        Course:Course
     }
 
     insertObject('Users', newAccountTrainee);
     insertObject('trainees', newProfileTrainee);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.get('/deteleTrainee', requireStaff, async(req, res) => {
     const trainee = req.query.userName;
 
     await DeleteTrainee(trainee);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.get('/editTrainee', requireStaff, async(req, res) => {
     const id = req.query.id;
@@ -113,7 +116,7 @@ router.post('/updateTrainee', requireStaff, async(req, res) => {
 
     UpdateTrainee(id, nameInput, emailInput, ageInput, specialtyInput, addressInput);
 
-    res.redirect('staffPage');
+    res.redirect('viewTrainees');
 })
 router.post('/searchTrainee', requireStaff, async(req, res) => {
     const searchName = req.body.txtSearch;
@@ -121,7 +124,7 @@ router.post('/searchTrainee', requireStaff, async(req, res) => {
     const db = await getDB();
     const searchTrainee = await db.collection("trainees").find({ name: searchName }).toArray();
 
-    res.render('staffPage', { data: searchTrainee })
+    res.render('viewTrainees', { data: searchTrainee })
 })
 
 
@@ -238,20 +241,55 @@ router.get('/assignTrainee', requireStaff, (req, res) => {
 
 //Minh:
 
-
 router.get('/addTraineeForCourses', async(req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("Course").find({}).toArray();
     res.render('addTraineeForCourses', { course: viewTrainees });
 })
 
+router.post('/addTraineesToCourse', async(req, res) => {
+    const id = req.body.txtID;
+    const userName = req.body.CB;
+    const dbo = await getDB();
+    const filter = { _id: ObjectId(id) }
+    const traineeToCourse = {
+        $set: {
+            trainees: userName
+        }
+    }
+    await dbo.collection("Course").updateOne(filter, traineeToCourse)
+
+    res.redirect('/staff/addTraineeForCourses')
+})
+
 router.get('/showTrainees', async(req, res) => {
     const id = req.query.id;
     const db = await getDB();
-    const c = await db.collection("Course").findOne({ _id: ObjectId(id) });
-    res.render('showTrainees', { course: c });
-})
+    const o = await db.collection("Course").findOne({ _id: ObjectId(id) });
+    const trainees = await db.collection("trainees").find({}).toArray();
+    
+    const newTrainees = []
+    if (o.trainees == null) {
+        trainees.forEach(e => {
+            newTrainees.push(e.userName)
+        });
+    } else if (!Array.isArray(o.trainees)) {
+        o.trainees = [o.trainees]
+        trainees.forEach(e => {
+            if (!o.trainees.includes(e.userName)) {
+                newTrainees.push(e.userName)
+            }
+        });
+    } else {
+        trainees.forEach(e => {
+            if (!o.trainees.includes(e.userName)) {
+                newTrainees.push(e.userName)
+            }
+        });
+    }
 
+    res.render('showTrainees', { o: o, new: newTrainees });
+})
 
 ``
 router.get('/addTrainerForCourses', async(req, res) => {
@@ -262,6 +300,20 @@ router.get('/addTrainerForCourses', async(req, res) => {
 
 })
 
+router.post('/addCoursesToTrainer', async(req, res) => {
+    const id = req.body.txtID;
+    const courseID = req.body.CB;
+    const dbo = await getDB();
+    const filter = { _id: ObjectId(id) }
+    const coursesToTrainer = {
+        $set: {
+            Courses: courseID
+        }
+    }
+    await dbo.collection("Trainers").updateOne(filter, coursesToTrainer)
+
+    res.redirect('/staff/addTrainerForCourses')
+})
 
 router.get('/showCourses', async(req, res) => {
     const id = req.query.id;
@@ -290,21 +342,6 @@ router.get('/showCourses', async(req, res) => {
     }
 
     res.render('showCourses', { trainer: t, new: newCourses });
-})
-
-router.post('/addCoursesToTrainer', async(req, res) => {
-    const id = req.body.txtID;
-    const courseID = req.body.CB;
-    const dbo = await getDB();
-    const filter = { _id: ObjectId(id) }
-    const coursesToTrainer = {
-        $set: {
-            Courses: courseID
-        }
-    }
-    await dbo.collection("Trainers").updateOne(filter, coursesToTrainer)
-
-    res.redirect('/staff/addTrainerForCourses')
 })
 
 module.exports = router;
