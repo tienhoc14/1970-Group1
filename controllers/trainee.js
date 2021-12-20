@@ -22,37 +22,32 @@ router.get('/viewClass', requireTrainee, async(req, res) => {
     res.render("viewClass", {data: trainee.Course, t: course.Trainee})
 })
 
-router.get('/viewMyCourse', requireTrainee, async (req, res) => {
+router.get('/viewMyCourse', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
 
     const dbo = await getDB();
-    const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
-    res.render("viewMyCourse", {data: trainee.Courses})
+    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
+    res.render("viewMyCourse", { data: trainee.Courses })
 })
 
+router.get('/join', requireTrainee, async(req, res) => {
+    const user = req.session["Trainee"]
+    const courseID = req.query.id
 
-router.get('/joinCourse', requireTrainee, async (req,res)=>{
-    const id = req.query.id;
-    const user = req.session["Trainee"];
+    const db = await getDB()
+    const trainee = await db.collection("trainees").findOne({ "userName": user.name })
+    const course = await db.collection("Course").findOne({ _id: ObjectId(courseID) })
 
-    const db = await getDB();
-    const me = await db.collection("trainees").findOne({ "userName": user.name });
-    const course = await db.collection("Course").findOne({ _id: ObjectId(id) });
+    trainee.Course.push(course.courseID)
+    const updateT = trainee.Course
+    course.trainees.push(trainee.userName)
+    const updateC = course.trainees
 
-    me.forEach(c=>{
-        if(!trainee.Course.includes(course.courseID)){
-            trainee.Course.push(course.courseID)
-        }
-    })
-    course.forEach(c=>{
-        if(!course.trainees.includes(me.name)){
-            course.trainees.push(me.name)
-        }
-    })
+    await db.collection("trainees").updateOne({ "userName": user.name }, { $set: { "Course": updateT } })
+    await db.collection("Course").updateOne({ _id: ObjectId(courseID) }, { $set: { "trainees": updateC } })
 
-
-    res.render('viewMyCourse', { t: me, c:course });
-});
+    res.render('viewMyCourse')
+})
 
 router.get('/view', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
@@ -87,7 +82,7 @@ router.post('/update', requireTrainee, async(req, res) => {
             address: addressInput,
         }
     }
-    
+
     const filter = { _id: ObjectId(id) }
     const dbo = await getDB()
     await dbo.collection("trainees").updateOne(filter, UpdateTrainee)
@@ -107,5 +102,7 @@ router.post('/search', requireTrainee, async(req, res) => {
     const allCourse = await dbo.collection("Course").find({ courseID: searchCoures }).toArray();
     res.render("searchCourse", { data: allCourse })
 })
+
+
 
 module.exports = router;
