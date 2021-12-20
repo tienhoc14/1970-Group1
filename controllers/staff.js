@@ -2,7 +2,7 @@ const express = require('express');
 const async = require('hbs/lib/async');
 const router = express.Router()
 const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
-const { requireStaff } = require('../projectLibrary');
+const { requireStaff, requireTrainee } = require('../projectLibrary');
 router.use(express.static('public'))
 
 router.get('/staffPage', requireStaff, async(req, res) => {
@@ -149,6 +149,7 @@ router.post('/addCourse', (req, res) => {
     const tutorInput = req.body.txtTutor;
     const categoryCourse = req.body.txtCategoryCourse;
     const descriptionCourse = req.body.txtDescription;
+    const trainee = [];
 
     const InsertCourse = {
         courseID: courseIDInput,
@@ -156,6 +157,7 @@ router.post('/addCourse', (req, res) => {
         tutor: tutorInput,
         categoryCourse: categoryCourse,
         descriptionCourse: descriptionCourse,
+        trainees: trainee
     }
 
     insertObject('Course', InsertCourse)
@@ -348,6 +350,14 @@ router.get('/showCourses', async(req, res) => {
     }
 
     res.render('showCourses', { trainer: t, new: newCourses });
+})
+
+//hoa
+router.get('/delete', requireStaff, async(req, res)=>{
+    const id = req.query.id;
+    const dbo = await getDB();
+    const d = await dbo.collection("Course").deleteOne({ "_id": ObjectId(id)});
+    res.redirect("viewCourse")
 })
 
 module.exports = router;

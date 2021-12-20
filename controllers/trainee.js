@@ -11,17 +11,6 @@ router.get('/', requireTrainee, (req, res) => {
     res.render('traineeIndex')
 })
 
-router.get('/viewClass', requireTrainee, async(req, res) => {
-    const user = req.session["Trainee"]
-    const courseID = req.query.courseID
-
-    const dbo = await getDB();
-    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
-    const course = await dbo.collection("Course").findOne({ "courseID": courseID })
-
-    res.render("viewClass", {data: trainee.Course, t: course.trainees})
-})
-
 router.get('/viewMyCourse', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
 
@@ -38,6 +27,19 @@ router.get('/viewMyCourse', requireTrainee, async(req, res) => {
     res.render("viewMyCourse", { course: mycourse })
 })
 
+router.get('/detail', requireTrainee, async (req,res)=>{
+    const id = req.query.courseID
+    const dbo = await getDB();
+    const myclass = []
+
+    const trainee = await dbo.collection("trainees").find({}).toArray()
+    trainee.forEach(t=>{
+        if (t.Course.includes(id)){
+            myclass.push(t)
+        }
+    })
+    res.render("detailClass", {classmate: myclass})
+})
 
 router.get('/join', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]

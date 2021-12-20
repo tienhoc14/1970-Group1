@@ -22,25 +22,25 @@
     </form>
     <br>
     <div class="function">
-        <li><a class="home" href="/trainee">Home</a></li>
-        <li><a class="course" href="/trainee/viewClass">View Classmates</a></li>   
+        <li><a class="home" href="/trainee">Home</a></li>  
     </div>
     <br>
     <form action = "joinCourse" method="POST" ></form>
-    <center><h2>Trainees regisrered for course:{{t}}</h2></center>
-    {{!-- <table>
+    <table>
         <tr>
-            <th>Name</th>
-            <th>UserName</th>
-            <th>Course</th>
+            <th>CourseID</th>
+            <th>CouesName</th>
+            <th>Tutor</th>
+            <th>Detail</th>
         </tr>
-        {{#each t}}
+        {{#each course}}
             <tr>
-                <td>{{name}}</td>
-                <td>{{userName}}</td>
-                <td>{{Course}}</td>
+                <td>{{courseID}}</td>
+                <td>{{courseName}}</td>
+                <td>{{tutor}}</td>
+                <td><a href="/trainee/detail?courseID={{courseID}}">Detail</a></td>
             </tr>
         {{/each}}
-    </table> --}}
+    </table>
 </body>
 </html>
