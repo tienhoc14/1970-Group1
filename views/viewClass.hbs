@@ -12,7 +12,7 @@
     <div class="header">
         <img src="/images/avt.jpeg" width="3%">
         <li><a href="/trainee/update">Update profile</a></li>
-        <li><a href="">Logout</a></li>
+        <li><a href="/logout">Logout</a></li>
     </div>
     <br>
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
@@ -29,20 +29,12 @@
         <div>
             <tr>
                 <th>Course ID</th>
-                <th>Course Name</th>
-                <th>Tutor</th>
-                <th>Category</th>
-                <th>Descripton</th>
-                <th>Option</th>
+                <th>Detail</th>
             </tr>
-            {{#each course}}
+            {{#each data}}
             <tr>
-                <td>{{courseID}}</td>
-                <td>{{courseName}}</td>
-                <td>{{tutor}}</td>
-                <td>{{categoryCourse}}</td>
-                <td>{{descriptionCourse}}</td>
-                <td><a href="/trainee/joinCourse?id={{_id}}">Join</a></td>
+                <td>{{this}}</td>
+                <td><a href="/trainee/detail?userName={{userName}}">Detail</a></td>
             </tr>
             {{/each}}
             
