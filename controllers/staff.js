@@ -1,4 +1,5 @@
 const express = require('express');
+const async = require('hbs/lib/async');
 const router = express.Router()
 const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require('../databaseHandler');
 const { requireStaff } = require('../projectLibrary');
@@ -42,7 +43,7 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
             speciality: spec,
             address: address,
             phone_number: phone
-
+            
         }
     }
 
@@ -83,7 +84,7 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         specialty: specialtyInput,
         address: addressInput,
         userName: userName,
-        Course: Course
+        Course:Course
     }
 
     insertObject('Users', newAccountTrainee);
@@ -131,7 +132,7 @@ router.post('/searchTrainee', requireStaff, async(req, res) => {
 
 router.get('/assignTrainer', requireStaff, (req, res) => {
 
-    })
+})
     //Insert course: Cuong
 router.get('/viewCourse', async(req, res) => {
     const db = await getDB();
@@ -148,14 +149,13 @@ router.post('/addCourse', (req, res) => {
     const tutorInput = req.body.txtTutor;
     const categoryCourse = req.body.txtCategoryCourse;
     const descriptionCourse = req.body.txtDescription;
-    const trainee = []
+
     const InsertCourse = {
         courseID: courseIDInput,
         courseName: courseName,
         tutor: tutorInput,
         categoryCourse: categoryCourse,
         descriptionCourse: descriptionCourse,
-        trainees: trainee
     }
 
     insertObject('Course', InsertCourse)
@@ -192,10 +192,11 @@ router.get('/updateCourseCategory', requireStaff, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('editCourseCategory', { bas: coursecategory })
+    res.render('editCourseCategory', { bas : coursecategory })
 })
 
 router.post('/editCourseCategory', requireStaff, async(req, res) => {
+    const id = req.body.txtId;
     const coursecategory_Name = req.body.txtCourseCategoryName;
     const description_CourseCategory = req.body.txtDescriptionCourseCategory;
 
@@ -210,23 +211,28 @@ router.post('/editCourseCategory', requireStaff, async(req, res) => {
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { bas: coursecategory })
+    res.render('viewCourseCategory', { bas : coursecategory })
 })
 
-router.get("/deleteCourseCategory", async(req, res) => {
+router.get("/deleteCourseCategory", async (req, res) => {
     const id = req.query.id;
-    const dbo = await getDB();
+    const dbo = await getDB()
     await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
     const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
     res.render('viewCourseCategory', { bas: category })
 })
 
-router.post('/searchCourseCategory', async(req, res) => {
-    const search = req.body.txtSearch
-    const id = req.session["Staff"]
-    const dbo = await getDB()
-    const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": search })
-    res.render('detailTrainer', { search: coursecategory, id: id })
+router.get('/searchCourseCategory', requireStaff, async(req, res) => {
+    const dbo = await getDB();
+    const allCourseCategory = await dbo.collection("CourseCategory").find({}).toArray();
+    res.render("searchCourseCategory", { bas: allCourseCategory })
+})
+
+router.post('/searchCourseCategory', requireStaff, async(req, res) => {
+    const searchCourseCategory = req.body.txtSearch;
+    const dbo = await getDB();
+    const allCourseCategory = await dbo.collection("CourseCategory").find({ coursecategoryID: searchCourseCategory }).toArray();
+    res.render("searchCourseCategory", { bas: allCourseCategory })
 })
 
 //End code
@@ -268,7 +274,7 @@ router.get('/showTrainees', async(req, res) => {
     const db = await getDB();
     const o = await db.collection("Course").findOne({ _id: ObjectId(id) });
     const trainees = await db.collection("trainees").find({}).toArray();
-
+    
     const newTrainees = []
     if (o.trainees == null) {
         trainees.forEach(e => {
