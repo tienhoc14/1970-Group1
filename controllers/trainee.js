@@ -16,10 +16,10 @@ router.get('/viewClass', requireTrainee, async(req, res) => {
     const courseID = req.query.courseID
 
     const dbo = await getDB();
-    const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
-    const course = await dbo.collection("Course").findOne({"courseID": courseID })
+    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
+    const course = await dbo.collection("Course").findOne({ "courseID": courseID })
 
-    res.render("viewClass", {data: trainee.Course, t: course.Trainee})
+    res.render("viewClass", { data: trainee.Course, t: course.Trainee })
 })
 
 router.get('/viewMyCourse', requireTrainee, async(req, res) => {
@@ -54,7 +54,7 @@ router.get('/join', requireTrainee, async(req, res) => {
     await db.collection("trainees").updateOne({ "userName": user.name }, { $set: { "Course": updateT } })
     await db.collection("Course").updateOne({ _id: ObjectId(courseID) }, { $set: { "trainees": updateC } })
 
-    res.render('viewMyCourse')
+    res.render('join', { course: courseID })
 })
 
 router.get('/view', requireTrainee, async(req, res) => {
