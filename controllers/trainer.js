@@ -4,6 +4,8 @@ const { insertObject, getDB, ObjectId } = require('../databaseHandler')
 const { requireTrainer } = require('../projectLibrary')
 const router = express.Router()
 
+router.use(express.static('public'))
+
 router.get('/', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
@@ -30,9 +32,11 @@ router.get('/scoring', requireTrainer, async (req, res) => {
 })
 
 router.get('/showScore', requireTrainer, async (req, res) => {
-    const db = await getDB();
+    const user = req.session["Trainer"]
+    const dbo = await getDB()
+    const trainees = await dbo.collection("trainees").findOne({ "userName": user.name })
 
-    res.render('showScore')
+    res.render('showScore', {user: user, data: trainees})
 })
 
 router.post('/showScore', requireTrainer, async(req, res) => {
@@ -52,7 +56,7 @@ router.post('/showScore', requireTrainer, async(req, res) => {
     // //     score: sl
     // // }
     // insertObject("CourseScore", scoring)
-    res.render("showScore");
+    res.render("showScore", {user: user} );
 })
 
 // router.post('/scoringTrainee',requireTrainer, async (req, res) => {
