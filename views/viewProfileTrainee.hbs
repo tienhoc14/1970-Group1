@@ -10,9 +10,8 @@
 </head>
 <body>
         <div class="header">
-        <a href="/trainee/viewProfileTrainee"><img src="/images/avt.jpeg" width="3%"></a>
-        <li><a href="/trainee/update">Update profile</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a class="up" href="/trainee/update">Update profile</a></li>
+        <li><a class="log" href="/logout">Logout</a></li>
     </div>
     <br>
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
@@ -22,10 +21,11 @@
     <br>
     <div class="function">
         <li><a class="home" href="/trainee">Home</a></li>
-        <li><a class="course" href="/trainee/viewMyCourse">My Course</a></li>   
+        <li><a class="course" href="/trainee/viewMyCourse">My Course</a></li>
+        <li><a class="course" href="/trainee/viewClass">View Class</a></li>   
     </div>
     <br>
-    <div>
+    <div class="v-u">
         FullName: {{trainee.name}}<br>
         UserName: {{trainee.userName}} <br>
         Role: {{trainee.role}} <br>

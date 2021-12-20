@@ -73,6 +73,9 @@ tr:nth-child(even) {
 .log{
     margin-left: 80%;
 }
+.log_u{
+    margin-left: 90%;
+}
 
 .button {
     background-color: blue;
@@ -84,3 +87,17 @@ tr:nth-child(even) {
     margin: 4px 2px;
     cursor: pointer;
   }
+
+.v-u{
+    max-width: 30%;
+    margin-top: 10%;
+    margin-left: 35%;
+    padding: 10px;
+    border: black 1px solid;
+    border-radius: 1%;
+}
+
+.i{
+    margin-top: 10px;
+    margin-left: 80%;
+}

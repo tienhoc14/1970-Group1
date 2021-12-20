@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="header">
-        <img src="/images/avt.jpeg" width="3%">
-        <li><a href="">Logout</a></li>
+        <a class= "avt"href="/trainee/view"><img src="/images/avt.jpeg" width="3%"></a>
+        <li><a class="log_u" href="/logout">Logout</a></li>
     </div>
     <br>
     <center><img src="/images/Logo.png" width="20%" height="40%"></center>
@@ -22,9 +22,10 @@
     <div class="function">
         <li><a class="home" href="/trainee">Home</a></li>
         <li><a class="course" href="/trainee/viewMyCourse">My Course</a></li> 
+        <li><a class="course" href="/trainee/viewMyCourse">View Class</a></li> 
     </div>
     <br>
-    <div class="update">
+    <div class="v-u">
     <form action="update" method = "POST">
         <input type="hidden" name="txtId" value="{{trainee._id}}">
         FullName: <input type="text" name="txtName" value="{{trainee.name}}" />
