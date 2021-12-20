@@ -21,8 +21,16 @@ router.get('/viewMyCourse', requireTrainee, async(req, res) => {
     const user = req.session["Trainee"]
 
     const dbo = await getDB();
-    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
-    res.render("viewMyCourse", { data: trainee.Courses })
+    const mycourse = []
+
+    const course = await dbo.collection("Course").find({}).toArray()
+    course.forEach(c => {
+        if (c.trainees.includes(user.name)) {
+            mycourse.push(c)
+        }
+    });
+
+    res.render("viewMyCourse", { course: mycourse })
 })
 
 router.get('/join', requireTrainee, async(req, res) => {
