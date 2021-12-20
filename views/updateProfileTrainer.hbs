@@ -11,8 +11,8 @@
 
 <body>
 	<center><a href="/"><img src="/images/Logo.png" width="250" height="120" /></a></center>
-	<h3>{{userInfo.name}}</h3>
-	<h3>Role: {{userInfo.role}}</h3>
+	<h3>{{user.name}}</h3>
+	<h3>Role: {{user.role}}</h3>
 	<center>
 		<div class="function">
 			<li><a href="/trainer">Home</a></li>
@@ -28,8 +28,9 @@
 			Phone: <input type="text" name="phone" value="{{data.phone_number}}"> <br>
 			Speciality: <input type="text" name="spec" value="{{data.speciality}}"> <br>
 			Address: <input type="text" name="address" value="{{data.address}}"> <br>
+			<br>
 			<input type="submit" value="Save">
-			<a href="/trainer/profileTrainer">Cancel</a>
+			<button><a href="/trainer/profileTrainer">Cancel</a></button>
 		</form>
 
 	</center>
