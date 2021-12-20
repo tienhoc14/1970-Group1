@@ -33,57 +33,32 @@ router.get('/scoring', requireTrainer, async (req, res) => {
 
 router.get('/showScore', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
+    const id = req.query.id;
     const dbo = await getDB()
-    const trainees = await dbo.collection("trainees").findOne({ "userName": user.name })
+    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
 
-    res.render('showScore', {user: user, data: trainees})
+    res.render('showScore', { user: user, data: trainee })
 })
 
-router.post('/showScore', requireTrainer, async(req, res) => {
-    const user = req.session["Trainer"]
-    const nameTrainee = req.query.userName
-
-    const sl = req.body.SL 
-    
+router.post('/traineeScoring', requireTrainer, async (req, res) => {
+    const id = req.body.txtID;
+    const sl = req.body.SL
     const dbo = await getDB();
-    // const course = await dbo.collection("Course").find({ }).toArray();
-    // const trainee = await dbo.collection("trainees").find({ }).toArray();
-    const t = await dbo.collection("trainees").findOne({ "userName": nameTrainee })
-    console.log()
-    // // const scoring = { 
-    // //     // course : course.courseID,
-    // //     trainee: trainee.user,
-    // //     score: sl
-    // // }
-    // insertObject("CourseScore", scoring)
-    res.render("showScore", {user: user} );
+
+    const scoring = {
+        score: sl
+    }
+    insertObject("CourseScore", scoring)
+    res.redirect('/trainer/showScore')
 })
 
-// router.post('/scoringTrainee',requireTrainer, async (req, res) => {
-//     const id = req.body.txtID;
-//     const username = req.body.txtUser;
-//     const sl = req.body.SL;
-    
-//     const dbo = await getDB();
-//     const trainee = await dbo.collection("trainees").find({ userName : username }).toArray();
-//     const filter = { _id: ObjectId(id) }
-//     const scoring = {
-//         $set: {
-//             coursescoreId: id,
-//             trainee : trainee,
-//             score: sl
-//     }}
-//     await dbo.collection("CourseScore").updateOne(filter, scoring)
-//     res.render('showScore', { courseid: id, trainee: trainee, score : sl })
-
-// })
 
 router.get('/profileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
 
-    res.render('profileTrainer', { data: trainer, user:user })
+    res.render('profileTrainer', { data: trainer, user: user })
 })
 
 
@@ -91,7 +66,7 @@ router.get('/updateProfileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
-    res.render('updateProfileTrainer', { data: trainer, user:user })
+    res.render('updateProfileTrainer', { data: trainer, user: user })
 })
 
 router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
@@ -117,7 +92,7 @@ router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
     await dbo.collection("Trainers").updateOne(filter, updateToTrainers)
 
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
-    res.render('profileTrainer', { data: trainer, user:user })
+    res.render('profileTrainer', { data: trainer, user: user })
 })
 
 module.exports = router;
