@@ -1,6 +1,6 @@
 const express = require('express')
 const async = require('hbs/lib/async')
-const { getDB, ObjectId } = require('../databaseHandler')
+const { getDB, ObjectId, insertObject } = require('../databaseHandler')
 const { requireTrainee } = require('../projectLibrary')
 
 const router = express.Router()
@@ -102,6 +102,7 @@ router.post('/search', requireTrainee, async(req, res) => {
     const allCourse = await dbo.collection("Course").find({ courseID: searchCoures }).toArray();
     res.render("searchCourse", { data: allCourse })
 })
+// Course Score
 
 
 
