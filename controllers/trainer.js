@@ -30,15 +30,16 @@ router.get('/scoring', requireTrainer, async (req, res) => {
 })
 
 router.get('/showScore', requireTrainer, async (req, res) => {
-    
+    const db = await getDB();
+
     res.render('showScore')
 })
 
-router.post('scoringTrainee', requireTrainer, async (req, res) => {
-    const id = req.body.txtId
-    
 
-    res.redirect('/trainer/showScore')
+router.post('/showScore', requireTrainer, async (req, res) => {
+    const dbo = await getDB()
+    const s = await dbo.collection('scores').find({}).toArray();
+    res.redirect('/trainer/showScore', {scores: s})
 })
 
 
@@ -47,7 +48,7 @@ router.get('/profileTrainer', requireTrainer, async (req, res) => {
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
 
-    res.render('profileTrainer', { data: trainer })
+    res.render('profileTrainer', { data: trainer, user:user })
 })
 
 
@@ -55,10 +56,11 @@ router.get('/updateProfileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
-    res.render('updateProfileTrainer', { data: trainer })
+    res.render('updateProfileTrainer', { data: trainer, user:user })
 })
 
 router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
+    const user = req.session["Trainer"]
     const id = req.body.txtId
     const name = req.body.trainerName
     const age = req.body.trainerAge
@@ -79,8 +81,8 @@ router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
     const dbo = await getDB()
     await dbo.collection("Trainers").updateOne(filter, updateToTrainers)
 
-    const trainer = await dbo.collection("Trainers").findOne({ "_id": ObjectId(id) })
-    res.render('profileTrainer', { data: trainer })
+    const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
+    res.render('profileTrainer', { data: trainer, user:user })
 })
 
 module.exports = router;

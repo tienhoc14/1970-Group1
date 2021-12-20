@@ -22,6 +22,13 @@
 			<li><a class="logout" href="\login">Logout</a></li>
 		</div>
 		<h1 style="font-weight: 100;">Score of all Trainees</h1>
+		{{#each scores}}
+        <tr>
+			<td>{{userName}}</td>
+            <td>{{nameTrainee}}</td>
+            <td>{{}}</td>
+        </tr>
+        {{/each}}
 		
 	</center>
 </body>

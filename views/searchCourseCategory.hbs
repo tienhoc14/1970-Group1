@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Search Course</title>
+</head>
+<body>
+    <center><img src="/images/Logo.png" width="20%" height="40%"></center>
+    <form class="s" action="/staff/searchCourseCategory" method="POST">
+        <input type="search" name="txtSearch" placeholder="Search Course Category">
+    </form>
+    <br>
+    <div class="function">
+        <li><a class="home" href="/staff/staffPage">Home</a></li>   
+    </div>
+    <br>
+    <table>
+        <tr>
+            <th>Course Category Name</th>
+            <th>Decripsion</th>
+            <th>Controller</th>
+        </tr>
+        {{#each bas}}
+        <tr>
+                <td>{{courseCategoryName}}</td>
+                <td>{{descriptionCourseCategory}}</td>
+                <td><a href="/trainee/edit?id={{_id}}">Edit</a></td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
+</html>
