@@ -34,11 +34,11 @@ router.get('/showScore', requireTrainer, async (req, res) => {
     res.render('showScore')
 })
 
-router.post('scoringTrainee', requireTrainer, async (req, res) => {
-    const id = req.body.txtId
-    
 
-    res.redirect('/trainer/showScore')
+router.post('/showScore', requireTrainer, async (req, res) => {
+    const dbo = await getDB()
+    const s = await dbo.collection('scores').find({}).toArray();
+    res.redirect('/trainer/showScore', {scores: s})
 })
 
 
