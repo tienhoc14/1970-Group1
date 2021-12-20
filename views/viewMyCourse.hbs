@@ -27,20 +27,20 @@
     </div>
     <br>
     <form action = "joinCourse" method="POST" ></form>
-    <table>
+    <center><h2>Trainees regisrered for course:{{t}}</h2></center>
+    {{!-- <table>
         <tr>
-            <th>Course ID</th>
-            <th>Name Course</th>
-            <th>Trainer</th>
+            <th>Name</th>
+            <th>UserName</th>
+            <th>Course</th>
         </tr>
-        {{#each course}}
-        <tr>
-            <td>{{courseID}}</td>
-            <td>{{courseName}}</td>
-            <td>{{tutor}}</td>
-        </tr>
+        {{#each t}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{userName}}</td>
+                <td>{{Course}}</td>
+            </tr>
         {{/each}}
-    </table>
-    </form>
+    </table> --}}
 </body>
 </html>
