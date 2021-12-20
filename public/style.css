@@ -8,6 +8,10 @@ a {
 .header {
     border: 1px outset black;
 }
+.header a:hover{
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+}
 
 .function {
     border: 1px outset black;
@@ -60,4 +64,12 @@ tr:nth-child(even) {
 .divText a:hover{
     background-color: rgb(255, 0, 0);
     color: rgb(255, 255, 255);
+}
+
+.up{
+    margin: 1%;
+}
+
+.log{
+    margin-left: 80%;
 }

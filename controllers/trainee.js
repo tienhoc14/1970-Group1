@@ -12,9 +12,14 @@ router.get('/', requireTrainee, (req, res) => {
 })
 
 router.get('/viewClass', requireTrainee, async(req, res) => {
-    const db = await getDB();
-    const viewTrainees = await db.collection("Course").find({}).toArray();
-    res.render("viewClass", { course: viewTrainees });
+    const user = req.session["Trainee"]
+    const courseID = req.query.courseID
+
+    const dbo = await getDB();
+    const trainee = await dbo.collection("trainees").findOne({"userName": user.name})
+    const course = await dbo.collection("Course").findOne({"courseID": courseID })
+
+    res.render("viewClass", {data: trainee.Course, t: course.Trainee})
 })
 
 router.get('/viewMyCourse', requireTrainee, async(req, res) => {
