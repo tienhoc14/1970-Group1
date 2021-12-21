@@ -12,9 +12,8 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: '124447yd@@$%%#', cookie: { maxAge: 900000 }, saveUninitialized: false, resave: false }))
 
-app.get('/', requiresLogin, (req, res) => {
-    const user = req.session["User"]
-    res.render('index', { userInfo: user })
+app.get('/', (req, res) => {
+    res.render('login')
 })
 
 app.post('/login', async(req, res) => {
@@ -35,7 +34,7 @@ app.post('/login', async(req, res) => {
             name: name,
             role: role
         }
-        res.redirect('/staff/staffpage')
+        res.redirect('/staff')
 
     } else if (role == "Trainee") {
         req.session["Trainee"] = {

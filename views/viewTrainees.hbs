@@ -9,36 +9,38 @@
     <title>View All Trainee</title>
 </head>
 <body>
-    <a href="/staff/staffPage">Home</a>
+    <a href="/staff">Home</a>
     <a href="/staff/addTrainee">Add Trainee</a>
     <form action="/staff/searchTrainee" method="post" style="text-align: right">
         Search <input type="text" name="txtSearch" placeholder="Full Name">
         <input type="submit" value="Search">
     </form>
-    <Table>
-        <tr>
-            <th>UserName</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
-            <th>Specialty</th>
-            <th>Address</th>
-            <th>Option</th>
-        </tr>
-        {{#each data}}
+    <div class = "table-trainee">
+        <Table>
             <tr>
-                <td>{{userName}}</td>
-                <td>{{name}}</td>
-                <td>{{email}}</td>
-                <td>{{age}}</td>
-                <td>{{specialty}}</td>
-                <td>{{address}}</td>
-                <td>
-                    <a href="/staff/editTrainee?id={{_id}}">Edit</a>
-                    <a href="/staff/deteleTrainee?userName={{userName}}">Delete</a>
-                </td>
+                <th>UserName</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Specialty</th>
+                <th>Address</th>
+                <th>Option</th>
             </tr>
-        {{/each}}
-    </Table>
+            {{#each data}}
+                <tr>
+                    <td>{{userName}}</td>
+                    <td>{{name}}</td>
+                    <td>{{email}}</td>
+                    <td>{{age}}</td>
+                    <td>{{specialty}}</td>
+                    <td>{{address}}</td>
+                    <td>
+                        <a href="/staff/editTrainee?id={{_id}}">Edit</a>
+                        <a href="/staff/deteleTrainee?userName={{userName}}">Delete</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </Table>
+    </div>
 </body>
 </html>

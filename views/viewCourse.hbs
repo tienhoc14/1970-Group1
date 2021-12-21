@@ -8,17 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="/staff/staffPage">Home</a>
+    <a href="/staff/">Home</a>
     <a href="/staff/addCourse">Add Course</a>
-    <table bolder = 3>
-        <div>
+    <br>
+    <br>
+    <div class="table-trainee">
+        <table bolder = 3>
             <tr>
                 <th>Course ID</th>
                 <th>Course Name</th>
                 <th>Tutor</th>
                 <th>Category</th>
                 <th>Descripton</th>
-                <th></th>
                 <th></th>
             </tr>
             {{#each course}}
@@ -28,12 +29,10 @@
                 <td>{{tutor}}</td>
                 <td>{{categoryCourse}}</td>
                 <td>{{descriptionCourse}}</td>
-                <td>Edit</td>
                 <td><a href="/staff/delete?id={{_id}}">Delete</a> </td>
             </tr>
             {{/each}}
-            
-        </div>
-    </table>
+        </table>
+    </div>
 </body>
 </html>

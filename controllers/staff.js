@@ -5,7 +5,7 @@ const { getDB, DeleteTrainee, UpdateTrainee, ObjectId, insertObject } = require(
 const { requireStaff, requireTrainee } = require('../projectLibrary');
 router.use(express.static('public'))
 
-router.get('/staffPage', requireStaff, async(req, res) => {
+router.get('/', requireStaff, async(req, res) => {
     const db = await getDB();
     const viewTrainees = await db.collection("trainees").find({}).toArray();
     res.render('staffPage', { data: viewTrainees });
@@ -43,7 +43,7 @@ router.post('/updateProfileStaff', requireStaff, async(req, res) => {
             speciality: spec,
             address: address,
             phone_number: phone
-            
+
         }
     }
 
@@ -84,8 +84,12 @@ router.post('/addTrainee', requireStaff, async(req, res) => {
         specialty: specialtyInput,
         address: addressInput,
         userName: userName,
+<<<<<<< HEAD
         Course:Course,
         role: 'Trainee'
+=======
+        Course: Course
+>>>>>>> f37b8b1955e714581163fbefaee5c3c88f759860
     }
 
     insertObject('Users', newAccountTrainee);
@@ -133,7 +137,7 @@ router.post('/searchTrainee', requireStaff, async(req, res) => {
 
 router.get('/assignTrainer', requireStaff, (req, res) => {
 
-})
+    })
     //Insert course: Cuong
 router.get('/viewCourse', async(req, res) => {
     const db = await getDB();
@@ -195,7 +199,7 @@ router.get('/updateCourseCategory', requireStaff, async(req, res) => {
     const id = req.query.id
     const dbo = await getDB()
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('editCourseCategory', { bas : coursecategory })
+    res.render('editCourseCategory', { bas: coursecategory })
 })
 
 router.post('/editCourseCategory', requireStaff, async(req, res) => {
@@ -214,10 +218,10 @@ router.post('/editCourseCategory', requireStaff, async(req, res) => {
     await dbo.collection("CourseCategory").updateOne(filter, updateToCourseCategory)
 
     const coursecategory = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
-    res.render('viewCourseCategory', { bas : coursecategory })
+    res.render('viewCourseCategory', { bas: coursecategory })
 })
 
-router.get("/deleteCourseCategory", async (req, res) => {
+router.get("/deleteCourseCategory", async(req, res) => {
     const id = req.query.id;
     const dbo = await getDB()
     await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
@@ -277,7 +281,7 @@ router.get('/showTrainees', async(req, res) => {
     const db = await getDB();
     const o = await db.collection("Course").findOne({ _id: ObjectId(id) });
     const trainees = await db.collection("trainees").find({}).toArray();
-    
+
     const newTrainees = []
     if (o.trainees == null) {
         trainees.forEach(e => {
@@ -354,10 +358,10 @@ router.get('/showCourses', async(req, res) => {
 })
 
 //hoa
-router.get('/delete', requireStaff, async(req, res)=>{
+router.get('/delete', requireStaff, async(req, res) => {
     const id = req.query.id;
     const dbo = await getDB();
-    const d = await dbo.collection("Course").deleteOne({ "_id": ObjectId(id)});
+    const d = await dbo.collection("Course").deleteOne({ "_id": ObjectId(id) });
     res.redirect("viewCourse")
 })
 
