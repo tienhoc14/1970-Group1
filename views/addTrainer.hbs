@@ -19,7 +19,7 @@
             <a href="/admin/manage_staff"> <li>Manage Staff</li></a>
         </div>
         <div class="c-item search">
-            <form action="/admin/search" method="post">
+            <form action="/admin/search" method="post" name="myForm" onsubmit="return validateForm()">
                 <input type="text" name="txtSearch" placeholder="Search username">
             </form>
         </div>
@@ -44,12 +44,12 @@
         <div class="c-item body">
             <h2>Add Trainer</h2>
             <form action="addTrainer" method="post">
-                Full name: <input type="text" name="trainerName"> <br> <br>
-                Username: <input type="text" name="username"> <br><br>
-                Age: <input type="number" name="trainerAge" min="18"> <br><br>
-                Phone: <input type="text" name="phone"> <br><br>
-                Speciality: <input type="text" name="spec"> <br><br>
-                Address: <input type="text" name="address" id="add"> <br>
+                Full name: <input type="text" name="trainerName" required> <br> <br>
+                Username: <input type="text" name="username" required> <br><br>
+                Age: <input type="number" name="trainerAge" min="18" required> <br><br>
+                Phone: <input type="text" name="phone" required> <br><br>
+                Speciality: <input type="text" name="spec" required> <br><br>
+                Address: <input type="text" name="address" id="add" required> <br>
                 <input id="save" type="submit" value="Add">
                 <a id="cancel" href="/admin/manage_trainer">Cancel</a>
             </form>
@@ -58,5 +58,16 @@
     <footer>
        © 2021 Greenwich.edu.vn. All Right Reserved
     </footer>
+
+    {{!-- script --}}
+    <script>
+    function validateForm() {
+        let x = document.forms["myForm"]["txtSearch"].value;
+        if (x == "") {
+            alert("username must be filled out");
+            return false;
+        }
+        }
+    </script>
 </body>
 </html>
