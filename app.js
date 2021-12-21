@@ -35,7 +35,7 @@ app.post('/login', async(req, res) => {
             name: name,
             role: role
         }
-        res.redirect('/staff/staffpage')
+        res.redirect('/staff')
 
     } else if (role == "Trainee") {
         req.session["Trainee"] = {
