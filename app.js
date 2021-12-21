@@ -57,7 +57,7 @@ app.get('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.session.destroy()
-    res.render('login')
+    res.redirect('login')
 })
 
 const adminController = require('./controllers/admin')
