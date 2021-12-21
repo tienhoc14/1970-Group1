@@ -221,7 +221,7 @@ router.get("/deleteCourseCategory", async(req, res) => {
     const id = req.query.id;
     const dbo = await getDB()
     await dbo.collection("CourseCategory").deleteOne({ "_id": ObjectId(id) });
-    const category = await dbo.collection("Category").findOne({ "_id": ObjectId(id) })
+    const category = await dbo.collection("CourseCategory").findOne({ "_id": ObjectId(id) })
     res.render('viewCourseCategory', { bas: category })
 })
 
@@ -234,7 +234,7 @@ router.get('/searchCourseCategory', requireStaff, async(req, res) => {
 router.post('/searchCourseCategory', requireStaff, async(req, res) => {
     const searchCourseCategory = req.body.txtSearch;
     const dbo = await getDB();
-    const allCourseCategory = await dbo.collection("CourseCategory").find({ coursecategoryID: searchCourseCategory }).toArray();
+    const allCourseCategory = await dbo.collection("CourseCategory").find({ courseCategoryName: searchCourseCategory }).toArray();
     res.render("searchCourseCategory", { bas: allCourseCategory })
 })
 
