@@ -45,8 +45,8 @@
             <h2>Update admin account</h2>
             <form action="editAdmin" method="post">
                 <input type="hidden" name="txtId" value="{{u._id}}">
-                Username: <input type="text" name="txtUser" value="{{u.userName}}"> <br><br>
-                Password: <input type="password" name="txtPass" value="{{u.password}}"> <br><br>
+                Username: <input type="text" name="txtUser" value="{{u.userName}}" required> <br><br>
+                Password: <input type="password" name="txtPass" value="{{u.password}}" required> <br><br>
                 <input id="save" type="submit" value="Save">
                 <a id="cancel" href="/admin">Cancel</a>
             </form>
