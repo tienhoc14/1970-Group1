@@ -44,12 +44,12 @@
         <div class="c-item body">
             <h2>Update Trainer Profile</h2>
             <form action="editTrainer" method="post">
-                <input type="hidden" name="txtId" value="{{data._id}}">
-                Full name: <input type="text" name="trainerName" value="{{data.name}}"> <br><br>
-                Age: <input type="number" name="trainerAge" min="18" value="{{data.age}}"> <br><br>
-                Phone: <input type="text" name="phone" value="{{data.phone_number}}"> <br><br>
-                Speciality: <input type="text" name="spec" value="{{data.speciality}}"> <br><br>
-                Address: <input type="text" name="address" value="{{data.address}}" id="add"> <br><br>
+                <input type="hidden" name="txtId" value="{{data._id}}" required>
+                Full name: <input type="text" name="trainerName" value="{{data.name}}" required> <br><br>
+                Age: <input type="number" name="trainerAge" min="18" value="{{data.age}}" required> <br><br>
+                Phone: <input type="text" name="phone" value="{{data.phone_number}}" required> <br><br>
+                Speciality: <input type="text" name="spec" value="{{data.speciality}}" required> <br><br>
+                Address: <input type="text" name="address" value="{{data.address}}" id="add" required> <br><br>
                 <input id="save" type="submit" value="Save">
                 <a id="cancel" href="/admin/manage_trainer">Cancel</a>
             </form>

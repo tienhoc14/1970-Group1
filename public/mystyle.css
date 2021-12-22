@@ -227,3 +227,11 @@ h2 {
 #add {
     width: 250px;
 }
+
+.slideshow {
+    display: flex;
+}
+
+.slideshow img {
+    margin: auto;
+}

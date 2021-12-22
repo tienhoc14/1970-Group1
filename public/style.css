@@ -1,5 +1,4 @@
-li,
-a {
+li,a {
     list-style-type: none;
     display: inline;
     text-decoration: none;
@@ -17,11 +16,11 @@ a {
     border: 1px outset black;
     margin-top: 2%;
     text-align: center;
-    max-width: 1000px;
+    padding:  5px 0;
 }
 .function a:hover{
-    background-color: rgb(255, 0, 0);
-    color: rgb(255, 255, 255);
+    background-color: #2962FF;
+    color: white;
 }
 .function li{
     margin: 0 100px;
@@ -41,7 +40,7 @@ td,
 th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 10px;
 }
 
 tr:nth-child(even) {
@@ -63,17 +62,19 @@ tr:nth-child(even) {
 .divText{
     text-align: right;
 }
+
 .divText a:hover{
     background-color: rgb(255, 0, 0);
     color: rgb(255, 255, 255);
 }
 
-.up{
-    margin: 1%;
+a.up{
+    
+    margin: 3px;
 }
 
-.log{
-    margin-left: 80%;
+a.log{
+    margin-left: 90%;
 }
 .log_u{
     margin-left: 90%;
@@ -102,4 +103,25 @@ tr:nth-child(even) {
 .i{
     margin-top: 10px;
     margin-left: 80%;
+}
+
+.table-trainee{
+    background-color: #004eff78;
+}
+.table-trainee a:hover{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #2962FF;
+}
+a{
+    color: white;
+    background-color:#0277BD;
+    border: 1px solid #0277BD;
+    border-radius: 5px;
+    padding: 1px;
+}
+a:hover{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #2962FF;
 }

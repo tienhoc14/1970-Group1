@@ -36,11 +36,11 @@
                 <img src="/images/bg1.jpg" alt="">
             </div>
             <a href="/admin"><li>Home</li></a>
-            <a href="/admin/manage_trainer"> <li>Manage Trainer</li></a>
+            <a href="/admin/manage_trainer"> <li style="background-color: #ddd;">Manage Trainer</li></a>
             <a href="/admin/manage_staff"> <li>Manage Staff</li></a>
         </div>
         <div class="c-item search">
-            <form action="/admin/search" method="post">
+            <form action="/admin/search" method="post" name="myForm" onsubmit="return validateForm()">
                 <input type="text" name="txtSearch" placeholder="Search username">
             </form>
         </div>
@@ -90,5 +90,18 @@
     <footer>
        © 2021 Greenwich.edu.vn. All Right Reserved
     </footer>
+
+    <script>
+        function validateForm() {
+            let x = document.forms["myForm"]["txtSearch"].value;
+            if (x == "") {
+                alert("username must be filled out");
+                return false;
+            }
+            }
+
+            var myIndex = 0;
+            carousel();
+    </script>
 </body>
 </html>

@@ -14,12 +14,12 @@
             <div class="logo-uni">
                 <img src="/images/bg1.jpg" alt="">
             </div>
-            <a href="/admin"><li>Home</li></a>
+            <a href="/admin"><li style="background-color: #ddd;">Home</li></a>
             <a href="/admin/manage_trainer"> <li>Manage Trainer</li></a>
             <a href="/admin/manage_staff"> <li>Manage Staff</li></a>
         </div>
         <div class="c-item search">
-            <form action="/admin/search" method="post">
+            <form action="/admin/search" method="post" name="myForm" onsubmit="return validateForm()">
                 <input type="text" name="txtSearch" placeholder="Search username">
             </form>
         </div>
@@ -42,11 +42,41 @@
             </div>
         </div>
         <div class="c-item body">
-            
+            <div class="slideshow">
+                <img src="/images/banner1.png" alt="" height="500px" class="mySlides">
+                <img src="/images/banner2.png" alt="" class="mySlides">
+                <img src="/images/banner3.png" alt="" height="500px" class="mySlides">
+            </div>
         </div>
     </div>
     <footer>
        © 2021 Greenwich.edu.vn. All Right Reserved
     </footer>
+
+    {{!-- script --}}
+    <script>
+    function validateForm() {
+        let x = document.forms["myForm"]["txtSearch"].value;
+        if (x == "") {
+            alert("username must be filled out");
+            return false;
+        }
+        }
+
+        var myIndex = 0;
+        carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 2500);
+    }
+    </script>
 </body>
 </html>

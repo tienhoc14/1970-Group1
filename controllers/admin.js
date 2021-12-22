@@ -144,7 +144,13 @@ router.post('/search', async(req, res) => {
     const user = req.session["Admin"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": search })
-    res.render('detailTrainer', { data: trainer, user: user })
+    var noti = ""
+    if (trainer == null) {
+        noti = "There is no Trainer with username: " + search
+    } else {
+        noti = "Trainer Profile"
+    }
+    res.render('detailTrainer', { data: trainer, user: user, noti: noti })
 })
 
 // End Trainer
