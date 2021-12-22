@@ -22,12 +22,8 @@
 			<li><a class="button" href="\login">Logout</a></li>
 		</div>
 		<h1 style="font-weight: 100;">Score of all Trainees</h1>
-		{{#each scores}}
-        <tr>
-			<td>{{courseId}}</td>
-            <td>{{userName}}</td>
-            <td>{{sl}}</td>
-        </tr>
+		{{#each data}}
+		{{Trainee}} - {{score}} <br>
         {{/each}}
 		
 	</center>

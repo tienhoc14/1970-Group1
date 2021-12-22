@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.use(express.static('public'))
 
-router.get('/', requireTrainer, async (req, res) => {
+router.get('/', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const view = await dbo.collection("Trainers").findOne({ "userName": user.name })
@@ -14,7 +14,7 @@ router.get('/', requireTrainer, async (req, res) => {
     res.render('trainerIndex', { user: user, courses: view.Courses })
 })
 
-router.get('/detailCourse', requireTrainer, async (req, res) => {
+router.get('/detailCourse', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const courseID = req.query.courseID
     const dbo = await getDB()
@@ -23,7 +23,7 @@ router.get('/detailCourse', requireTrainer, async (req, res) => {
     res.render('detailCourse', { user: user, t: view.trainees, o: courseID })
 })
 
-router.get('/scoring', requireTrainer, async (req, res) => {
+router.get('/scoring', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const nameTrainee = req.query.userName
     const dbo = await getDB()
@@ -31,28 +31,27 @@ router.get('/scoring', requireTrainer, async (req, res) => {
     res.render('scoring', { user: user, t: t })
 })
 
-router.get('/showScore', requireTrainer, async (req, res) => {
-    const user = req.session["Trainer"]
-    const id = req.query.id;
-    const dbo = await getDB()
-    const trainee = await dbo.collection("trainees").findOne({ "userName": user.name })
-
-    res.render('showScore', { user: user, data: trainee })
-})
-
-router.post('/traineeScoring', requireTrainer, async (req, res) => {
+router.post('/traineeScoring', requireTrainer, async(req, res) => {
     const id = req.body.txtID;
     const sl = req.body.SL
-    const dbo = await getDB();
 
     const scoring = {
+        Trainee: id,
         score: sl
     }
     insertObject("CourseScore", scoring)
     res.redirect('/trainer/showScore')
 })
 
-router.get('/profileTrainer', requireTrainer, async (req, res) => {
+router.get('/showScore', requireTrainer, async(req, res) => {
+    const user = req.session["Trainer"]
+    const dbo = await getDB()
+    const score = await dbo.collection("CourseScore").find({}).toArray()
+    console.log(score)
+    res.render('showScore', { user: user, data: score })
+})
+
+router.get('/profileTrainer', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
@@ -61,14 +60,14 @@ router.get('/profileTrainer', requireTrainer, async (req, res) => {
 })
 
 
-router.get('/updateProfileTrainer', requireTrainer, async (req, res) => {
+router.get('/updateProfileTrainer', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
     const trainer = await dbo.collection("Trainers").findOne({ "userName": user.name })
     res.render('updateProfileTrainer', { data: trainer, user: user })
 })
 
-router.post('/updateProfileTrainer', requireTrainer, async (req, res) => {
+router.post('/updateProfileTrainer', requireTrainer, async(req, res) => {
     const user = req.session["Trainer"]
     const id = req.body.txtId
     const name = req.body.trainerName
