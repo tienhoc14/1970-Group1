@@ -52,10 +52,6 @@ router.post('/traineeScoring', requireTrainer, async (req, res) => {
     res.redirect('/trainer/showScore')
 })
 
-<<<<<<< HEAD
-
-=======
->>>>>>> deee5bf205a17296ac086d19d960644498c8f96d
 router.get('/profileTrainer', requireTrainer, async (req, res) => {
     const user = req.session["Trainer"]
     const dbo = await getDB()
