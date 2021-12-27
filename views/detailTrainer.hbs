@@ -42,16 +42,20 @@
             </div>
         </div>
         <div class="c-item body">
-            <h2>{{noti}}</h2>
-            Full name: {{data.name}} <br>
-            Username: {{data.userName}} <br>
-            Age: {{data.age}} <br>
-            Phone: {{data.phone_number}} <br>
-            Email: {{data.email}} <br>
-            Speciality: {{data.speciality}} <br>
-            Address: {{data.address}} <br><br>
-            <a id="save" href="/admin/update_trainer?id={{data._id}}">Edit profile</a>
-            <a id="cancel" href="/admin/manage_trainer">Cancel</a>
+            {{#if data}}
+                <h2>Trainer Profile</h2>
+                Full name: {{data.name}} <br>
+                Username: {{data.userName}} <br>
+                Age: {{data.age}} <br>
+                Phone: {{data.phone_number}} <br>
+                Email: {{data.email}} <br>
+                Speciality: {{data.speciality}} <br>
+                Address: {{data.address}} <br><br>
+                <a id="save" href="/admin/update_trainer?id={{data._id}}">Edit profile</a>
+                <a id="cancel" href="/admin/manage_trainer">Cancel</a>
+            {{else}}
+                <center><h1>Trainer not found!</h1></center>
+            {{/if}}
         </div>
     </div>
     <footer>
