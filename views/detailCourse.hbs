@@ -23,12 +23,14 @@
             <li><a href="/logout" class="button">Logout</a></li>
         </div>
         <h1 style="font-weight: 100;">View Trainees regisrered for course: {{o}}</h1>
-        {{#each t}}
-        {{this}}
-        <a href="/trainer/scoring?userName={{this}}">
-        Scoring
-        </a><br><br>
-        {{/each}}
+        <h1>
+            {{#each t}}
+            {{this}}
+            <a href="/trainer/scoring?userName={{this}}">
+                Scoring
+            </a><br><br>
+            {{/each}}
+        </h1>
     </center>
 </body>
 
