@@ -13,17 +13,21 @@ li,a {
 }
 
 .function {
+    display: grid;
+    grid-template-columns: 15% 15% 15% 15% 15% 15%;
     border: 1px outset black;
     margin-top: 2%;
     text-align: center;
-    padding:  5px 0;
+    padding-top:  5px;
+    padding-bottom:  5px;
+    padding-left:  5%;
 }
 .function a:hover{
     background-color: #2962FF;
     color: white;
 }
 .function li{
-    margin: 0 100px;
+    margin: 0 10px;
 }
 
 .s {
