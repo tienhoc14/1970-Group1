@@ -164,16 +164,11 @@ table th {
 }
 
 #detail {
-    padding: 5px 15px;
-    background-color: #77b4f2;
-    color: #f5faf5;
-    border: 1px solid #77b4f2;
-    border-radius: 5px;
+    color: #4c78d8;
 }
 
 #detail:hover {
-    background-color: #3e95ed;
-    border: 1px solid #3e95ed;
+    color: blue;
 }
 
 #pass {
